@@ -1,0 +1,1805 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Edu Oasis LMS — Latihan Awam & e-TRiS (HRD Corp)</title>
+<style>
+:root{
+  --bg1:#04141d; --bg2:#062a2f; --bg3:#0a3d3a;
+  --glass:rgba(255,255,255,0.07);
+  --glass2:rgba(255,255,255,0.11);
+  --glass-brd:rgba(255,255,255,0.16);
+  --primary:#10b981; --primary2:#22d3ee; --primary-d:#0e7c66;
+  --accent:#f59e0b; --accent2:#fb7185;
+  --ok:#22c55e; --warn:#f59e0b; --bad:#ef4444; --info:#38bdf8;
+  --txt:#eaf6f4; --txt-dim:#a7c2bd; --txt-mut:#6f8d88;
+  --radius:18px; --radius-sm:12px;
+  --shadow:0 18px 50px -12px rgba(0,0,0,.55);
+  --grad:linear-gradient(135deg,var(--primary),var(--primary2));
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  font-family:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;
+  color:var(--txt); min-height:100vh;
+  background:
+    radial-gradient(1100px 700px at 12% -10%, rgba(34,211,238,.18), transparent 60%),
+    radial-gradient(900px 600px at 100% 0%, rgba(16,185,129,.20), transparent 55%),
+    radial-gradient(700px 700px at 60% 120%, rgba(245,158,11,.10), transparent 60%),
+    linear-gradient(160deg,var(--bg1),var(--bg2) 55%,var(--bg3));
+  background-attachment:fixed;
+  -webkit-font-smoothing:antialiased;
+}
+a{color:var(--primary2);text-decoration:none}
+a:hover{text-decoration:underline}
+::-webkit-scrollbar{width:10px;height:10px}
+::-webkit-scrollbar-thumb{background:rgba(255,255,255,.14);border-radius:8px}
+.glass{
+  background:var(--glass); backdrop-filter:blur(16px) saturate(140%);
+  -webkit-backdrop-filter:blur(16px) saturate(140%);
+  border:1px solid var(--glass-brd); border-radius:var(--radius);
+  box-shadow:var(--shadow);
+}
+.glass-strong{background:var(--glass2);backdrop-filter:blur(22px) saturate(160%);-webkit-backdrop-filter:blur(22px) saturate(160%);border:1px solid var(--glass-brd);border-radius:var(--radius);box-shadow:var(--shadow)}
+.row{display:flex;gap:14px;flex-wrap:wrap}
+.col{display:flex;flex-direction:column;gap:14px}
+.between{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap}
+.center{display:flex;align-items:center;gap:10px}
+.grid{display:grid;gap:16px}
+.g2{grid-template-columns:repeat(2,1fr)}
+.g3{grid-template-columns:repeat(3,1fr)}
+.g4{grid-template-columns:repeat(4,1fr)}
+.auto{grid-template-columns:repeat(auto-fill,minmax(260px,1fr))}
+@media(max-width:900px){.g2,.g3,.g4{grid-template-columns:1fr}}
+.muted{color:var(--txt-dim)}
+.mut{color:var(--txt-mut)}
+.sm{font-size:12px}
+.xs{font-size:11px}
+.lg{font-size:18px}
+.xl{font-size:26px;font-weight:800;letter-spacing:-.5px}
+.h2{font-size:20px;font-weight:800;margin:0}
+.h3{font-size:16px;font-weight:700;margin:0}
+.pri{color:var(--primary2)}
+.accent{color:var(--accent)}
+.tag{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:700;padding:4px 10px;border-radius:999px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);color:var(--txt)}
+.badge{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:700;padding:4px 10px;border-radius:8px;border:1px solid transparent}
+.b-ok{background:rgba(34,197,94,.16);color:#86efac;border-color:rgba(34,197,94,.35)}
+.b-warn{background:rgba(245,158,11,.16);color:#fcd34d;border-color:rgba(245,158,11,.35)}
+.b-bad{background:rgba(239,68,68,.16);color:#fca5a5;border-color:rgba(239,68,68,.35)}
+.b-info{background:rgba(56,189,248,.16);color:#bae6fd;border-color:rgba(56,189,248,.35)}
+.b-muted{background:rgba(255,255,255,.07);color:var(--txt-dim);border-color:rgba(255,255,255,.16)}
+.b-pri{background:rgba(16,185,129,.18);color:#a7f3d0;border-color:rgba(16,185,129,.4)}
+.b-hrd{background:linear-gradient(135deg,rgba(245,158,11,.2),rgba(251,113,133,.2));color:#fde68a;border-color:rgba(245,158,11,.4)}
+.btn{display:inline-flex;align-items:center;gap:8px;justify-content:center;cursor:pointer;border:1px solid var(--glass-brd);border-radius:12px;padding:10px 16px;font-weight:700;font-size:13px;color:var(--txt);background:var(--glass);transition:.15s;white-space:nowrap}
+.btn:hover{background:var(--glass2);transform:translateY(-1px)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.btn-pri{background:var(--grad);border:none;color:#04141d}
+.btn-pri:hover{filter:brightness(1.08)}
+.btn-ghost{background:transparent}
+.btn-acc{background:linear-gradient(135deg,#f59e0b,#fb7185);border:none;color:#1a0f00}
+.btn-bad{background:rgba(239,68,68,.18);border-color:rgba(239,68,68,.4);color:#fca5a5}
+.btn-sm{padding:6px 10px;font-size:12px;border-radius:9px}
+input,select,textarea{width:100%;background:rgba(0,0,0,.25);border:1px solid var(--glass-brd);border-radius:10px;padding:10px 12px;color:var(--txt);font-size:13px;font-family:inherit;outline:none}
+input:focus,select:focus,textarea:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(16,185,129,.18)}
+label{font-size:12px;font-weight:600;color:var(--txt-dim);display:block;margin-bottom:6px}
+.field{margin-bottom:12px}
+.card{padding:18px}
+.p24{padding:24px}
+.mt{margin-top:14px}.mb{margin-bottom:14px}.mt8{margin-top:8px}.mt-lg{margin-top:24px}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.08)}
+th{color:var(--txt-dim);font-size:11px;text-transform:uppercase;letter-spacing:.6px}
+tr:hover td{background:rgba(255,255,255,.03)}
+.hr{height:1px;background:rgba(255,255,255,.1);margin:14px 0}
+.kpi{font-size:30px;font-weight:800;letter-spacing:-1px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:18px;letter-spacing:-.5px}
+.logo .mark{width:34px;height:34px;border-radius:10px;background:var(--grad);display:grid;place-items:center;color:#04141d;font-weight:900;box-shadow:0 6px 18px rgba(16,185,129,.4)}
+.nav-link{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:10px;color:var(--txt-dim);font-size:13px;font-weight:600;cursor:pointer}
+.nav-link:hover{background:rgba(255,255,255,.06);color:var(--txt)}
+.nav-link.active{background:var(--glass2);color:var(--txt);box-shadow:inset 3px 0 0 var(--primary)}
+.nav-sec{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--txt-mut);padding:14px 12px 6px}
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(6px);display:grid;place-items:center;z-index:80;padding:20px}
+.toast{position:fixed;right:18px;bottom:18px;z-index:120;display:flex;flex-direction:column;gap:8px}
+.toast .t{padding:12px 16px;border-radius:10px;background:var(--glass2);border:1px solid var(--glass-brd);box-shadow:var(--shadow);font-size:13px;font-weight:600;animation:slidein .25s ease}
+@keyframes slidein{from{transform:translateY(12px);opacity:0}to{transform:none;opacity:1}}
+.dot{width:8px;height:8px;border-radius:50%}
+.progress{height:8px;border-radius:99px;background:rgba(255,255,255,.1);overflow:hidden}
+.progress>span{display:block;height:100%;background:var(--grad)}
+.hero-bg{position:fixed;inset:0;z-index:-1;overflow:hidden;pointer-events:none}
+.blob{position:absolute;border-radius:50%;filter:blur(80px);opacity:.5}
+details>summary{cursor:pointer;padding:8px 0;font-weight:600}
+.scroll-x{overflow-x:auto}
+.hide{display:none}
+.avatar{width:36px;height:36px;border-radius:50%;background:var(--grad);display:grid;place-items:center;color:#04141d;font-weight:800;font-size:13px}
+.divider-v{width:1px;background:rgba(255,255,255,.12);align-self:stretch}
+.stripes{background-image:repeating-linear-gradient(45deg,rgba(255,255,255,.04) 0 10px,transparent 10px 20px)}
+.kbd{font-family:monospace;background:rgba(0,0,0,.3);padding:2px 6px;border-radius:5px;border:1px solid var(--glass-brd);font-size:11px}
+.checkrow{display:flex;align-items:center;gap:10px;padding:8px 0}
+.checkbox{width:18px;height:18px;accent-color:var(--primary)}
+.tab{padding:8px 14px;border-radius:10px;cursor:pointer;font-size:13px;font-weight:600;color:var(--txt-dim)}
+.tab.active{background:var(--glass2);color:var(--txt)}
+.empty{padding:40px;text-align:center;color:var(--txt-mut)}
+.pill-price{font-weight:800;font-size:15px}
+.qty{display:inline-flex;align-items:center;gap:6px;background:rgba(0,0,0,.25);border:1px solid var(--glass-brd);border-radius:8px;padding:3px}
+.qty button{background:none;border:none;color:var(--txt);cursor:pointer;padding:4px 8px;font-size:14px}
+.section-title{display:flex;align-items:center;gap:10px;margin:8px 0 14px}
+.section-title .bar{width:4px;height:22px;background:var(--grad);border-radius:4px}
+.cert-frame{border:12px double var(--primary);border-radius:14px;padding:40px;background:linear-gradient(160deg,rgba(255,255,255,.97),#f3fff9);color:#062a2f;text-align:center;position:relative}
+.cert-frame .seal{position:absolute;right:30px;bottom:24px;width:90px;height:90px;border-radius:50%;background:conic-gradient(var(--accent),var(--primary),var(--accent));display:grid;place-items:center;color:#1a0f00;font-weight:900;font-size:10px}
+.steps{counter-reset:step;display:flex;gap:0;flex-wrap:wrap}
+.steps .s{flex:1;min-width:120px;position:relative;padding:10px 12px;font-size:11px;color:var(--txt-dim);border-bottom:2px solid rgba(255,255,255,.1)}
+.steps .s.active{color:var(--txt);border-color:var(--primary);font-weight:700}
+.steps .s.done{color:#86efac;border-color:var(--ok)}
+</style>
+</head>
+<body>
+<div class="hero-bg">
+  <div class="blob" style="width:420px;height:420px;background:#10b981;top:-120px;left:-80px"></div>
+  <div class="blob" style="width:380px;height:380px;background:#22d3ee;top:30%;right:-100px"></div>
+  <div class="blob" style="width:340px;height:340px;background:#f59e0b;bottom:-120px;left:40%"></div>
+</div>
+<div id="app"></div>
+<div id="modal-root"></div>
+<div id="toast-root" class="toast"></div>
+
+<script>
+/* =====================================================================
+   EDU OASIS LMS  —  Dummy Backend (localStorage) + SPA (vanilla JS)
+   Per PRD v1.3: Latihan Awam NON-HRD & HRD Claimable (e-TRiS, HRD Corp)
+   ===================================================================== */
+const VERSION='1.3 (Demo)';
+const DB_KEY='edu_oasis_db_v1';
+const SESSION_KEY='edu_oasis_session_v1';
+
+/* ---------------- Utilities ---------------- */
+const $=(s,r=document)=>r.querySelector(s);
+const $$=(s,r=document)=>[...r.querySelectorAll(s)];
+const uid=(p='id')=>p+'_'+Math.random().toString(36).slice(2,9)+Date.now().toString(36).slice(-4);
+const now=()=>new Date().toISOString();
+const todayISO=(d=new Date())=>d.toISOString().slice(0,10);
+const fmtMYR=n=>'RM '+(Number(n)||0).toLocaleString('ms-MY',{minimumFractionDigits:2,maximumFractionDigits:2});
+const fmtDate=s=>{if(!s)return '—';const d=new Date(s);if(isNaN(d))return s;return d.toLocaleDateString('ms-MY',{day:'2-digit',month:'short',year:'numeric'});};
+const fmtDateTime=s=>{if(!s)return '—';const d=new Date(s);if(isNaN(d))return s;return d.toLocaleString('ms-MY',{day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'});};
+const daysFrom=(iso,n)=>{const d=new Date(iso);d.setDate(d.getDate()+n);return d.toISOString();};
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const maskKP=k=>{if(!k)return '—';const s=String(k);return s.length>6? s.slice(0,6)+'-'+s.slice(6).replace(/\d/g,'•')+'•••':s;};
+const maskAcct=a=>{const s=String(a||'');return s.length>4?'•••••• '+s.slice(-4):s;};
+const initials=n=>String(n||'?').trim().split(/\s+/).slice(0,2).map(x=>x[0]).join('').toUpperCase();
+const sample=(arr)=>arr[Math.floor(Math.random()*arr.length)];
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+function toast(msg,type='info'){const r=$('#toast-root');const el=document.createElement('div');el.className='t';const colors={info:'b-info',ok:'b-ok',warn:'b-warn',bad:'b-bad'};el.innerHTML=`<span class="badge ${colors[type]||'b-info'}">${type.toUpperCase()}</span> ${esc(msg)}`;r.appendChild(el);setTimeout(()=>{el.style.opacity='0';el.style.transition='.3s';setTimeout(()=>el.remove(),300);},3200);}
+
+/* ---------------- Storage-backed dummy DB ---------------- */
+const Store={
+  load(){try{return JSON.parse(localStorage.getItem(DB_KEY))||null;}catch(e){return null;}},
+  save(d){localStorage.setItem(DB_KEY,JSON.stringify(d));},
+  clear(){localStorage.removeItem(DB_KEY);localStorage.removeItem(SESSION_KEY);}
+};
+let DB=null;
+function audit(action,entity,entityId,extra=''){
+  if(!DB)return;
+  DB.auditLogs.unshift({id:uid('al'),userId:Auth.user?Auth.user.id:'system',userName:Auth.user?Auth.user.nama:'Sistem',action,entity,entityId:String(entityId||''),detail:extra,ts:now()});
+  Store.save(DB);
+}
+
+/* ---------------- Auth ---------------- */
+const Auth={
+  get user(){try{return JSON.parse(localStorage.getItem(SESSION_KEY))||null;}catch(e){return null;}},
+  set user(u){if(u)localStorage.setItem(SESSION_KEY,JSON.stringify(u));else localStorage.removeItem(SESSION_KEY);},
+  login(email,pw){
+    const u=DB.users.find(x=>x.emel.toLowerCase()===email.toLowerCase() && x.kataLaluan===pw);
+    if(!u)return null;
+    const sess={id:u.id,nama:u.nama,emel:u.emel,peranan:u.peranan,employerId:u.employerId||null,fotoUrl:u.fotoUrl||null};
+    this.user=sess; audit('LOG masuk','User',u.id); return sess;
+  },
+  logout(){if(this.user)audit('Log keluar','User',this.user.id);this.user=null;},
+  has(r){const u=this.user;return u&&u.peranan===r;},
+  isOne(...rs){const u=this.user;return u&&rs.includes(u.peranan);}
+};
+
+/* ---------------- Service layer (migrates to real backend later) ---------------- */
+const S={
+  users:{list:()=>DB.users,get:id=>DB.users.find(x=>x.id===id),byEmail:e=>DB.users.find(x=>x.emel.toLowerCase()===e.toLowerCase()),add(u){u.id=uid('usr');u.createdAt=now();u.updatedAt=now();DB.users.push(u);Store.save(DB);audit('Cipta pengguna','User',u.id);return u;},upd(id,p){const u=this.get(id);Object.assign(u,p,{updatedAt:now()});Store.save(DB);return u;},del(id){DB.users=DB.users.filter(x=>x.id!==id);Store.save(DB);audit('Padam pengguna','User',id);}},
+  employers:{list:()=>DB.employers,get:id=>DB.employers.find(x=>x.id===id),add(e){e.id=uid('emp');e.createdAt=now();DB.employers.push(e);Store.save(DB);return e;}},
+  courses:{list:()=>DB.courses,get:id=>DB.courses.find(x=>x.id===id),published:()=>DB.courses.filter(x=>x.statusPublish),add(c){c.id=uid('crs');c.createdAt=now();DB.courses.push(c);Store.save(DB);audit('Cipta kursus','Course',c.id);return c;},upd(id,p){const c=this.get(id);Object.assign(c,p);Store.save(DB);return c;},del(id){DB.courses=DB.courses.filter(x=>x.id!==id);Store.save(DB);}},
+  modules:{forCourse(cid){return DB.modules.filter(m=>m.courseId===cid).sort((a,b)=>a.susunan-b.susunan);},lessons(m){return DB.lessons.filter(l=>l.moduleId===m.id).sort((a,b)=>a.susunan-b.susunan);},allLessons(cid){return DB.modules.filter(m=>m.courseId===cid).flatMap(m=>DB.lessons.filter(l=>l.moduleId===m.id));}},
+  sessions:{list:()=>DB.sessions,forCourse(cid){return DB.sessions.filter(s=>s.courseId===cid);},get:id=>DB.sessions.find(x=>x.id===id),add(s){s.id=uid('ses');s.createdAt=now();DB.sessions.push(s);Store.save(DB);return s;},upd(id,p){Object.assign(this.get(id),p);Store.save(DB);}},
+  enrollments:{list:()=>DB.enrollments,forUser(uid_){return DB.enrollments.filter(e=>e.userId===uid_);},forCourse(cid){return DB.enrollments.filter(e=>e.courseId===cid);},forSession(sid){return DB.enrollments.filter(e=>e.sessionId===sid);},forEmployer(eid){return DB.enrollments.filter(e=>e.employerId===eid);},get:id=>DB.enrollments.find(x=>x.id===id),add(e){e.id=uid('enr');e.createdAt=now();DB.enrollments.push(e);Store.save(DB);audit('Pendaftaran','Enrollment',e.id);return e;},upd(id,p){Object.assign(this.get(id),p,{updatedAt:now()});Store.save(DB);}},
+  attendance:{forSession(sid){return DB.attendance.filter(a=>a.sessionId===sid);},forEnrollment(eid){return DB.attendance.filter(a=>a.enrollmentId===eid);},add(a){a.id=uid('att');a.capMasaBorang=now();DB.attendance.push(a);Store.save(DB);return a;}},
+  progress:{forEnrollment(eid){return DB.progress.filter(p=>p.enrollmentId===eid);},toggle(eid,lid){let p=DB.progress.find(x=>x.enrollmentId===eid&&x.lessonId===lid);if(!p){p={id:uid('prg'),enrollmentId:eid,lessonId:lid,selesai:true,tarikhSelesai:now()};DB.progress.push(p);}else{p.selesai=!p.selesai;p.tarikhSelesai=p.selesai?now():null;}Store.save(DB);return p;}},
+  quizzes:{forCourse(cid){return DB.quizzes.filter(q=>q.courseId===cid);},get:id=>DB.quizzes.find(x=>x.id===id),attempt(a){a.id=uid('att_q');a.ts=now();DB.attempts.push(a);Store.save(DB);return a;},attemptsFor(uid_,qid){return DB.attempts.filter(x=>x.userId===uid_&&x.quizId===qid);}},
+  certificates:{forUser(uid_){return DB.certificates.filter(c=>{const e=DB.enrollments.find(en=>en.id===c.enrollmentId);return e&&e.userId===uid_;});},get:id=>DB.certificates.find(x=>x.id===id),byCode:code=>DB.certificates.find(x=>x.kodPengesahan===code),add(c){c.id=uid('cer');c.tarikhKeluar=now();DB.certificates.push(c);Store.save(DB);audit('Jana e-sijil','Certificate',c.id);return c;},upd(id,p){Object.assign(this.get(id),p);Store.save(DB);}},
+  certTemplate:{get:()=>DB.certTemplate,upd(p){Object.assign(DB.certTemplate,p);Store.save(DB);}},
+  feedbackTemplate:{get:()=>DB.feedbackTemplate,upd(p){Object.assign(DB.feedbackTemplate,p);Store.save(DB);}},
+  feedbackResponses:{forSession(sid){return DB.feedbackResponses.filter(f=>f.sessionId===sid);},forEnrollment(eid){return DB.feedbackResponses.find(f=>f.enrollmentId===eid);},add(r){r.id=uid('fr');r.capMasa=now();DB.feedbackResponses.push(r);Store.save(DB);return r;}},
+  feedbackReports:{forSession(sid){return DB.feedbackReports.find(f=>f.sessionId===sid);},get:id=>DB.feedbackReports.find(x=>x.id===id),ensure(sid,trainerId){let r=this.forSession(sid);if(!r){r={id:uid('frp'),sessionId:sid,trainerId,status:'Dianalisis',statistik:{},tema:[],sentimen:{positif:0,neutral:0,negatif:0},penandaIsu:[],ringkasan:'',disemakOleh:null,tarikhDilepaskan:null,diakuiOleh:null};DB.feedbackReports.push(r);Store.save(DB);}return r;},upd(id,p){Object.assign(this.get(id),p);Store.save(DB);}},
+  invoices:{list:()=>DB.invoices,get:id=>DB.invoices.find(x=>x.id===id),forUser(uid_){return DB.invoices.filter(i=>i.userId===uid_);},forEmployer(eid){return DB.invoices.filter(i=>i.employerId===eid);},add(i){i.id=uid('inv');i.tarikhTerbit=now();DB.invoices.push(i);Store.save(DB);return i;},upd(id,p){Object.assign(this.get(id),p);Store.save(DB);}},
+  paymentProofs:{list:()=>DB.paymentProofs,forInvoice(iid){return DB.paymentProofs.filter(p=>p.invoiceId===iid);},forEnrollment(eid){return DB.paymentProofs.filter(p=>p.enrollmentIds&&p.enrollmentIds.includes(eid));},add(p){p.id=uid('pp');p.ts=now();DB.paymentProofs.push(p);Store.save(DB);audit('Muat naik bukti bayaran','PaymentProof',p.id);return p;},upd(id,p){Object.assign(this.get(id),p);Store.save(DB);}},
+  hrdRequests:{list:()=>DB.hrdRequests,get:id=>DB.hrdRequests.find(x=>x.id===id),add(r){r.id=uid('hrd');r.createdAt=now();DB.hrdRequests.push(r);Store.save(DB);audit('Cipta Permohonan HRD','HRDRequest',r.id);return r;},upd(id,p){Object.assign(this.get(id),p,{updatedAt:now()});Store.save(DB);},messages(id){return DB.hrdMessages.filter(m=>m.requestId===id);},addMsg(m){m.id=uid('hm');m.ts=now();DB.hrdMessages.push(m);Store.save(DB);return m;},docs(id){return DB.hrdDocuments.filter(d=>d.requestId===id);},addDoc(d){d.id=uid('hd');d.ts=now();DB.hrdDocuments.push(d);Store.save(DB);return d;}},
+  claimCases:{list:()=>DB.claimCases,forSession(sid){return DB.claimCases.find(c=>c.sessionId===sid);},get:id=>DB.claimCases.find(x=>x.id===id),add(c){c.id=uid('cc');c.createdAt=now();DB.claimCases.push(c);Store.save(DB);audit('Cipta Kes Tuntutan','ClaimCase',c.id);return c;},upd(id,p){Object.assign(this.get(id),p);Store.save(DB);},documents(id){return DB.claimDocuments.filter(d=>d.claimCaseId===id);},addDoc(d){d.id=uid('cd');d.ts=now();DB.claimDocuments.push(d);Store.save(DB);return d;},updDoc(id,p){Object.assign(DB.claimDocuments.find(x=>x.id===id),p);Store.save(DB);}},
+  claimTemplates:{list:()=>DB.claimTemplates,upd(id,p){Object.assign(DB.claimTemplates.find(x=>x.id===id),p);Store.save(DB);}},
+  trainers:{forUser(uid_){return DB.trainerProfiles.find(t=>t.userId===uid_);},get:id=>DB.trainerProfiles.find(t=>t.id===id),bySession(sid){const s=DB.sessions.find(x=>x.id===sid);return s&&s.jurulatihId?DB.trainerProfiles.find(t=>t.id===s.jurulatihId):null;},add(t){t.id=uid('trn');t.createdAt=now();DB.trainerProfiles.push(t);Store.save(DB);return t;},upd(id,p){Object.assign(this.get(id),p);Store.save(DB);},docs(tid){return DB.trainerDocuments.filter(d=>d.trainerId===tid);},docsFor(tid,kind){return DB.trainerDocuments.filter(d=>d.trainerId===tid&&d.jenis===kind);},addDoc(d){d.id=uid('td');d.ts=now();DB.trainerDocuments.push(d);Store.save(DB);return d;},updDoc(id,p){Object.assign(DB.trainerDocuments.find(x=>x.id===id),p);Store.save(DB);},bank(tid){return DB.trainerBankAccounts.find(b=>b.trainerId===tid);},setBank(b){let ex=DB.trainerBankAccounts.find(x=>x.trainerId===b.trainerId);if(ex){Object.assign(ex,b,{tarikhKemaskini:now()});Store.save(DB);return ex;}b.id=uid('tba');b.tarikhKemaskini=now();DB.trainerBankAccounts.push(b);Store.save(DB);return b;},associates(sid){return DB.associateTrainers.filter(a=>a.sessionId===sid);}},
+  materials:{list:()=>DB.programMaterials,add(m){m.id=uid('mat');m.createdAt=now();DB.programMaterials.push(m);Store.save(DB);return m;},upd(id,p){Object.assign(DB.programMaterials.find(x=>x.id===id),p);Store.save(DB);},downloads(mid){return DB.materialDownloads.filter(d=>d.materialId===mid);},logDL(d){d.id=uid('md');d.ts=now();DB.materialDownloads.push(d);Store.save(DB);}},
+  settings:{get:()=>DB.settings,upd(p){Object.assign(DB.settings,p);Store.save(DB);}},
+  auditLogs:{list:()=>DB.auditLogs}
+};
+
+/* ---------------- Router & layout ---------------- */
+const R={path:'',go(h){location.hash=h;},init(){window.addEventListener('hashchange',()=>App.render());if(!location.hash)location.hash='#/';}};
+function parseHash(){const h=location.hash.replace(/^#/,'')||'/';const parts=h.split('?')[0].split('/').filter(Boolean);return parts;}
+
+/* ---------------- UI helpers ---------------- */
+function modal(title,bodyHtml,opts={}){
+  const root=$('#modal-root');
+  const m=document.createElement('div');m.className='modal-bg';
+  m.innerHTML=`<div class="glass-strong" style="max-width:${opts.w||620}px;width:100%;max-height:88vh;overflow:auto;padding:22px">
+    <div class="between mb"><div class="h3">${title}</div><button class="btn btn-sm btn-ghost" onclick="closeModal()">✕</button></div>
+    ${bodyHtml}</div>`;
+  m.addEventListener('click',e=>{if(e.target===m)closeModal();});
+  root.appendChild(m);
+  return m;
+}
+function closeModal(){$('#modal-root').innerHTML='';}
+function confirmBox(msg,onYes,opts={}){
+  modal(opts.title||'Pengesahan Diperlukan',`<p class="muted mb">${msg}</p><div class="row" style="justify-content:flex-end"><button class="btn btn-ghost" onclick="closeModal()">Batal</button><button class="btn ${opts.bad?'btn-bad':'btn-pri'}" id="cfy">${opts.yes||'Sahkan'}</button></div>`);
+  $('#cfy').onclick=()=>{closeModal();onYes();};
+}
+function statusBadge(map,st){const m=map[st]||{t:st,c:'b-muted'};return `<span class="badge ${m.c}">${m.t}</span>`;}
+function priceCard(label,amount,active,onClick,note){return `<button class="glass" onclick="${onClick}" style="text-align:left;padding:16px;cursor:pointer;${active?'border-color:var(--primary);box-shadow:0 0 0 3px rgba(16,185,129,.25)':''}">
+    <div class="sm muted">${label}</div>
+    <div class="pill-price pri mt8">${amount}</div>
+    <div class="xs mut mt8">${note||''}</div>
+  </button>`;}
+function tabs(items,activeKey,onPick){return `<div class="row" style="border-bottom:1px solid rgba(255,255,255,.1);margin-bottom:14px">${items.map(i=>`<div class="tab ${i.k===activeKey?'active':''}" onclick="${onPick}('${i.k}')">${i.l}</div>`).join('')}</div>`;}
+function stepsRow(items,activeIdx){return `<div class="steps mb">${items.map((it,i)=>`<div class="s ${i<activeIdx?'done':i===activeIdx?'active':''}"><div class="xs mut">${i+1}. ${it}</div></div>`).join('')}</div>`;}
+function emptyState(msg,icon='📭'){return `<div class="empty"><div style="font-size:36px">${icon}</div><div class="mt8">${msg}</div></div>`;}
+
+/* ---------------- Seed: realistic Malaysian dummy data ---------------- */
+const SeedData={
+  firstNames:['Ahmad','Siti','Mohd','Nurul','Tan','Lim','Wong','Rajesh','Priya','Kumar','Lee','Nor','Hafiz','Aishah','Chong','Ravi','Mei Ling','Faridah','Zulkifli','Kavitha','Suresh','Fatimah','Rahman','Wei','Loganathan','Geetha','Ariffin','Siew','Muthu','Yusof'],
+  lastNames:['bin Abdullah','binti Ibrahim','bin Osman','binti Hasan','Wei Ming','Chun Wei','Kumar','Devi','a/l Subramaniam','a/p Lakshmi','Hock Sing','Fauzi','Rahmat','Cheong','Menon','Ramasamy','Suresh','binti Aziz','bin Hamzah','Kaur','binti Yusof','Chandran','Rao','a/l Muniandy','Tang','Lim','Goh','Yap','Vijayan','Bala'],
+  companies:[
+    {namaSyarikat:'Tech Solutions Sdn Bhd',noSSM:'201801023456 (1234567-A)',idHRD:'HRD-2021-001122'},
+    {namaSyarikat:'Greenfield Manufacturing Sdn Bhd',noSSM:'201903087654 (9876543-W)',idHRD:'HRD-2019-004455'},
+    {namaSyarikat:'Capital Bank Berhad',noSSM:'197001000012 (1234-H)',idHRD:'HRD-2015-009988'},
+    {namaSyarikat:'Nusantara Logistics Sdn Bhd',noSSM:'202001055667 (778899-X)',idHRD:'HRD-2020-007766'},
+    {namaSyarikat:'Brightwave Digital Sdn Bhd',noSSM:'202102034455 (112233-A)',idHRD:'HRD-2022-003322'},
+    {namaSyarikat:'Putri Holdings Sdn Bhd',noSSM:'199801000234 (4567-B)',idHRD:'HRD-2017-006655'},
+    {namaSyarikat:'Sinar Construction Sdn Bhd',noSSM:'201504012345 (234567-P)',idHRD:'HRD-2016-001144'},
+    {namaSyarikat:'MediCare Services Sdn Bhd',noSSM:'202005066778 (334455-M)',idHRD:'HRD-2021-005544'},
+  ],
+  trainers:['Aiman Fauzi','Saraswathy Nair','Daniel Tan','Rohana Mansor','Krishnan a/l Muniandy'],
+  banks:['Maybank Berhad','CIMB Bank Berhad','Public Bank Berhad','RHB Bank Berhad','Bank Islam Malaysia Berhad','AmBank Berhad'],
+  venues:['Edu Oasis Training Centre, Menara Omar, KL Sentral, Kuala Lumpur','Online via Zoom (link dikongsi selepas pendaftaran)','Hotel Hilton Kuala Lumpur, Jalan Stesen Sentral','Sunway Putra Hotel, Jalan Putra, Kuala Lumpur','Online via Microsoft Teams'],
+  zoomBg:['Edu Oasis — Brand Teal','Edu Oasis — Geo Pattern','Edu Oasis — Professional Dark']
+};
+
+function genKP(){const y=String(70+Math.floor(Math.random()*30));const mm=String(Math.floor(Math.random()*12)+1).padStart(2,'0');const dd=String(Math.floor(Math.random()*28)+1).padStart(2,'0');const p=String(Math.floor(Math.random()*10000)).padStart(4,'0');const last=String(Math.floor(Math.random()*10000)).padStart(4,'0');return `${y}${mm}${dd}${p}${last}`;}
+function genPhone(){return '01'+String(Math.floor(Math.random()*9)+1)+String(Math.floor(Math.random()*10000000)).padStart(8,'0');}
+function genAcct(){return String(Math.floor(Math.random()*9000000000)+1000000000);}
+function genRef(p){return p+'-'+new Date().getFullYear()+'-'+String(Math.floor(Math.random()*9000)+1000);}
+
+const CATEGORIES=['Kemahiran Digital','Kepimpinan','Keselamatan & Kesihatan Pekerjaan','Komunikasi','Pemasaran','Kewangan'];
+const STATUS_ENR={BARU:'Pendaftaran Baharu',MENUNGGU_BUKTI:'Menunggu Bukti',BUKTI_DITERIMA:'Bukti Diterima',DISAHKAN:'Disahkan',DITOLAK:'Ditolak',SELESAI:'Selesai',HRD_PROSES:'Dalam Proses HRD'};
+const STATUS_PAY={MENUNGGU:'Menunggu Bukti',DITERIMA:'Bukti Diterima',DISAHKAN:'Disahkan',DITOLAK:'Ditolak'};
+const STATUS_HRD=['Permintaan Baharu','Menunggu Hubungan Admin','Dalam Semakan Geran Levi','Penyediaan Dokumen','Dihantar ke HRD Corp','Menunggu Kelulusan HRD Corp','Diluluskan','Perlu Pembetulan','Ditolak','Dibatalkan'];
+const STATUS_CLAIM=['Belum Bermula','Dalam Proses','Dokumen Lengkap','Dihantar','Diluluskan','Perlu Tindakan','Ditolak'];
+const STATUS_SES=['akan datang','sedang berlangsung','tamat','penuh'];
+
+function seed(){
+  const db={version:VERSION,createdAt:now(),settings:{
+    jenama:'Edu Oasis',microFee:50,sstRate:0.0,ambangKehadiran:80,skorLulusDefault:70,
+    bankEdu:{bank:'Maybank Berhad',namaPemegang:'Edu Oasis Training Sdn Bhd',noAkaun:'5623 1890 4456'},
+    tempatDipegangHari:7,tempohResponsBayaran:3,adminContact:{wa:'+60123800700',emel:'admin@eduoasis.my',tel:'+603-2278 0700'},
+    dasarPembatalan:'Pembatalan > 7 hari: bayaran balik penuh. 3-7 hari: 50%. < 3 hari: tiada bayaran balik.'
+  },users:[],employers:[],courses:[],modules:[],lessons:[],sessions:[],enrollments:[],attendance:[],progress:[],quizzes:[],attempts:[],certificates:[],certTemplate:{},feedbackTemplate:{},feedbackResponses:[],feedbackReports:[],invoices:[],paymentProofs:[],hrdRequests:[],hrdMessages:[],hrdDocuments:[],claimCases:[],claimDocuments:[],claimTemplates:[],trainerProfiles:[],associateTrainers:[],trainerBankAccounts:[],trainerDocuments:[],programMaterials:[],materialDownloads:[],auditLogs:[]};
+
+  /* Employers */
+  SeedData.companies.forEach(c=>{db.employers.push({id:uid('emp'),namaSyarikat:c.namaSyarikat,noSSM:c.noSSM,idMajikanHRDCorp:c.idHRD+' (DUMMY)',alamat:'Lot 12, Jalan Teknologi, Cyberjaya, Selangor',picNama:sample(SeedData.firstNames)+' '+sample(SeedData.lastNames),picEmel:'hr@'+c.namaSyarikat.split(' ')[0].toLowerCase()+'.com.my',picPhone:genPhone(),bakiLevi:Math.floor(Math.random()*80000)+5000,createdAt:now()});});
+
+  /* Trainers + users */
+  SeedData.trainers.forEach((nm,i)=>{const em=nm.toLowerCase().replace(/[^a-z]/g,'').slice(0,10)+'@eduoasis.my';const u={id:uid('usr'),nama:nm,emel:em,kataLaluan:'trainer123',peranan:'JURULATIH',noKP:genKP(),telefon:genPhone(),jawatan:'Associate Trainer',employerId:null,fotoUrl:null,createdAt:now()};db.users.push(u);db.trainerProfiles.push({id:uid('trn'),userId:u.id,nama:nm,bio:'Jurulatih berdaftar HRD Corp dengan pengalaman '+ (3+i*2) +' tahun dalam industri.',kepakaran:[CATEGORIES[i%CATEGORIES.length],'Pembangunan Organisasi'],kelayakan:['Diploma Latihan & Penilaian (JPK)','Sijil Pemandu Fasilitator HRD Corp (DUMMY)'],pengalaman:3+i*2,gambarUrl:'',statusGambar:i%2?'Diluluskan':'Menunggu',statusProfil:'Diluluskan',noKP:u.noKP,emel:em,telefon:u.telefon,createdAt:now()});db.trainerBankAccounts.push({id:uid('tba'),trainerId:db.trainerProfiles.slice(-1)[0].id,namaBank:SeedData.banks[i%SeedData.banks.length],namaPemegang:nm,noAkaun:genAcct(),disahkanOleh:'admin@eduoasis.my',tarikhKemaskini:now()});});
+
+  /* Admin / finance / superadmin + participants + employer officers */
+  const demoAccounts=[
+    {nama:'Super Admin',emel:'superadmin@eduoasis.my',pw:'super123',role:'SUPER_ADMIN',jawatan:'Pentadbir Sistem'},
+    {nama:'Norliza Hashim (Admin Kursus)',emel:'admin@eduoasis.my',pw:'admin123',role:'ADMIN',jawatan:'Pentadbir Kursus'},
+    {nama:'Cheong Wai Kit (Kewangan)',emel:'finance@eduoasis.my',pw:'finance123',role:'KEWANGAN',jawatan:'Pegawai Kewangan'},
+  ];
+  demoAccounts.forEach(a=>db.users.push({id:uid('usr'),nama:a.nama,emel:a.emel,kataLaluan:a.pw,peranan:a.role,noKP:genKP(),telefon:genPhone(),jawatan:a.jawatan,employerId:null,fotoUrl:null,createdAt:now()}));
+
+  /* 60 participants across employers + some individual */
+  for(let i=0;i<60;i++){const emp=i<48?sample(db.employers):null;const fn=sample(SeedData.firstNames),ln=sample(SeedData.lastNames);const nm=fn+' '+ln;const em=(fn+ln).toLowerCase().replace(/[^a-z]/g,'').slice(0,16)+ (i+1)+'@example.com';db.users.push({id:uid('usr'),nama:nm,emel:em,kataLaluan:'peserta123',peranan:'PESERTA',noKP:genKP(),telefon:genPhone(),jawatan:emp?sample(['Eksekutif','Pengurus','Penyelia','Kerani','Juruteknik','Pegawai']):'Individu',employerId:emp?emp.id:null,fotoUrl:null,createdAt:now()});}
+  /* employer HR officers */
+  db.employers.forEach((e,i)=>{const nm=sample(SeedData.firstNames)+' '+sample(SeedData.lastNames);db.users.push({id:uid('usr'),nama:nm,emel:'hr'+(i+1)+'@'+e.namaSyarikat.split(' ')[0].toLowerCase()+'.com.my',kataLaluan:'hr123',peranan:'MAJIKAN',noKP:genKP(),telefon:genPhone(),jawatan:'Pegawai HR / Latihan',employerId:e.id,fotoUrl:null,createdAt:now()});});
+
+  /* Courses: 12 (8 standard + 4 micro-session) */
+  const courseDefs=[
+    {tajuk:'Asas Analisis Data dengan Power BI',cat:'Kemahiran Digital',mod:'Bersemuka',jam:16,non:1200,hrd:1500,both:true,desc:'Kuasai visualisasi data, DAX dan papan pemuka interaktif menggunakan Microsoft Power BI untuk membuat keputusan berasaskan data.'},
+    {tajuk:'Kepimpinan Berkesan untuk Pengurus Baru',cat:'Kepimpinan',mod:'Hibrid',jam:16,non:1400,hrd:1800,both:true,desc:'Bangunkan gaya kepimpinan, kemahiran membina pasukan dan pengurusan prestasi untuk pengurus baru.'},
+    {tajuk:'Pengurusan OSH di Tempat Kerja (Bertaraf)',cat:'Keselamatan & Kesihatan Pekerjaan',mod:'Bersemuka',jam:16,non:1100,hrd:1400,both:true,desc:'Pematuhan Akta Keselamatan dan Kesihatan Pekerjaan 1994, penilaian risiko dan pelan tindakan kecemasan.'},
+    {tajuk:'Komunikasi Interpersonal & Pembentangan Profesional',cat:'Komunikasi',mod:'Dalam Talian Langsung',jam:8,non:600,hrd:800,both:true,desc:'Tingkatkan keyakinan berkomunikasi, teknik pembentangan dan pengurusan soal jawab.'},
+    {tajuk:'Pemasaran Digital & Media Sosial untuk Perniagaan',cat:'Pemasaran',mod:'Hibrid',jam:16,non:1300,hrd:1600,both:true,desc:'Strategi Meta Ads, Google Ads, kandungan dan pengukuran ROI pemasaran digital.'},
+    {tajuk:'Asas Pengurusan Kewangan & Belanjawan',cat:'Kewangan',mod:'Bersemuka',jam:16,non:1200,hrd:1500,both:true,desc:'Penyata kewangan asas, belanjawan operasi dan kawalan kos untuk bukan akauntan.'},
+    {tajuk:'Microsoft Excel — Intermediate to Advanced',cat:'Kemahiran Digital',mod:'Kendiri',jam:12,non:500,hrd:0,both:false,desc:'Formula, pivot table, Power Query dan automasi asas menggunakan Excel.'},
+    {tajuk:'Excel untuk Penganalisis Data',cat:'Kemahiran Digital',mod:'Dalam Talian Langsung',jam:8,non:450,hrd:0,both:false,desc:'Fokus pivot, fungsi carian (XLOOKUP) dan dashboard asas.'},
+    {tajuk:'Microsoft Excel Power Query — Micro-Session',cat:'Kemahiran Digital',mod:'Dalam Talian Langsung',jam:3,non:50,hrd:50,both:true,micro:true,desc:'Sesi pantas Power Query: import, transform dan gabung data dalam 3 jam.'},
+    {tajuk:'Membina Slide Pembentangan Berkesan — Micro-Session',cat:'Komunikasi',mod:'Dalam Talian Langsung',jam:2,non:50,hrd:0,both:false,micro:true,desc:'Reka bentuk slaid yang jelas, ringkas dan berkesan dalam 2 jam.'},
+    {tajuk:'Asas Canva untuk Pemasaran — Micro-Session',cat:'Pemasaran',mod:'Dalam Talian Langsung',jam:3,non:50,hrd:0,both:false,micro:true,desc:'Cipta grafik pemasaran profesional dengan Canva dalam 3 jam.'},
+    {tajuk:'Pengurusan Masa & Produktiviti — Micro-Session',cat:'Kepimpinan',mod:'Dalam Talian Langsung',jam:4,non:50,hrd:50,both:true,micro:true,desc:'Teknik pengurusan masa, keutamaan dan fokus mendalam (deep work).'},
+  ];
+  courseDefs.forEach((d,i)=>{
+    const layakHRD=d.both && d.hrd>0;
+    db.courses.push({
+      id:uid('crs'),kod:'EO-'+String(1001+i),tajuk:d.tajuk,penerangan:d.desc,kategori:d.cat,
+      kategoriKursus:d.micro?'MICRO_SESSION':'STANDARD',mod:d.mod,tempohJam:d.jam,
+      yuranNonHRD:d.non,yuranHRD:d.hrd,
+      jalurNonHRDAktif:true,jalurHRDAktif:layakHRD,
+      kuotaDefault:d.micro?20:25,ambangKehadiran:80,skorLulus:70,
+      layakTuntutanETRiS:layakHRD,rujukanHRDCorp:layakHRD?'HRDC-PROG-'+String(5001+i)+' (DUMMY)':'',
+      tarikhSahHRD:'2027-12-31',kosLatihanPelmet:layakHRD?d.hrd:0,rujukanDalaman:'INT-'+String(200+i),
+      statusPublish:true,createdAt:now()
+    });
+  });
+
+  /* Modules + Lessons for each course */
+  db.courses.forEach(c=>{
+    const nMods=c.kategoriKursus==='MICRO_SESSION'?1:3;
+    for(let m=0;m<nMods;m++){
+      const mid=uid('mod');db.modules.push({id:mid,courseId:c.id,tajuk:`Modul ${m+1}: ${['Pengenalan','Praktikal','Pengukuhan & Penilaian'][m]||'Topik '+m}`,susunan:m,jenisKandungan:m===1?'latihan':'teks'});
+      const lessons=[{t:'Pengenaran & Objektif',j:'video',min:15},{t:'Konsep Teras',j:'video',min:25},{t:'Bacaan Sokongan',j:'pdf',min:10},{t:'Latihan Amali',j:'pdf',min:30},{t:'Kuiz Pendek',j:'kuiz',min:15}];
+      const nL=c.kategoriKursus==='MICRO_SESSION'?3:5;
+      for(let l=0;l<nL;l++){const L=lessons[l];db.lessons.push({id:uid('lsn'),moduleId:mid,tajuk:L.t,susunan:l,jenisKandungan:L.j,tempohMinit:L.min,url:L.j==='video'?'https://example.com/v/'+mid+l:(L.j==='pdf'?'#pdf-'+mid+l:'')});}
+    }
+    /* Quizzes */
+    const qid=uid('qz');db.quizzes.push({id:qid,courseId:c.id,nama:'Kuiz Akhir',skorLulus:c.skorLulus,hadPercubaan:3,soalan:[
+      {id:uid('q'),soalan:'Apakah tujuan utama visualisasi data?',pilihan:['Membuat keputusan berasaskan data','Menghias laporan','Menggantikan jadual','Memperlahankan proses'],jawapanBetul:0,skor:1},
+      {id:uid('q'),soalan:'Pivot table paling sesuai untuk:',pilihan:['Meringkaskan data besar','Menulis kod','Menghantar emel','Membuat slaid'],jawapanBetul:0,skor:1},
+      {id:uid('q'),soalan:'Format fail e-sijil yang dijana ialah:',pilihan:['PDF','DOCX','XLSX','MP4'],jawapanBetul:0,skor:1},
+    ]});
+  });
+
+  /* 15 sessions */
+  const today=new Date();
+  const trainers=db.trainerProfiles;
+  for(let i=0;i<15;i++){
+    const pool=i<6?db.courses.filter(c=>c.kategoriKursus==='STANDARD'):db.courses;
+    const c=pool[i%pool.length];
+    const start=new Date(today);start.setDate(start.getDate()+ (i-4)); // some past, some future
+    const end=new Date(start);end.setDate(end.getDate()+Math.ceil(c.tempohJam/8));
+    const status= start<today && end<today ?'tamat': start<=today && end>=today?'sedang berlangsung':'akan datang';
+    const kuota=c.kuotaDefault;
+    db.sessions.push({
+      id:uid('ses'),courseId:c.id,tarikhMula:todayISO(start),tarikhTamat:todayISO(end),
+      lokasi:sample(SeedData.venues),pautanKelasMaya:'https://zoom.us/j/'+String(Math.floor(Math.random()*900000000)+100000000),
+      kuota,status,jurulatihId:trainers[i%trainers.length].id,kluster:'KOHORT-'+String(202610+i),
+      borangKehadiranToken:uid('att'),createdAt:now()
+    });
+  }
+
+  /* Enrollments + invoices + payment proofs + attendance + feedback + certificates for past sessions */
+  const pesertaUsers=db.users.filter(u=>u.peranan==='PESERTA');
+  db.sessions.forEach(s=>{
+    const c=db.courses.find(x=>x.id===s.courseId);
+    const empUsers=db.users.filter(u=>u.peranan==='MAJIKAN');
+    // group registrations: ~half HRD half NON-HRD for eligible courses
+    const isHRD=c.layakTuntutanETRiS && Math.random()<0.55;
+    const groupEmployer=isHRD?sample(db.employers):null;
+    const n=Math.min(c.kuotaDefault, 3+Math.floor(Math.random()*8));
+    const picked=sample(pesertaUsers.slice(0,40)).id; // ensure variety
+    let pickedList=new Set();
+    while(pickedList.size<n){pickedList.add(pesertaUsers[Math.floor(Math.random()*pesertaUsers.length)].id);}
+    const enrollIds=[];
+    [...pickedList].forEach(uidU=>{
+      const u=db.users.find(x=>x.id===uidU);
+      const empId=u.employerId||(isHRD?groupEmployer.id:null);
+      const en={id:uid('enr'),userId:uidU,sessionId:s.id,courseId:c.id,employerId:empId,jalurYuran:isHRD?'HRD':'NON_HRD',yuranDikenakan:isHRD?c.yuranHRD:c.yuranNonHRD,statusBayaran:isHRD?'DISAHKAN':'DISAHKAN',statusPendaftaran:isHRD?'DISAHKAN':'DISAHKAN',hrdRequestId:null,kehadiranPeratus:0,skorAkhir:null,lulus:null,createdAt:now()};
+      db.enrollments.push(en);enrollIds.push(en.id);
+    });
+    // For HRD session, create HRD request + claim case
+    if(isHRD && groupEmployer){
+      const hrdStatus=s.status==='tamat'?'Diluluskan':sample(['Menunggu Kelulusan HRD Corp','Dalam Semakan Geran Levi','Penyediaan Dokumen','Dihantar ke HRD Corp']);
+      const hr={id:uid('hrd'),noRujukan:genRef('HRD'),employerId:groupEmployer.id,courseId:c.id,sessionId:s.id,bilPeserta:n,status:s.status==='tamat'?'Diluluskan':hrdStatus,adminDitugasan:'admin@eduoasis.my',tempatDipegangHingga:daysFrom(now(),7),hasilSemakanLevi:'Baki levi mencukupi (DUMMY)',catatanLevi:'Semakan manual dilakukan oleh admin.',tarikhHantarHRD:s.status==='tamat'?daysFrom(s.tarikhMula,-3):null,rujukanHRDCorp:s.status==='tamat'?genRef('ETRIS'):'',keputusan:s.status==='tamat'?'LULUS':'',createdAt:now()};
+      db.hrdRequests.push(hr);
+      db.enrollments.filter(e=>e.sessionId===s.id).forEach(e=>{e.hrdRequestId=hr.id;});
+      db.hrdMessages.push({id:uid('hm'),requestId:hr.id,pengirim:'admin',mesej:'Salam, terima kasih. Kami akan semakan baki levi majikan dan kongsikan dokumen sokongan.',ts:daysFrom(now(),-5)});
+      db.hrdDocuments.push({id:uid('hd'),requestId:hr.id,jenisDokumen:'Invois Proforma',namaFail:'invois_proforma_'+hr.noRujukan+'.pdf',ts:daysFrom(now(),-4)});
+      // Claim case for completed HRD
+      if(s.status==='tamat'){
+        const cc={id:uid('cc'),sessionId:s.id,employerId:groupEmployer.id,hrdRequestId:hr.id,rujukanETRiS:genRef('ETRIS'),status:sample(['Dokumen Lengkap','Dihantar','Diluluskan']),tarikhAkhir:daysFrom(s.tarikhTamat,90),tarikhHantar:daysFrom(s.tarikhTamat,5),catatan:'Kes tuntutan dalam proses.',createdAt:now()};
+        db.claimCases.push(cc);
+        const claimDocs=[
+          {jenis:'SENARAI_PESERTA',wajib:true,status:'Lengkap',auto:true},
+          {jenis:'LEMBARAN_KEHADIRAN',wajib:true,status:'Lengkap',auto:true},
+          {jenis:'SERTIFIKAT',wajib:true,status:'Lengkap',auto:true},
+          {jenis:'INVOIS_RESIT',wajib:true,status:'Lengkap',auto:true},
+          {jenis:'COURSE_PLAN',wajib:true,status:'Lengkap',auto:false},
+          {jenis:'SESSION_PLAN',wajib:true,status:'Lengkap',auto:false},
+          {jenis:'PENGESAHAN_KEHADIRAN',wajib:true,status:'Draf',auto:false},
+          {jenis:'T3',wajib:true,status:'Menunggu Tandatangan',auto:false},
+          {jenis:'JD14',wajib:true,status:'Belum Disediakan',auto:false},
+        ];
+        claimDocs.forEach(cd=>db.claimDocuments.push({id:uid('cd'),claimCaseId:cc.id,jenisDokumen:cd.jenis,wajib:cd.wajib,status:cd.status,sumber:cd.auto?'Sistem (auto)':'Muat naik',versi:'1.0',disediakanOleh:'admin@eduoasis.my',ts:now()}));
+      }
+    }
+    // Invoices + payment proofs for NON-HRD
+    if(!isHRD){
+      const total=[...pickedList].length*c.yuranNonHRD;
+      const inv={id:uid('inv'),noInvois:genRef('INV'),employerId:null,userId:[...pickedList][0]?db.users.find(u=>u.id===[...pickedList][0]).id:null,sessionId:s.id,jumlah:total,cukai:0,status:s.status==='tamat'?'Dibayar':sample(['Menunggu Bukti','Bukti Diterima','Disahkan']),tarikhTerbit:now(),enrollmentIds:enrollIds.slice()};
+      db.invoices.push(inv);
+      if(s.status!=='akan datang'){
+        const pp={id:uid('pp'),invoiceId:inv.id,enrollmentIds:enrollIds.slice(),namaFail:'bukti_bayaran_'+inv.noInvois+'.pdf',tarikhBayar:s.tarikhMula,jumlah:total,kaedah:'Pindahan Bank / IBG',rujukanTransaksi:genRef('TXN'),status:s.status==='tamat'?'DISAHKAN':sample(['DITERIMA','DISAHKAN']),disemakOleh:'finance@eduoasis.my',sebabTolak:'',ts:now()};
+        db.paymentProofs.push(pp);
+        db.invoices.filter(i=>i.id===inv.id).forEach(i=>{if(pp.status==='DISAHKAN')i.status='Dibayar';});
+      }
+      // mark enrollments
+      db.enrollments.filter(e=>e.sessionId===s.id).forEach(e=>{e.statusBayaran= s.status==='akan datang'?'MENUNGGU_BUKTI':'DISAHKAN';e.statusPendaftaran= s.status==='akan datang'?'MENUNGGU_BUKTI':'DISAHKAN';});
+    }
+    // Attendance + feedback + certificates for completed sessions
+    if(s.status==='tamat'){
+      db.enrollments.filter(e=>e.sessionId===s.id).forEach(e=>{
+        const u=db.users.find(x=>x.id===e.userId);
+        const hadir=Math.random()<0.9;
+        const pct=hadir?(80+Math.floor(Math.random()*21)):Math.floor(Math.random()*60);
+        e.kehadiranPeratus=pct;
+        db.attendance.push({id:uid('att'),enrollmentId:e.id,sessionId:s.id,sessionDate:s.tarikhMula,status:hadir?(Math.random()<0.15?'LEWAT':'HADIR'):'TIADA',namaDiSijil:u.nama,noKP:u.noKP,emel:u.emel,telefon:u.telefon,syarikat:u.employerId?(db.employers.find(em=>em.id===u.employerId)||{}).namaSyarikat:'Individu',jawatan:u.jawatan,capMasaBorang:daysFrom(s.tarikhMula,0.2/24),sumber:'BORANG',dilarasOleh:''});
+        if(hadir){
+          // feedback
+          const skorAspek={kandungan:3+Math.floor(Math.random()*3),jurulatih:3+Math.floor(Math.random()*3),bahan:3+Math.floor(Math.random()*3),penganjuran:3+Math.floor(Math.random()*3),kemudahan:3+Math.floor(Math.random()*3),kerelevanan:3+Math.floor(Math.random()*3)};
+          const skorRekomen=Math.floor(Math.random()*4)+7;
+          const komen=sample(['Pengisian sangat menarik dan praktikal.','Jurulatih sangat berpengalaman.','Tempoh sedikit terlalu padat.','Bahan kursus boleh diperbaiki.','Sangat membantu kerja harian saya.','Cuti lebih masa untuk latihan amali.']);
+          db.feedbackResponses.push({id:uid('fr'),enrollmentId:e.id,sessionId:s.id,skorAspek,skorRekomen,komenTerbuka:{terbaik:komen,penambahbaikan:sample(['Lebih kajian kes','Lebih masa rehat','Lebih bahan rujukan']),cadangan:''},capMasa:now()});
+          // progress
+          S_dummyProgressForEnr(db,e.id,c.id);
+          // certificate if eligible
+          if(pct>=c.ambangKehadiran){
+            db.certificates.push({id:uid('cer'),enrollmentId:e.id,noSijil:genRef('SIL'),userId:e.userId,kodPengesahan:uid('ver').toUpperCase(),versiTemplat:'1.0',status:'AKTIF',tarikhKeluar:daysFrom(s.tarikhTamat,1),urlPDF:'#cert-'+e.id});
+          }
+        }
+      });
+      // feedback report
+      const trainerId=s.jurulatihId;
+      const fr={id:uid('frp'),sessionId:s.id,trainerId,status:'Dianalisis',statistik:{},tema:[{t:'Kandungan',s:'positif'},{t:'Jurulatih',s:'positif'},{t:'Tempoh',s:'neutral'}],sentimen:{positif:0,neutral:0,negatif:0},penandaIsu:[],ringkasan:'',disemakOleh:null,tarikhDilepaskan:null,diakuiOleh:null};
+      const frs=db.feedbackResponses.filter(f=>f.sessionId===s.id);
+      fr.statistik={bilanganRespons:frs.length};
+      fr.sentimen={positif:Math.ceil(frs.length*0.7),neutral:Math.floor(frs.length*0.2),negatif:frs.length-Math.ceil(frs.length*0.7)-Math.floor(frs.length*0.2)};
+      fr.ringkasan='Kursus diterima baik secara keseluruhan. Peserta memuji kandungan dan jurulatih. Cadangan penambahbaikan: lebih masa latihan amali.';
+      db.feedbackReports.push(fr);
+    }
+  });
+
+  /* Trainer documents (course plan/session plan) at various statuses */
+  db.trainerProfiles.forEach((t,i)=>{
+    db.sessions.filter(s=>s.jurulatihId===t.id).slice(0,2).forEach((s,si)=>{
+      const c=db.courses.find(x=>x.id===s.courseId);
+      const kinds=[['COURSE_PLAN',c.id],['SESSION_PLAN',null]];
+      kinds.forEach((k,ki)=>{
+        const statusArr=['Draf','Dihantar','Dalam Semakan','Diluluskan','Perlu Pembetulan'];
+        db.trainerDocuments.push({id:uid('td'),trainerId:t.id,jenis:k[0],courseId:k[1]||null,sessionId:k[0]==='SESSION_PLAN'?s.id:null,namaFail:(k[0]==='COURSE_PLAN'?'course_plan':'session_plan')+'_'+c.kod+'.pdf',versi:'1.'+ki,status:sample(statusArr),komenAdmin:Math.random()<0.3?'Sila tambah objektif pembelajaran yang terukur.':'',tarikhAkhir:daysFrom(s.tarikhMula,-7),ts:now()});
+      });
+    });
+  });
+
+  /* Program materials (slide templates + zoom backgrounds) */
+  db.programMaterials.push({id:uid('mat'),jenis:'TEMPLAT_SLAID',nama:'Templat Slaid Edu Oasis (Standard)',fail:'templat_slaid_standard_v2.pptx',versi:'2.0',kategori:'STANDARD',aktif:true,createdAt:now()});
+  db.programMaterials.push({id:uid('mat'),jenis:'TEMPLAT_SLAID',nama:'Templat Slaid Micro-Session',fail:'templat_slaid_micro_v1.pptx',versi:'1.0',kategori:'MICRO_SESSION',aktif:true,createdAt:now()});
+  SeedData.zoomBg.forEach((b,i)=>db.programMaterials.push({id:uid('mat'),jenis:'LATAR_ZOOM',nama:b,fail:'zoom_bg_'+i+'.png',versi:'1.'+i,kategori:'SEMUA',aktif:true,createdAt:now()}));
+
+  /* Claim templates (Borang Pengesahan Kehadiran / T3 / JD14) */
+  db.claimTemplates.push({id:uid('ct'),jenis:'PENGESAHAN_KEHADIRAN',nama:'Borang Pengesahan Kehadiran (Templat Edu Oasis)',versi:'1.0',fail:'tpl_pengesahan_kehadiran_v1.docx',pemetaanMedan:['kursus.tajuk','sesi.tarikhMula','majikan.namaSyarikat','peserta.nama','peserta.noKP','peserta.jawatan','kehadiran.status'],aktif:true,createdAt:now()});
+  db.claimTemplates.push({id:uid('ct'),jenis:'T3',nama:'Borang T3 (Templat Edu Oasis — DUMMY)',versi:'1.0',fail:'tpl_t3_v1.docx',pemetaanMedan:['kursus.tajuk','jurulatih.nama','jurulatih.kelayakan','sesi.tarikhMula','sesi.tarikhTamat','majikan.namaSyarikat'],aktif:true,createdAt:now()});
+  db.claimTemplates.push({id:uid('ct'),jenis:'JD14',nama:'Borang JD14 (Templat Edu Oasis — DUMMY)',versi:'1.0',fail:'tpl_jd14_v1.docx',pemetaanMedan:['kursus.tajuk','majikan.namaSyarikat','majikan.noSSM','sesi.kluster','kos.latihan'],aktif:true,createdAt:now()});
+
+  /* Cert template (single universal) */
+  db.certTemplate={versi:'1.0',logo:'EDU OASIS',teksUmum:'Ini diiktiraf bahawa pemegang sijil ini telah menyempurnakan program latihan di bawah dengan jayanya dan memenuhi syarat penyertaan.',namaPenandatangan:'Norliza Hashim',jawatanPenandatangan:'Pengurus Operasi, Edu Oasis',organisasiPenandatangan:'Edu Oasis Training Sdn Bhd',aktif:true};
+
+  /* Feedback template */
+  db.feedbackTemplate={versi:'1.0',aspek:[{k:'kandungan',l:'Kualiti kandungan kursus'},{k:'jurulatih',l:'Penyampaian jurulatih'},{k:'bahan',l:'Bahan & nota kursus'},{k:'penganjuran',l:'Penganjuran & pentadbiran'},{k:'kemudahan',l:'Kemudahan / platform'},{k:'kerelevanan',l:'Kerelevanan kepada kerja anda'}],skalaMax:5,skorRekomenMax:10,soalanTerbuka:[{k:'terbaik',l:'Perkara terbaik tentang program ini'},{k:'penambahbaikan',l:'Apakah yang boleh diperbaiki?'},{k:'cadangan',l:'Cadangan topik lain yang anda inginkan'}],aktif:true};
+
+  return db;
+}
+function S_dummyProgressForEnr(db,enId,cId){const ls=db.lessons.filter(l=>db.modules.some(m=>m.id===l.moduleId&&m.courseId===cId));ls.forEach((l,i)=>{if(Math.random()<0.8)db.progress.push({id:uid('prg'),enrollmentId:enId,lessonId:l.id,selesai:true,tarikhSelesai:now()});});}
+
+/* ---------------- App render & layout ---------------- */
+const App={
+  render(){
+    const p=parseHash();
+    const path=p[0]||'';
+    if(!Auth.user && path!=='login' && !['','katalog','kursus','sah-sijil','daftar'].includes(path)){
+      location.hash='#/login';return;
+    }
+    if(Auth.user && path==='login'){location.hash='#/dashboard';return;}
+    let html='';
+    if(path==='login'){html=Pages.login();}
+    else if(Auth.user){html=Layout.shell(p);}
+    else {html=Layout.public(p);}
+    $('#app').innerHTML=html;
+    window.scrollTo(0,0);
+    if(App.after)App.after(p);
+  }
+};
+
+const Layout={
+  navByRole(){
+    const r=Auth.user.peranan;
+    const items={
+      PESERTA:[['dashboard','📅 Papan Pemuka'],['kursus-saya','🎓 Kursus Saya'],['sijil-saya','🏆 Sijil Saya'],['invois-saya','🧾 Invois & Bayaran'],['profil','👤 Profil']],
+      MAJIKAN:[['dashboard','📅 Papan Pemuka'],['daftar-kumpulan','➕ Daftar Kumpulan'],['permohonan-hrd','📨 Permohonan HRD'],['pekerja','👥 Pekerja & Kemajuan'],['tuntutan','💼 Status Tuntutan'],['invois-saya','🧾 Invois']],
+      JURULATIH:[['dashboard','📅 Papan Pemuka'],['sesi-saya','🎤 Sesi Saya'],['kehadiran','📋 Kehadiran'],['laporan-maklum-balas','📊 Laporan Maklum Balas'],['portal-jurulatih','🗂️ Portal Dokumen Jurulatih'],['pustaka-bahan','🎨 Pustaka Bahan'],['profil','👤 Profil']],
+      ADMIN:[['dashboard','📅 Papan Pemuka'],['urus-kursus','📚 Urus Kursus & Sesi'],['pendaftaran','📝 Pendaftaran'],['sah-bayaran','💰 Pengesahan Bayaran'],['peti-hrd','📥 Peti Masuk HRD'],['pusat-tuntutan','💼 Pusat Tuntutan e-TRiS'],['urus-kehadiran','📋 Pengurusan Kehadiran'],['analisis-maklum-balas','📈 Analisis Maklum Balas'],['semakan-jurulatih','✅ Semakan Dokumen Jurulatih'],['pustaka-bahan-admin','🎨 Pustaka Bahan'],['templat','📐 Templat e-Sijil & Borang'],['laporan','📊 Laporan']],
+      KEWANGAN:[['dashboard','📅 Papan Pemuka'],['sah-bayaran','💰 Pengesahan Bayaran'],['invois','🧾 Invois'],['laporan','📊 Laporan Kutipan']],
+      SUPER_ADMIN:[['dashboard','📅 Papan Pemuka'],['pengguna','👥 Pengguna & Peranan'],['tetapan','⚙️ Tetapan Sistem'],['audit','📜 Log Audit'],['reset','♻️ Reset Data Dummy']]
+    };
+    return items[r]||[];
+  },
+  public(p){
+    const path=p[0]||'';
+    let body='';
+    if(path===''||path===undefined)body=PagesPublic.home();
+    else if(path==='katalog')body=PagesPublic.catalog(p);
+    else if(path==='kursus')body=PagesPublic.courseDetail(p[1]);
+    else if(path==='sah-sijil')body=PagesPublic.verifyCert(p[1]);
+    else if(path==='daftar')body=PagesPublic.register();
+    else body=PagesPublic.home();
+    return `<header class="glass" style="border-radius:0;border-left:none;border-right:none;padding:14px 22px">
+      <div class="between" style="max-width:1280px;margin:0 auto">
+        <div class="logo" onclick="R.go('')" style="cursor:pointer"><div class="mark">E</div><div>Edu Oasis<div class="xs mut">LMS Latihan Awam & e-TRiS</div></div></div>
+        <div class="row">
+          <a class="btn btn-ghost btn-sm" href="#/katalog">Katalog Kursus</a>
+          <a class="btn btn-ghost btn-sm" href="#/sah-sijil">Pengesahan Sijil</a>
+          <a class="btn btn-pri btn-sm" href="#/login">Log Masuk</a>
+        </div>
+      </div></header>
+      <main style="max-width:1280px;margin:18px auto;padding:0 18px">${body}</main>
+      <footer class="mut xs" style="text-align:center;padding:30px 16px">Edu Oasis LMS ${VERSION} — Prototaip DEMO. Data rekaan (DUMMY) sahaja. © 2026 Edu Oasis, Malaysia.</footer>`;
+  },
+  shell(p){
+    const path=p[0]||'dashboard';
+    const items=this.navByRole();
+    const u=Auth.user;
+    let body='';
+    try{body=Pages[path]?Pages[path](p):`<div class="empty">Halaman tidak dijumpai: ${esc(path)}</div>`;}
+    catch(e){console.error(e);body=`<div class="glass card"><div class="h3" style="color:#fca5a5">Ralat</div><pre class="sm mut">${esc(e.stack||e.message)}</pre></div>`;}
+    return `<div style="display:grid;grid-template-columns:260px 1fr;min-height:100vh">
+      <aside class="glass" style="border-radius:0;padding:18px;position:sticky;top:0;height:100vh;overflow:auto">
+        <div class="logo mb" onclick="R.go('dashboard')" style="cursor:pointer"><div class="mark">E</div><div>Edu Oasis</div></div>
+        <div class="nav-sec">Menu</div>
+        ${items.map(it=>{const h=it[0];const active=(path===h)?'active':'';return `<div class="nav-link ${active}" onclick="R.go('${h}')">${it[1]}</div>`;}).join('')}
+        <div class="nav-sec">Umum</div>
+        <div class="nav-link" onclick="R.go('katalog')">🌐 Katalog Awam</div>
+        <div class="nav-sec">Akaun</div>
+        <div class="glass-strong" style="padding:10px;border-radius:12px">
+          <div class="center"><div class="avatar">${initials(u.nama)}</div><div><div class="sm" style="font-weight:700">${esc(u.nama)}</div><div class="xs mut">${u.peranan}</div></div></div>
+          <button class="btn btn-sm btn-ghost mt8" style="width:100%" onclick="Auth.logout();R.go('login')">Log Keluar</button>
+        </div>
+      </aside>
+      <main style="padding:22px;max-width:1180px;width:100%">
+        <div class="between mb"><div class="xl">${pageTitle(path)}</div><div class="xs mut">${fmtDateTime(now())}</div></div>
+        ${body}
+      </main>
+    </div>`;
+  }
+};
+function pageTitle(path){const m={'dashboard':'Papan Pemuka','kursus-saya':'Kursus Saya','sijil-saya':'Sijil Saya','invois-saya':'Invois & Bayaran','profil':'Profil Saya','daftar-kumpulan':'Daftar Kumpulan','permohonan-hrd':'Permohonan HRD','pekerja':'Pekerja & Kemajuan','tuntutan':'Status Tuntutan','sesi-saya':'Sesi Saya','kehadiran':'Kehadiran','laporan-maklum-balas':'Laporan Maklum Balas','portal-jurulatih':'Portal Dokumen Jurulatih','pustaka-bahan':'Pustaka Bahan','urus-kursus':'Urus Kursus & Sesi','pendaftaran':'Pendaftaran','sah-bayaran':'Pengesahan Bayaran','pusat-tuntutan':'Pusat Tuntutan e-TRiS','urus-kehadiran':'Pengurusan Kehadiran','analisis-maklum-balas':'Analisis & Semakan Maklum Balas','semakan-jurulatih':'Semakan Dokumen Jurulatih','pustaka-bahan-admin':'Pustaka Bahan','templat':'Templat e-Sijil & Borang','laporan':'Laporan','invois':'Invois','pengguna':'Pengguna & Peranan','tetapan':'Tetapan Sistem','audit':'Log Audit','reset':'Reset Data Dummy'};return m[path]||'Edu Oasis';}
+
+/* PAGE REGISTRY — filled in next block */
+const Pages={};
+const PagesPublic={};
+/* ===== Shared UI builders for pages ===== */
+const BADGE_PAY={'MENUNGGU':'Menunggu Bukti','DITERIMA':'Bukti Diterima','DISAHKAN':'Disahkan','DITOLAK':'Ditolak'};
+const BADGE_ENR={BARU:'Pendaftaran Baharu',MENUNGGU_BUKTI:'Menunggu Bukti',BUKTI_DITERIMA:'Bukti Diterima',DISAHKAN:'Disahkan',DITOLAK:'Ditolak',SELESAI:'Selesai',HRD_PROSES:'Dalam Proses HRD'};
+const BADGE_HRD={'Permintaan Baharu':'Permintaan Baharu','Menunggu Hubungan Admin':'Menunggu Hubungan Admin','Dalam Semakan Geran Levi':'Dalam Semakan Geran Levi','Penyediaan Dokumen':'Penyediaan Dokumen','Dihantar ke HRD Corp':'Dihantar ke HRD Corp','Menunggu Kelulusan HRD Corp':'Menunggu Kelulusan','Diluluskan':'Diluluskan','Perlu Pembetulan':'Perlu Pembetulan','Ditolak':'Ditolak','Dibatalkan':'Dibatalkan'};
+const BADGE_CLAIM={'Belum Bermula':'Belum Bermula','Dalam Proses':'Dalam Proses','Dokumen Lengkap':'Dokumen Lengkap','Dihantar':'Dihantar','Diluluskan':'Diluluskan','Perlu Tindakan':'Perlu Tindakan','Ditolak':'Ditolak'};
+const BADGE_SES={'akan datang':'Akan Datang','sedang berlangsung':'Sedang Berlangsung','tamat':'Tamat','penuh':'Penuh'};
+const BADGE_REPORT={'Menunggu Respons':'Menunggu Respons','Dianalisis':'Dianalisis (Draf)','Dalam Semakan Admin':'Dalam Semakan Admin','Dilepaskan kepada Jurulatih':'Dilepaskan','Dikecualikan':'Dikecualikan'};
+function bp(s){return statusBadge({'Menunggu Bukti':{t:'Menunggu Bukti',c:'b-warn'},'Bukti Diterima':{t:'Bukti Diterima',c:'b-info'},'Disahkan':{t:'Disahkan',c:'b-ok'},'Ditolak':{t:'Ditolak',c:'b-bad'}},BADGE_PAY[s]||s);}
+function be(s){const c={BARU:'b-muted',MENUNGGU_BUKTI:'b-warn',BUKTI_DITERIMA:'b-info',DISAHKAN:'b-ok',DITOLAK:'b-bad',SELESAI:'b-ok',HRD_PROSES:'b-info'};return `<span class="badge ${c[s]||'b-muted'}">${BADGE_ENR[s]||s}</span>`;}
+function bh(s){const c={'Permintaan Baharu':'b-muted','Menunggu Hubungan Admin':'b-warn','Dalam Semakan Geran Levi':'b-info','Penyediaan Dokumen':'b-info','Dihantar ke HRD Corp':'b-info','Menunggu Kelulusan HRD Corp':'b-warn','Diluluskan':'b-ok','Perlu Pembetulan':'b-warn','Ditolak':'b-bad','Dibatalkan':'b-muted'};return `<span class="badge ${c[s]||'b-muted'}">${BADGE_HRD[s]||s}</span>`;}
+function bc(s){const c={'Belum Bermula':'b-muted','Dalam Proses':'b-warn','Dokumen Lengkap':'b-info','Dihantar':'b-info','Diluluskan':'b-ok','Perlu Tindakan':'b-warn','Ditolak':'b-bad'};return `<span class="badge ${c[s]||'b-muted'}">${BADGE_CLAIM[s]||s}</span>`;}
+function bs(s){const c={'akan datang':'b-info','sedang berlangsung':'b-ok','tamat':'b-muted','penuh':'b-bad'};return `<span class="badge ${c[s]||'b-muted'}">${BADGE_SES[s]||s}</span>`;}
+function kpiCard(label,val,icon,sub){return `<div class="glass card"><div class="center"><div style="font-size:22px">${icon||'📊'}</div><div><div class="kpi">${val}</div><div class="xs mut">${label}</div></div></div>${sub?`<div class="xs mut mt8">${sub}</div>`:''}</div>`;}
+function courseCard(c){
+  const micro=c.kategoriKursus==='MICRO_SESSION';
+  const hr=c.layakTuntutanETRiS;
+  return `<div class="glass card" style="display:flex;flex-direction:column;gap:10px;cursor:pointer" onclick="R.go('kursus/${c.id}')">
+    <div class="between">
+      <span class="tag">${esc(c.kategori)}</span>
+      <div class="row" style="gap:6px">${micro?'<span class="badge b-pri">Micro-Session RM50</span>':''}${hr?'<span class="badge b-hrd">Layak Tuntutan e-TRiS</span>':''}</div>
+    </div>
+    <div class="h3">${esc(c.tajuk)}</div>
+    <div class="sm muted" style="flex:1">${esc(c.penerangan).slice(0,110)}…</div>
+    <div class="sm"><span class="mut">Mod:</span> ${esc(c.mod)} · <span class="mut">Tempoh:</span> ${c.tempohJam} jam</div>
+    <div class="hr" style="margin:4px 0"></div>
+    <div class="between">
+      <div><div class="xs mut">NON-HRD</div><div class="pill-price pri">${fmtMYR(c.yuranNonHRD)}</div></div>
+      ${hr?`<div style="text-align:right"><div class="xs mut">HRD Claimable</div><div class="pill-price accent">${fmtMYR(c.yuranHRD)}</div></div>`:'<div class="badge b-muted">NON-HRD sahaja</div>'}
+    </div>
+  </div>`;
+}
+function courseMetaTable(c){
+  return `<table>
+    <tr><th>Kod Kursus</th><td>${esc(c.kod)}</td><th>Kategori</th><td>${esc(c.kategori)}</td></tr>
+    <tr><th>Mod</th><td>${esc(c.mod)}</td><th>Tempoh</th><td>${c.tempohJam} jam</td></tr>
+    <tr><th>Kuota Default</th><td>${c.kuotaDefault}</td><th>Ambang Kehadiran</th><td>${c.ambangKehadiran}%</td></tr>
+    ${c.layakTuntutanETRiS?`<tr><th>Rujukan HRD Corp</th><td colspan="3">${esc(c.rujukanHRDCorp)}</td></tr>`:''}
+  </table>`;
+}
+
+/* ===== Certificate generator (SVG → PNG download + on-screen) ===== */
+const CertUtil={
+  viewHTML(cer){
+    const e=DB.enrollments.find(en=>en.id===cer.enrollmentId);
+    const u=DB.users.find(x=>x.id===e.userId);
+    const s=DB.sessions.find(x=>x.id===e.sessionId);
+    const c=DB.courses.find(x=>x.id===s.courseId);
+    const t=DB.certTemplate;
+    return `<div class="cert-frame">
+      <div style="font-size:13px;letter-spacing:3px;color:#0e7c66;font-weight:700">${esc(t.organisasiPenandatangan||'EDU OASIS')}</div>
+      <div style="font-size:34px;font-weight:900;color:#04141d;margin:6px 0">SIJIL PENYERTAAN</div>
+      <div class="sm" style="color:#555">Ini diiktiraf bahawa</div>
+      <div style="font-size:26px;font-weight:800;color:#04141d;margin:8px 0;border-bottom:2px solid #10b981;display:inline-block;padding:0 30px 6px">${esc(u.nama)}</div>
+      <div class="sm" style="color:#555">telah menyempurnakan program latihan</div>
+      <div style="font-size:20px;font-weight:700;color:#0e7c66;margin:6px 0">${esc(c.tajuk)}</div>
+      <div class="sm" style="color:#555">Tempoh: ${c.tempohJam} jam · Mod: ${esc(c.mod)} · Lokasi: ${esc(s.lokasi)}</div>
+      <div class="sm" style="color:#555;margin-top:8px">Tarikh Program: ${fmtDate(s.tarikhMula)} – ${fmtDate(s.tarikhTamat)}</div>
+      <div style="margin:18px auto;max-width:520px;font-size:13px;color:#333;font-style:italic">${esc(t.teksUmum)}</div>
+      <div class="between" style="margin-top:30px;text-align:center">
+        <div><div class="sm" style="border-top:1px solid #333;padding-top:6px;width:180px;margin:0 auto">${esc(t.namaPenandatangan)}<br><span class="xs">${esc(t.jawatanPenandatangan)}</span></div></div>
+        <div><div class="sm" style="color:#555">No. Sijil</div><div style="font-weight:700">${esc(cer.noSijil)}</div></div>
+        <div><div class="sm" style="color:#555">Dikeluarkan</div><div style="font-weight:700">${fmtDate(cer.tarikhKeluar)}</div></div>
+      </div>
+      <div class="seal">EDU<br>OASIS<br>★</div>
+    </div>`;
+  },
+  download(cerId){
+    const cer=DB.certificates.find(c=>c.id===cerId);if(!cer){toast('Sijil tidak dijumpai','bad');return;}
+    const e=DB.enrollments.find(en=>en.id===cer.enrollmentId);
+    const u=DB.users.find(x=>x.id===e.userId);
+    const s=DB.sessions.find(x=>x.id===e.sessionId);
+    const c=DB.courses.find(x=>x.id===s.courseId);
+    const t=DB.certTemplate;
+    const w=1000,h=720;
+    const svg=`<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}">
+      <rect width="${w}" height="${h}" fill="#f3fff9"/>
+      <rect x="20" y="20" width="${w-40}" height="${h-40}" fill="none" stroke="#10b981" stroke-width="3"/>
+      <rect x="34" y="34" width="${w-68}" height="${h-68}" fill="none" stroke="#10b981" stroke-width="1"/>
+      <text x="${w/2}" y="80" text-anchor="middle" font-family="Georgia,serif" font-size="16" fill="#0e7c66" letter-spacing="4">${esc((t.organisasiPenandatangan||'EDU OASIS')).toUpperCase()}</text>
+      <text x="${w/2}" y="150" text-anchor="middle" font-family="Georgia,serif" font-size="46" font-weight="bold" fill="#04141d">SIJIL PENYERTAAN</text>
+      <text x="${w/2}" y="200" text-anchor="middle" font-family="Arial" font-size="15" fill="#555">Ini diiktiraf bahawa</text>
+      <line x1="${w/2-260}" y1="260" x2="${w/2+260}" y2="260" stroke="#10b981" stroke-width="2"/>
+      <text x="${w/2}" y="250" text-anchor="middle" font-family="Georgia,serif" font-size="30" font-weight="bold" fill="#04141d">${esc(u.nama)}</text>
+      <text x="${w/2}" y="305" text-anchor="middle" font-family="Arial" font-size="15" fill="#555">telah menyempurnakan program latihan</text>
+      <text x="${w/2}" y="350" text-anchor="middle" font-family="Arial" font-size="22" font-weight="bold" fill="#0e7c66">${esc(c.tajuk)}</text>
+      <text x="${w/2}" y="390" text-anchor="middle" font-family="Arial" font-size="13" fill="#555">Tempoh: ${c.tempohJam} jam · Mod: ${esc(c.mod)} · Lokasi: ${esc(s.lokasi)}</text>
+      <text x="${w/2}" y="415" text-anchor="middle" font-family="Arial" font-size="13" fill="#555">Tarikh: ${fmtDate(s.tarikhMula)} – ${fmtDate(s.tarikhTamat)}</text>
+      <foreignObject x="240" y="445" width="520" height="120"><div xmlns="http://www.w3.org/1999/xhtml" style="font-family:Arial;font-size:13px;color:#333;font-style:italic;text-align:center">${esc(t.teksUmum)}</div></foreignObject>
+      <text x="200" y="640" text-anchor="middle" font-family="Arial" font-size="13" fill="#333">${esc(t.namaPenandatangan)}</text>
+      <line x1="120" y1="625" x2="280" y2="625" stroke="#333" stroke-width="1"/>
+      <text x="200" y="660" text-anchor="middle" font-family="Arial" font-size="11" fill="#666">${esc(t.jawatanPenandatangan)}</text>
+      <text x="${w/2}" y="640" text-anchor="middle" font-family="Arial" font-size="13" fill="#333">No. Sijil: ${esc(cer.noSijil)}</text>
+      <text x="${w/2}" y="660" text-anchor="middle" font-family="Arial" font-size="11" fill="#666">Dikeluarkan: ${fmtDate(cer.tarikhKeluar)}</text>
+      <text x="800" y="640" text-anchor="middle" font-family="Arial" font-size="13" fill="#333">Kod Pengesahan</text>
+      <text x="800" y="660" text-anchor="middle" font-family="Arial" font-size="11" fill="#666">${esc(cer.kodPengesahan)}</text>
+      <circle cx="880" cy="600" r="40" fill="none" stroke="#f59e0b" stroke-width="3"/>
+      <text x="880" y="595" text-anchor="middle" font-family="Arial" font-size="9" fill="#1a0f00" font-weight="bold">EDU OASIS</text>
+      <text x="880" y="608" text-anchor="middle" font-family="Arial" font-size="14" fill="#1a0f00">★</text>
+    </svg>`;
+    const img=new Image();const blob=new Blob([svg],{type:'image/svg+xml'});
+    const url=URL.createObjectURL(blob);
+    img.onload=()=>{const cv=document.createElement('canvas');cv.width=w;cv.height=h;const ctx=cv.getContext('2d');ctx.drawImage(img,0,0);cv.toBlob(b=>{const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='Sijil_'+cer.noSijil+'.png';a.click();URL.revokeObjectURL(a.href);toast('E-sijil dimuat turun (PNG)','ok');},'image/png');URL.revokeObjectURL(url);};
+    img.onerror=()=>{toast('Gagal jana PNG — guna pratonton cetak','warn');const w2=window.open('');w2.document.write(`<title>${cer.noSijil}</title><body style="margin:0">${svg}</body>`);w2.document.close();};
+    img.src=url;
+  }
+};
+
+/* ===== Certificate auto-issuance ===== */
+function issueCertificateIfEligible(enrollmentId){
+  const e=S.enrollments.get(enrollmentId);if(!e)return null;
+  const s=S.sessions.get(e.sessionId);const c=S.courses.get(e.courseId);
+  if(e.kehadiranPeratus<(c.ambangKehadiran||80))return null;
+  const existing=DB.certificates.find(x=>x.enrollmentId===enrollmentId&&x.status==='AKTIF');
+  if(existing)return existing;
+  const cer=S.certificates.add({enrollmentId:enrollmentId,userId:e.userId,noSijil:genRef('SIL'),kodPengesahan:uid('ver').toUpperCase(),versiTemplat:DB.certTemplate.versi,status:'AKTIF',urlPDF:'#cert-'+enrollmentId});
+  return cer;
+}
+
+/* ===== PUBLIC pages ===== */
+PagesPublic.home=()=>`<div class="glass-strong card" style="text-align:center;padding:48px 30px;margin-bottom:18px">
+  <span class="badge b-pri">Prototaip DEMO · PRD v1.3</span>
+  <div class="xl" style="font-size:38px;margin:14px 0">Platform Latihan Edu Oasis</div>
+  <p class="muted" style="max-width:720px;margin:0 auto">Satu platform LMS menyokong <b class="pri">Latihan Awam NON-HRD</b> dan <b class="accent">Kursus Layak Tuntutan e-TRiS (HRD Corp)</b> — pendaftaran, pembelajaran, kehadiran, maklum balas, e-sijil automatik dan pengurusan dokumen tuntutan dalam satu sistem.</p>
+  <div class="row mt" style="justify-content:center">
+    <a class="btn btn-pri" href="#/katalog">Lihat Katalog Kursus →</a>
+    <a class="btn" href="#/sah-sijil">Pengesahan Sijil Awam</a>
+  </div>
+  <div class="grid g3 mt-lg">
+    <div class="glass card"><div class="h3 pri">🎓 Latihan Awam Standard</div><p class="sm muted">Yuran dipisahkan jelas: kadar NON-HRD & kadar HRD Claimable. Mod bersemuka, dalam talian langsung, kendiri atau hibrid.</p></div>
+    <div class="glass card"><div class="h3 pri">⚡ Micro-Session Dalam Talian</div><p class="sm muted">Sesi pantas 2–4 jam pada kadar tetap <b>RM50</b>. Pendaftaran pantas dan pengesahan bayaran.</p></div>
+    <div class="glass card"><div class="h3 accent">💼 e-TRiS / HRD Corp</div><p class="sm muted">Aliran khas jalur HRD: hubungi admin, semakan geran levi, dokumen sokongan, kelulusan HRD Corp & penjejakan tuntutan.</p></div>
+  </div></div>
+  <div class="grid g3 mt-lg">
+    <div class="glass card"><div class="kpi">12</div><div class="xs mut">Kursus contoh (8 Standard + 4 Micro-Session)</div></div>
+    <div class="glass card"><div class="kpi">5</div><div class="xs mut">Jurulatih berdaftar</div></div>
+    <div class="glass card"><div class="kpi">8</div><div class="xs mut">Majikan HRD Corp contoh</div></div>
+  </div>`;
+
+PagesPublic.catalog=(p)=>{
+  const q=(p[1]||'');const params=new URLSearchParams(location.hash.split('?')[1]||'');
+  let cats=[],mods=[],types=[],priceMax=9999,query='';
+  function refilter(){
+    const cat=$('#f_cat')?[...$$('#f_cat input:checked')].map(x=>x.value):[];
+    const mod=$('#f_mod')?[...$$('#f_mod input:checked')].map(x=>x.value):[];
+    const typ=$('#f_typ')?[...$$('#f_typ input:checked')].map(x=>x.value):[];
+    const q2=($('#f_q')&&$('#f_q').value)||'';
+    let list=DB.courses.filter(c=>{
+      if(!c.statusPublish)return false;
+      if(cat.length&&!cat.includes(c.kategori))return false;
+      if(mod.length&&!mod.includes(c.mod))return false;
+      if(typ.length){if(typ.includes('MICRO')&&c.kategoriKursus!=='MICRO_SESSION')return false;if(typ.includes('HRD')&&!c.layakTuntutanETRiS)return false;}
+      if(q2){const s=(c.tajuk+' '+c.penerangan+' '+c.kategori).toLowerCase();if(!s.includes(q2.toLowerCase()))return false;}
+      return true;
+    });
+    $('#cat_results').innerHTML=list.length?`<div class="grid auto">${list.map(courseCard).join('')}</div>`:emptyState('Tiada kursus sepadan dengan penapis.','🔍');
+  }
+  App.after=()=>{refilter();$('#f_q')&&($('#f_q').oninput=refilter);[...$$('input[type=checkbox]')].forEach(c=>c.onchange=refilter);};
+  return `<div class="glass-strong card mb">
+    <div class="between"><div class="h2">Katalog Kursus Awam</div><input id="f_q" placeholder="🔍 Cari kursus…" style="max-width:280px"></div>
+    <div class="grid" style="grid-template-columns:220px 1fr;gap:18px;margin-top:14px">
+      <div class="col">
+        <div class="glass card">
+          <div class="h3 mb">Kategori</div>
+          <div id="f_cat">${CATEGORIES.map(c=>`<div class="checkrow"><input type="checkbox" class="checkbox" value="${esc(c)}" id="cat_${esc(c)}"><label for="cat_${esc(c)}" style="margin:0">${esc(c)}</label></div>`).join('')}</div>
+        </div>
+        <div class="glass card">
+          <div class="h3 mb">Mod</div>
+          <div id="f_mod">${['Bersemuka','Dalam Talian Langsung','Kendiri','Hibrid'].map(m=>`<div class="checkrow"><input type="checkbox" class="checkbox" value="${m}"><label style="margin:0">${m}</label></div>`).join('')}</div>
+        </div>
+        <div class="glass card">
+          <div class="h3 mb">Jenis</div>
+          <div id="f_typ"><div class="checkrow"><input type="checkbox" class="checkbox" value="MICRO"><label style="margin:0">Micro-Session (RM50)</label></div>
+          <div class="checkrow"><input type="checkbox" class="checkbox" value="HRD"><label style="margin:0">Layak Tuntutan e-TRiS</label></div></div>
+        </div>
+        <button class="btn btn-sm btn-ghost" onclick="[...$$('input[type=checkbox]')].forEach(c=>c.checked=false);$('#f_q').value='';refilter()">Reset Penapis</button>
+      </div>
+      <div id="cat_results"><div class="muted">Memuat…</div></div>
+    </div>
+  </div>`;
+};
+
+PagesPublic.courseDetail=(id)=>{
+  const c=S.courses.get(id);if(!c)return `<div class="empty">Kursus tidak dijumpai.</div>`;
+  const sessions=S.sessions.forCourse(c.id);
+  const trainers=DB.trainerProfiles;
+  return `<a href="#/katalog" class="btn btn-sm btn-ghost mb">← Kembali ke Katalog</a>
+  <div class="grid" style="grid-template-columns:1fr 320px;gap:18px">
+    <div class="col">
+      <div class="glass-strong card">
+        <div class="row mb">${c.kategoriKursus==='MICRO_SESSION'?'<span class="badge b-pri">Micro-Session Dalam Talian</span>':'<span class="badge b-muted">Latihan Awam Standard</span>'}
+        ${c.layakTuntutanETRiS?'<span class="badge b-hrd">Layak Tuntutan e-TRiS (HRD Corp)</span>':'<span class="badge b-muted">NON-HRD sahaja</span>'}</div>
+        <div class="xl" style="font-size:24px">${esc(c.tajuk)}</div>
+        <div class="sm mut mb">${esc(c.kod)} · ${esc(c.kategori)}</div>
+        <p class="muted">${esc(c.penerangan)}</p>
+        <div class="hr"></div>
+        <div class="h3 mb">Objektif Pembelajaran</div>
+        <ul class="muted sm"><li>Fahami konsep asas dan aplikasi praktikal.</li><li>Lakukan tugasan amali berkaitan tugas harian.</li><li>Penilaian kendiri melalui kuiz pendek.</li></ul>
+        <div class="h3 mt mb">Kandungan Kursus</div>
+        ${S.modules.forCourse(c.id).map(m=>`<details class="glass" style="padding:10px 14px;border-radius:10px"><summary>${esc(m.tajuk)}</summary><ul class="sm muted">${S.modules.lessons(m).map(l=>`<li>${esc(l.tajuk)} <span class="mut">(${l.jenisKandungan}, ${l.tempohMinit} min)</span></li>`).join('')}</ul></details>`).join('')}
+      </div>
+      <div class="glass card mt">
+        <div class="h3 mb">Sesi / Kohort Tersedia</div>
+        ${sessions.length?`<table><thead><tr><th>Kluster</th><th>Tarikh</th><th>Lokasi/Pautan</th><th>Kuota</th><th>Status</th></tr></thead><tbody>${sessions.map(s=>{const taken=S.enrollments.forSession(s.id).length;return `<tr><td>${esc(s.kluster)}</td><td>${fmtDate(s.tarikhMula)} → ${fmtDate(s.tarikhTamat)}</td><td>${esc(s.lokasi).slice(0,40)}</td><td>${taken}/${s.kuota}</td><td>${bs(s.status)}</td></tr>`;}).join('')}</tbody></table>`:emptyState('Tiada sesi dijadualkan.','📅')}
+      </div>
+    </div>
+    <div class="col">
+      <div class="glass-strong card">
+        <div class="h3 mb">Struktur Yuran</div>
+        ${c.jalurNonHRDAktif?`<div class="glass card" style="padding:12px"><div class="xs mut">Jalur NON-HRD</div><div class="pill-price pri">${fmtMYR(c.yuranNonHRD)}</div><div class="xs mut">Pembayaran: muat naik bukti bayaran</div></div>`:''}
+        ${c.layakTuntutanETRiS&&c.jalurHRDAktif?`<div class="glass card" style="padding:12px"><div class="xs mut">Jalur HRD Claimable</div><div class="pill-price accent">${fmtMYR(c.yuranHRD)}</div><div class="xs mut">Tuntutan levi HRD Corp — hubungi admin</div></div>`:''}
+        ${Auth.user?`<button class="btn btn-pri mt" style="width:100%" onclick="EnrollFlow.start('${c.id}')">Daftar Sekarang</button>`:`<a class="btn btn-pri mt" style="width:100%" href="#/login">Log Masuk untuk Daftar</a>`}
+        <div class="xs mut mt">Pilih jalur yuran pada langkah seterusnya.</div>
+      </div>
+      <div class="glass card">
+        <div class="h3 mb">Jurulatih</div>
+        ${trainers.slice(0,3).map(t=>`<div class="between mb"><div><div style="font-weight:700">${esc(t.nama)}</div><div class="xs mut">${t.kepakaran.join(', ')}</div></div><div class="avatar">${initials(t.nama)}</div></div>`).join('')}
+      </div>
+      <div class="glass card"><div class="h3 mb">FAQ</div>
+        <details><summary>Adakah Micro-Session layak tuntutan HRD?</summary><p class="sm muted">${c.layakTuntutanETRiS?'Ya, kursus ini menawarkan jalur HRD.':'Tidak, kursus ini hanya pada jalur NON-HRD.'}</p></details>
+        <details><summary>Bagaimana pembayaran NON-HRD?</summary><p class="sm muted">Muat naik invois/bukti pembayaran dalam sistem; admin/kewangan akan mengesahkan.</p></details>
+      </div>
+    </div>
+  </div>`;
+};
+
+PagesPublic.verifyCert=(code)=>{
+  const html=(found,msg)=>`<div class="glass-strong card" style="max-width:640px;margin:0 auto"><div class="h2 mb">Pengesahan Sijil Awam</div>
+    <div class="row mb"><input id="vcode" placeholder="Masukkan kod pengesahan / no. sijil" value="${esc(code||'')}"><button class="btn btn-pri" onclick="R.go('sah-sijil/'+encodeURIComponent($('#vcode').value.trim()))">Sahkan</button></div>
+    ${found?`<div class="glass card"><div class="center"><div style="font-size:40px">✅</div><div class="h3 pri">Sijil Sah</div></div><div class="hr"></div>${msg}</div>`:code?`<div class="badge b-bad">❌ ${msg}</div>`:''}
+  </div>`;
+  if(!code)return html(false,'');
+  const cer=DB.certificates.byCode(code.toUpperCase())||DB.certificates.find(c=>c.noSijil.toLowerCase()===code.toLowerCase());
+  if(!cer)return html(false,'Kod pengesahan tidak dijumpai.');
+  if(cer.status!=='AKTIF')return html(false,'Sijil ini telah dibatalkan.');
+  const e=DB.enrollments.find(en=>en.id===cer.enrollmentId);const u=DB.users.find(x=>x.id===e.userId);
+  const s=DB.sessions.find(x=>x.id===e.sessionId);const c=DB.courses.find(x=>x.id===s.courseId);
+  return html(true,`<table><tr><th>No. Sijil</th><td>${esc(cer.noSijil)}</td></tr><tr><th>Nama</th><td>${esc(u.nama)}</td></tr><tr><th>Program</th><td>${esc(c.tajuk)}</td></tr><tr><th>Tarikh Program</th><td>${fmtDate(s.tarikhMula)} – ${fmtDate(s.tarikhTamat)}</td></tr><tr><th>Dikeluarkan</th><td>${fmtDate(cer.tarikhKeluar)}</td></tr><tr><th>Status</th><td>${bs('tamat')} <span class="badge b-ok">Aktif & Disahkan</span></td></tr></table>`);
+};
+
+PagesPublic.register=()=>{
+  App.after=()=>{};
+  return `<div class="glass-strong card" style="max-width:560px;margin:0 auto"><div class="h2 mb">Daftar Akaun Baharu</div>
+    <div class="field"><label>Nama Penuh</label><input id="r_nama" placeholder="cth. Ahmad bin Abdullah"></div>
+    <div class="field"><label>Emel</label><input id="r_emel" type="email" placeholder="anda@contoh.com"></div>
+    <div class="field"><label>No. KP / Pasport</label><input id="r_kp" placeholder=" format sahaja (DUMMY)"></div>
+    <div class="field"><label>Telefon</label><input id="r_tel" placeholder="01XXXXXXXX"></div>
+    <div class="field"><label>Kata Laluan</label><input id="r_pw" type="password"></div>
+    <div class="checkrow"><input type="checkbox" class="checkbox" id="r_pdpa"><label for="r_pdpa" style="margin:0">Saya bersetuju dengan <b>Akta Perlindungan Data Peribadi 2010 (PDPA)</b>. Data ini adalah demo (DUMMY).</label></div>
+    <button class="btn btn-pri" style="width:100%" onclick="PagesPublic.doRegister()">Daftar</button>
+    <div class="xs mut mt" style="text-align:center">Sudah ada akaun? <a href="#/login">Log masuk</a></div>
+  </div>`;
+};
+PagesPublic.doRegister=()=>{
+  const nama=$('#r_nama').value.trim(),emel=$('#r_emel').value.trim(),kp=$('#r_kp').value.trim(),tel=$('#r_tel').value.trim(),pw=$('#r_pw').value;
+  if(!nama||!emel||!pw||!$('#r_pdpa').checked){toast('Sila lengkapkan semua medan & setuju PDPA','warn');return;}
+  if(S.users.byEmail(emel)){toast('Emel sudah didaftarkan','warn');return;}
+  const u=S.users.add({nama,emel,kataLaluan:pw,peranan:'PESERTA',noKP:kp,telefon:tel,jawatan:'Individu',employerId:null,fotoUrl:null,pdpaSetuju:true,pdpaVersi:'PDPA-2010-v1',pdpaTs:now()});
+  Auth.user={id:u.id,nama:u.nama,emel:u.emel,peranan:u.peranan,employerId:null,fotoUrl:null};
+  audit('Pendaftaran akaun baharu','User',u.id);
+  toast('Pendaftaran berjaya. Selamat datang!','ok');
+  R.go('dashboard');
+};
+
+/* ===== LOGIN ===== */
+Pages.login=()=>{
+  const demos=[
+    ['Super Admin','superadmin@eduoasis.my','super123','SUPER_ADMIN'],
+    ['Pentadbir Kursus','admin@eduoasis.my','admin123','ADMIN'],
+    ['Pegawai Kewangan','finance@eduoasis.my','finance123','KEWANGAN'],
+    ['Pegawai Majikan/HR','hr1@techsolutions.com.my','hr123','MAJIKAN'],
+    ['Jurulatih','aimanfauzi@eduoasis.my','trainer123','JURULATIH'],
+    ['Peserta','ahmad1@example.com','peserta123','PESERTA'],
+  ];
+  App.after=()=>{
+    $$('.demo-chip').forEach(c=>c.onclick=()=>{$('#l_emel').value=c.dataset.e;$('#l_pw').value=c.dataset.p;Pages.doLogin();});
+  };
+  return `<div style="min-height:100vh;display:grid;place-items:center;padding:30px">
+    <div class="glass-strong" style="max-width:520px;width:100%;padding:30px">
+      <div class="center mb" style="justify-content:center"><div class="logo"><div class="mark" style="width:46px;height:46px;font-size:22px">E</div><div><div style="font-size:22px">Edu Oasis</div><div class="xs mut">LMS Latihan Awam & e-TRiS</div></div></div></div>
+      <div class="h2 mb" style="text-align:center">Log Masuk</div>
+      <div class="field"><label>Emel</label><input id="l_emel" value="ahmad1@example.com" type="email"></div>
+      <div class="field"><label>Kata Laluan</label><input id="l_pw" value="peserta123" type="password"></div>
+      <button class="btn btn-pri" style="width:100%" onclick="Pages.doLogin()">Log Masuk</button>
+      <div class="xs mut mt" style="text-align:center"><a href="#/daftar">Daftar akaun baharu (peserta)</a> · <a href="#/">Laman awam</a></div>
+      <div class="hr mt"></div>
+      <div class="h3 mb">Akaun Demo (klik untuk log masuk)</div>
+      <div class="grid g2">${demos.map(d=>`<button class="demo-chip glass" style="padding:10px;text-align:left;cursor:pointer;border-radius:10px" data-e="${d[1]}" data-p="${d[2]}"><div class="sm" style="font-weight:700">${d[0]}</div><div class="xs mut">${d[1]}</div><div class="xs mut">${d[3]}</div></button>`).join('')}</div>
+      <div class="xs mut mt" style="text-align:center">⚠️ Persekitaran DEMO — data rekaan (DUMMY) sahaja. Jangan masukkan data peribadi sebenar.</div>
+    </div>
+  </div>`;
+};
+Pages.doLogin=()=>{
+  const e=$('#l_emel').value.trim(),p=$('#l_pw').value;
+  const u=Auth.login(e,p);
+  if(!u){toast('Emel atau kata laluan salah','bad');return;}
+  toast('Selamat datang, '+u.nama,'ok');R.go('dashboard');
+};
+
+/* ===== Enrollment Flow (fee track selection → payment proof / HRD request) ===== */
+const EnrollFlow={
+  start(courseId){
+    const c=S.courses.get(courseId);if(!c)return;
+    const sessions=S.sessions.forCourse(c.id).filter(s=>s.status!=='tamat'&&S.enrollments.forSession(s.id).length<s.kuota);
+    if(!sessions.length){modal('Tiada Sesi Tersedia',`<p class="muted">Tiada sesi terbuka untuk kursus ini sekarang. Sila kembali kemudian.</p>`);return;}
+    const isEmployer=Auth.user.peranan==='MAJIKAN';
+    EnrollFlow.state={courseId,sessionId:null,jalur:null};
+    EnrollFlow.render();
+  },
+  render(){
+    const st=EnrollFlow.state;const c=S.courses.get(st.courseId);
+    const sessions=S.sessions.forCourse(c.id).filter(s=>s.status!=='tamat'&&S.enrollments.forSession(s.id).length<s.kuota);
+    const step=st.sessionId?(st.jalur?2:1):0;
+    const body=`<div class="steps mb">${stepsRow(['Pilih Sesi','Pilih Jalur Yuran',(st.jalur==='HRD'?'Hubungi Admin':'Borang & Bayaran'),(st.jalur==='HRD'?'Pengesahan HRD':'Pengesahan')],step+ (st.jalur?(st.jalur==='HRD'?3:3):1)).replace(/<div class="steps mb">|<\/div>$/g,'')}</div>
+      ${step===0?EnrollFlow.stepSessions(c,sessions):step===1?EnrollFlow.stepTrack(c):st.jalur==='HRD'?EnrollFlow.stepHRDForm(c):EnrollFlow.stepNonHRD(c)}
+    `;
+    const m=modal('Pendaftaran Kursus: '+c.tajuk,body,{w:680});
+  },
+  stepSessions(c,sessions){
+    return `<div class="h3 mb">1. Pilih Sesi / Kohort</div>
+    <table><thead><tr><th></th><th>Kluster</th><th>Tarikh</th><th>Lokasi</th><th>Tempat</th></tr></thead><tbody>
+    ${sessions.map(s=>{const taken=S.enrollments.forSession(s.id).length;return `<tr><td><button class="btn btn-sm btn-pri" onclick="EnrollFlow.pickSession('${s.id}')">Pilih</button></td><td>${esc(s.kluster)}</td><td>${fmtDate(s.tarikhMula)}</td><td>${esc(s.lokasi).slice(0,30)}</td><td>${s.kuota-taken}/${s.kuota}</td></tr>`;}).join('')}
+    </tbody></table>
+    <div class="row" style="justify-content:flex-end;margin-top:14px"><button class="btn btn-ghost" onclick="closeModal()">Batal</button></div>`;
+  },
+  pickSession(sid){EnrollFlow.state.sessionId=sid;EnrollFlow.render();},
+  stepTrack(c){
+    const st=EnrollFlow.state;
+    const nonActive=c.jalurNonHRDAktif,hrdActive=c.layakTuntutanETRiS&&c.jalurHRDAktif;
+    return `<div class="h3 mb">2. Pilih Jalur Yuran</div>
+    <div class="grid g2 mb">
+      ${nonActive?priceCard('Jalur NON-HRD',fmtMYR(c.yuranNonHRD),st.jalur==='NON_HRD',`EnrollFlow.setTrack('NON_HRD')`,'Pembayaran sendiri — muat naik bukti bayaran'):`<div class="glass card mut sm">Jalur NON-HRD tidak ditawarkan.</div>`}
+      ${hrdActive?priceCard('Jalur HRD Claimable',fmtMYR(c.yuanHRD||c.yuranHRD),st.jalur==='HRD',`EnrollFlow.setTrack('HRD')`,'Tuntutan levi HRD Corp — hubungi admin'):`<div class="glass card mut sm">Jalur HRD tidak ditawarkan.</div>`}
+    </div>
+    <div class="row" style="justify-content:space-between"><button class="btn btn-ghost" onclick="EnrollFlow.state.sessionId=null;EnrollFlow.render()">← Sesi</button>
+    ${st.jalur?`<button class="btn btn-pri" onclick="EnrollFlow.confirmTrack()">Seterusnya →</button>`:''}</div>`;
+  },
+  setTrack(t){EnrollFlow.state.jalur=t;EnrollFlow.render();},
+  confirmTrack(){EnrollFlow.render();},
+  stepNonHRD(c){
+    const st=EnrollFlow.state;const u=Auth.user;
+    const existing=DB.enrollments.find(e=>e.userId===u.id&&e.sessionId===st.sessionId);
+    if(existing){return `<div class="badge b-warn mb">Anda sudah berdaftar untuk sesi ini.</div><button class="btn btn-ghost" onclick="closeModal()">Tutup</button>`;}
+    return `<div class="h3 mb">3. Borang Peserta & Bayaran (NON-HRD)</div>
+    <div class="field"><label>Nama Penuh (seperti pada sijil)</label><input id="en_nama" value="${esc(u.nama)}"></div>
+    <div class="grid g2"><div class="field"><label>No. KP / Pasport</label><input id="en_kp" value="${esc(u.noKP||'')}"></div><div class="field"><label>Telefon</label><input id="en_tel" value="${esc(u.telefon||'')}"></div></div>
+    <div class="field"><label>Jawatan</label><input id="en_jaw" value="${esc(u.jawatan||'')}"></div>
+    <div class="glass card"><div class="between"><div><div class="xs mut">Yuran NON-HRD</div><div class="pill-price pri">${fmtMYR(c.yuranNonHRD)}</div></div><div class="badge b-info">Invois akan dijana selepas pendaftaran</div></div></div>
+    <div class="row" style="justify-content:space-between;margin-top:14px"><button class="btn btn-ghost" onclick="EnrollFlow.state.jalur=null;EnrollFlow.render()">← Jalur</button>
+    <button class="btn btn-pri" onclick="EnrollFlow.submitNonHRD()">Daftar & Jana Invois</button></div>`;
+  },
+  submitNonHRD(){
+    const st=EnrollFlow.state;const c=S.courses.get(st.courseId);const s=S.sessions.get(st.sessionId);const u=Auth.user;
+    const en=S.enrollments.add({userId:u.id,sessionId:st.sessionId,courseId:c.id,employerId:u.employerId||null,jalurYuran:'NON_HRD',yuranDikenakan:c.yuranNonHRD,statusBayaran:'MENUNGGU_BUKTI',statusPendaftaran:'MENUNGGU_BUKTI',hrdRequestId:null,kehadiranPeratus:0,skorAkhir:null,lulus:null});
+    const inv=S.invoices.add({noInvois:genRef('INV'),employerId:u.employerId||null,userId:u.id,sessionId:st.sessionId,jumlah:c.yuranNonHRD,cukai:0,status:'Menunggu Bukti',enrollmentIds:[en.id]});
+    audit('Pendaftaran NON-HRD','Enrollment',en.id);
+    closeModal();toast('Pendaftaran berjaya! Invois dijana.','ok');
+    R.go('invois-saya');
+  },
+  stepHRDForm(c){
+    const st=EnrollFlow.state;const u=Auth.user;const s=S.sessions.get(st.sessionId);
+    const emp=u.employerId?S.employers.get(u.employerId):null;
+    return `<div class="h3 mb">3. Jalur HRD — Borang Majikan</div>
+    <div class="badge b-hrd mb">⚠ Tiada pembayaran diperlukan pada peringkat ini. Sistem akan cipta <b>Permohonan HRD</b> dan anda perlu menghubungi admin Edu Oasis.</div>
+    <div class="grid g2">
+      <div class="field"><label>Nama Syarikat</label><input id="h_nama" value="${esc(emp?emp.namaSyarikat:'')}"></div>
+      <div class="field"><label>No. SSM</label><input id="h_ssm" value="${esc(emp?emp.noSSM:'')}"></div>
+      <div class="field"><label>ID Majikan HRD Corp</label><input id="h_hrd" value="${esc(emp?emp.idMajikanHRDCorp:'')}"></div>
+      <div class="field"><label>Bilangan Peserta</label><input id="h_bil" type="number" value="1" min="1"></div>
+    </div>
+    <div class="field"><label>Senarai Peserta (manual / CSV)</label>
+      <textarea id="h_csv" rows="4" placeholder="Nama, No. KP, Emel, Jawatan (satu per baris)&#10;atau tampal CSV"></textarea>
+      <div class="xs mut">Bil. peserta dalam senarai mesti sepadan dengan bilangan di atas.</div>
+    </div>
+    <div class="glass card"><div class="between"><div><div class="xs mut">Yuran HRD Claimable (untuk tuntutan levi)</div><div class="pill-price accent">${fmtMYR(c.yuranHRD)}</div></div><div class="xs mut">Bayaran dituntut melalui levi HRD Corp selepas kelulusan</div></div></div>
+    <div class="row" style="justify-content:space-between;margin-top:14px"><button class="btn btn-ghost" onclick="EnrollFlow.state.jalur=null;EnrollFlow.render()">← Jalur</button>
+    <button class="btn btn-acc" onclick="EnrollFlow.submitHRD()">Cipta Permohonan HRD</button></div>`;
+  },
+  submitHRD(){
+    const st=EnrollFlow.state;const c=S.courses.get(st.courseId);const s=S.sessions.get(st.sessionId);const u=Auth.user;
+    const bil=parseInt($('#h_bil').value)||1;
+    const empId=u.employerId||S.employers.add({namaSyarikat:$('#h_nama').value,noSSM:$('#h_ssm').value,idMajikanHRDCorp:$('#h_hrd').value+' (DUMMY)',alamat:'',picNama:u.nama,picEmel:u.emel,picPhone:'',bakiLevi:0}).id;
+    const hr=S.hrdRequests.add({noRujukan:genRef('HRD'),employerId:empId,courseId:c.id,sessionId:st.sessionId,bilPeserta:bil,status:'Permintaan Baharu',adminDitugasan:'',tempatDipegangHingga:daysFrom(now(),DB.settings.tempatDipegangHari||7),hasilSemakanLevi:'',catatanLevi:'',tarikhHantarHRD:null,rujukanHRDCorp:'',keputusan:''});
+    // create enrollments pending HRD approval
+    const csv=$('#h_csv').value.trim().split('\n').filter(l=>l.trim());
+    for(let i=0;i<bil;i++){
+      const line=csv[i]?csv[i].split(',').map(x=>x.trim()):[];
+      S.enrollments.add({userId:u.id,sessionId:st.sessionId,courseId:c.id,employerId:empId,jalurYuran:'HRD',yuranDikenakan:c.yuranHRD,statusBayaran:'DISAHKAN',statusPendaftaran:'HRD_PROSES',hrdRequestId:hr.id,kehadiranPeratus:0,namaPesonertaCsv:line[0]||'',noKPCsv:line[1]||'',emelCsv:line[2]||'',jawatanCsv:line[3]||''});
+    }
+    S.hrdMessages.add({requestId:hr.id,pengirim:'majikan',mesej:'Permohonan baru dihantar. Sila hubungi admin untuk semakan geran levi.',ts:now()});
+    audit('Cipta Permohonan HRD (jalur HRD)','HRDRequest',hr.id);
+    closeModal();toast('Permohonan HRD dicipta. Sila hubungi admin.','ok');
+    R.go('permohonan-hrd');
+  }
+};
+
+/* ===== Dashboard (role-aware) ===== */
+Pages.dashboard=()=>{
+  const r=Auth.user.peranan;
+  if(r==='PESERTA')return Pages._dashPeserta();
+  if(r==='MAJIKAN')return Pages._dashMajikan();
+  if(r==='JURULATIH')return Pages._dashTrainer();
+  if(r==='ADMIN'||r==='KEWANGAN'||r==='SUPER_ADMIN')return Pages._dashAdmin(r);
+  return '<div class="empty">Peranan tidak diketahui.</div>';
+};
+Pages._dashPeserta=()=>{
+  const u=Auth.user;const ens=S.enrollments.forUser(u.id);
+  const certs=S.certificates.forUser(u.id);
+  const upcoming=ens.filter(e=>{const s=S.sessions.get(e.sessionId);return s&&s.status!=='tamat';});
+  const pendingPay=ens.filter(e=>e.statusBayaran==='MENUNGGU_BUKTI'||e.statusBayaran==='DITERIMA');
+  const pendingFB=ens.filter(e=>{const s=S.sessions.get(e.sessionId);return s&&s.status==='tamat'&&e.kehadiranPeratus>=0&&!DB.certificates.find(c=>c.enrollmentId===e.id)&&e.kehadiranPeratus>=80&&!DB.feedbackResponses.find(f=>f.enrollmentId===e.id);});
+  return `<div class="grid g4 mb">${kpiCard('Pendaftaran Aktif',upcoming.length,'🎓')}${kpiCard('Sijil Diperolehi',certs.length,'🏆')}${kpiCard('Bayaran Tertunggak',pendingPay.length,'💰')}${kpiCard('Borang Maklum Balas Tertunggak',pendingFB.length,'📝')}</div>
+  <div class="grid" style="grid-template-columns:1fr 1fr;gap:18px">
+    <div class="glass card"><div class="section-title"><div class="bar"></div><div class="h3">Kursus Akan Datang</div></div>
+      ${upcoming.length?upcoming.map(e=>{const s=S.sessions.get(e.sessionId);const c=S.courses.get(e.courseId);return `<div class="between mb"><div><div style="font-weight:700">${esc(c.tajuk)}</div><div class="xs mut">${fmtDate(s.tarikhMula)} · ${esc(s.lokasi).slice(0,30)}</div></div>${be(e.statusPendaftaran)}</div>`;}).join(''):emptyState('Tiada kursus akan datang.','📅')}
+      <a class="btn btn-sm btn-ghost mt" href="#/katalog">Lihat katalog →</a>
+    </div>
+    <div class="glass card"><div class="section-title"><div class="bar"></div><div class="h3">Tindakan Diperlukan</div></div>
+      ${pendingPay.length?pendingPay.map(e=>{const inv=DB.invoices.find(i=>i.enrollmentIds&&i.enrollmentIds.includes(e.id));return `<div class="between mb"><div class="sm">🧾 Bayaran tertunggak</div><button class="btn btn-sm btn-pri" onclick="R.go('invois-saya')">Muat Naik Bukti</button></div>`;}).join(''):''}
+      ${pendingFB.length?pendingFB.map(e=>{const s=S.sessions.get(e.sessionId);return `<div class="between mb"><div class="sm">📝 Borang maklum balas: ${fmtDate(s.tarikhTamat)}</div><button class="btn btn-sm btn-pri" onclick="R.go('borang-maklum-balas/${e.id}')">Isi Sekarang</button></div>`;}).join(''):''}
+      ${(!pendingPay.length&&!pendingFB.length)?`<div class="muted sm">✅ Tiada tindakan tertunggak.</div>`:''}
+    </div>
+  </div>`;
+};
+Pages._dashMajikan=()=>{
+  const u=Auth.user;const emp=u.employerId?S.employers.get(u.employerId):null;
+  if(!emp)return '<div class="empty">Akaun majikan tidak dipautkan kepada rekod employer. Sila log masuk sebagai akaun demo HR.</div>';
+  const ens=S.enrollments.forEmployer(emp.id);
+  const hrds=DB.hrdRequests.filter(h=>h.employerId===emp.id);
+  const claims=DB.claimCases.filter(c=>c.employerId===emp.id);
+  const pendingPay=ens.filter(e=>e.jalurYuran==='NON_HRD'&&(e.statusBayaran==='MENUNGGU_BUKTI'||e.statusBayaran==='DITERIMA'));
+  return `<div class="grid g4 mb">${kpiCard('Pekerja Berdaftar',ens.length,'👥')}${kpiCard('Permohonan HRD',hrds.length,'📨')}${kpiCard('Kes Tuntutan',claims.length,'💼')}${kpiCard('Bayaran Tertunggak',pendingPay.length,'💰')}</div>
+  <div class="grid g2">
+    <div class="glass card"><div class="section-title"><div class="bar"></div><div class="h3">${esc(emp.namaSyarikat)}</div></div>
+      <div class="sm muted">${esc(emp.noSSM)} · HRD: ${esc(emp.idMajikanHRDCorp)}</div>
+      <div class="hr"></div>
+      <div class="between"><div class="sm">Baki Levi (DUMMY)</div><div class="pill-price pri">${fmtMYR(emp.bakiLevi||0)}</div></div>
+      <a class="btn btn-sm btn-pri mt" href="#/daftar-kumpulan">➕ Daftar Kumpulan Pekerja</a>
+    </div>
+    <div class="glass card"><div class="section-title"><div class="bar"></div><div class="h3">Permohonan HRD Terkini</div></div>
+      ${hrds.slice(0,4).map(h=>`<div class="between mb"><div class="sm">${esc(h.noRujukan)} · ${S.courses.get(h.courseId).tajuk.slice(0,30)}</div>${bh(h.status)}</div>`).join('')||emptyState('Tiada permohonan.','📨')}
+      <a class="btn btn-sm btn-ghost mt" href="#/permohonan-hrd">Lihat semua →</a>
+    </div>
+  </div>`;
+};
+Pages._dashTrainer=()=>{
+  const u=Auth.user;const tp=S.trainers.forUser(u.id);
+  if(!tp)return '<div class="empty">Profil jurulatih tidak dijumpai. Sila hubungi admin.</div>';
+  const mySessions=DB.sessions.filter(s=>s.jurulatihId===tp.id);
+  const docs=S.trainers.docs(tp.id);
+  const reports=DB.feedbackReports.filter(f=>f.trainerId===tp.id);
+  return `<div class="grid g4 mb">${kpiCard('Sesi Ditugaskan',mySessions.length,'🎤')}${kpiCard('Dokumen Belum Diluluskan',docs.filter(d=>!['Diluluskan'].includes(d.status)).length,'🗂️')}${kpiCard('Laporan Maklum Balas',reports.length,'📊')}${kpiCard('Bank Honorarium',S.trainers.bank(tp.id)?'Aktif':'Belum','🏦')}</div>
+  <div class="grid g2">
+    <div class="glass card"><div class="section-title"><div class="bar"></div><div class="h3">Sesi Akan Datang</div></div>
+      ${mySessions.filter(s=>s.status!=='tamat').map(s=>{const c=S.courses.get(s.courseId);return `<div class="between mb"><div><div style="font-weight:700">${esc(c.tajuk)}</div><div class="xs mut">${fmtDate(s.tarikhMula)} · ${esc(s.kluster)}</div></div>${bs(s.status)}</div>`;}).join('')||emptyState('Tiada sesi.','📅')}
+    </div>
+    <div class="glass card"><div class="section-title"><div class="bar"></div><div class="h3">Senarai Semak Kesediaan Dokumen</div></div>
+      <div class="sm muted">Lengkapkan course plan, session plan, profil & akaun bank sebelum sesi.</div>
+      <a class="btn btn-sm btn-pri mt" href="#/portal-jurulatih">Buka Portal Jurulatih →</a>
+    </div>
+  </div>`;
+};
+Pages._dashAdmin=(r)=>{
+  const ens=DB.enrollments;const inv=DB.invoices;const hrds=DB.hrdRequests;const claims=DB.claimCases;
+  const pendPay=DB.paymentProofs.filter(p=>p.status==='DITERIMA');
+  const pendHRD=hrds.filter(h=>!['Diluluskan','Ditolak','Dibatalkan'].includes(h.status));
+  const reports=DB.feedbackReports.filter(f=>f.status==='Dianalisis'||f.status==='Dalam Semakan Admin');
+  return `<div class="grid g4 mb">${kpiCard('Pendaftaran',ens.length,'📝')}${kpiCard('Pengesahan Bayaran Tertunggak',pendPay.length,'💰')}${kpiCard('Permohonan HRD Aktif',pendHRD.length,'📨')}${kpiCard('Kes Tuntutan',claims.length,'💼')}</div>
+  <div class="grid" style="grid-template-columns:1fr 1fr 1fr;gap:18px">
+    <div class="glass card"><div class="section-title"><div class="bar"></div><div class="h3">Pengesahan Bayaran</div></div>
+      ${pendPay.slice(0,4).map(p=>{const inv=DB.invoices.get(p.invoiceId);return `<div class="between mb"><div class="sm">${esc(inv?inv.noInvois:p.invoiceId)}</div><button class="btn btn-sm btn-pri" onclick="R.go('sah-bayaran')">Semak</button></div>`;}).join('')||emptyState('Tiada','✓')}
+    </div>
+    <div class="glass card"><div class="section-title"><div class="bar"></div><div class="h3">Peti Masuk HRD</div></div>
+      ${pendHRD.slice(0,4).map(h=>`<div class="between mb"><div class="sm">${esc(h.noRujukan)}</div>${bh(h.status)}<button class="btn btn-sm btn-ghost" onclick="R.go('peti-hrd')">Buka</button></div>`).join('')||emptyState('Tiada','📨')}
+    </div>
+    <div class="glass card"><div class="section-title"><div class="bar"></div><div class="h3">Analisis Maklum Balas</div></div>
+      ${reports.slice(0,4).map(f=>{const s=DB.sessions.get(f.sessionId);const c=S.courses.get(s.courseId);return `<div class="between mb"><div class="sm">${esc(c.tajuk.slice(0,25))}</div><span class="badge b-warn">${f.status}</span></div>`;}).join('')||emptyState('Tiada','📊')}
+    </div>
+  </div>
+  ${r==='SUPER_ADMIN'?`<div class="glass card mt"><div class="h3 mb">Tindakan Pantas</div><div class="row"><a class="btn" href="#/pengguna">Pengguna & Peranan</a><a class="btn" href="#/tetapan">Tetapan Sistem</a><a class="btn btn-bad" href="#/reset">Reset Data Dummy</a></div></div>`:''}`;
+};
+
+/* ===== PESERTA pages ===== */
+Pages['kursus-saya']=()=>{
+  const u=Auth.user;const ens=S.enrollments.forUser(u.id);
+  return `<div class="glass card"><div class="section-title"><div class="bar"></div><div class="h3">Kursus Saya (${ens.length})</div></div>
+  ${ens.length?`<table><thead><tr><th>Kursus</th><th>Sesi</th><th>Jalur</th><th>Kemajuan</th><th>Status</th><th>Tindakan</th></tr></thead><tbody>
+  ${ens.map(e=>{const s=S.sessions.get(e.sessionId);const c=S.courses.get(e.courseId);const prog=S.progress.forEnrollment(e.id);const tot=S.modules.allLessons(c.id).length;const done=prog.filter(p=>p.selesai).length;const pct=tot?Math.round(done/tot*100):0;return `<tr><td><a href="#/kursus/${c.id}">${esc(c.tajuk)}</a></td><td>${esc(s.kluster)}<div class="xs mut">${fmtDate(s.tarikhMula)}</div></td><td>${e.jalurYuran==='HRD'?'<span class="badge b-hrd">HRD</span>':'<span class="badge b-pri">NON-HRD</span>'}</td><td><div class="progress" style="width:90px"><span style="width:${pct}%"></span></div><div class="xs mut">${pct}%</div></td><td>${be(e.statusPendaftaran)}</td><td>${e.statusPendaftaran==='DISAHKAN'&&s.status!=='akan datang'?'<button class="btn btn-sm btn-pri" onclick="R.go(\'pembelajaran/'+e.id+'\')">Belajar</button>':s.status==='tamat'&&!DB.certificates.find(c=>c.enrollmentId===e.id)&&e.kehadiranPeratus>=80&&!DB.feedbackResponses.find(f=>f.enrollmentId===e.id)?'<button class="btn btn-sm btn-acc" onclick="R.go(\'borang-maklum-balas/'+e.id+'\')">Maklum Balas</button>':'—'}</td></tr>`;}).join('')}
+  </tbody></table>`:emptyState('Anda belum berdaftar mana-mana kursus.','🎓')}
+  <a class="btn btn-pri mt" href="#/katalog">Lihat Katalog</a></div>`;
+};
+Pages['pembelajaran']=(p)=>{
+  const eid=p[1];const e=S.enrollments.get(eid);if(!e)return '<div class="empty">Pendaftaran tidak dijumpai.</div>';
+  if(e.statusPendaftaran!=='DISAHKAN'){return '<div class="glass card"><div class="badge b-warn mb">Pendaftaran belum disahkan.</div></div>';}
+  const c=S.courses.get(e.courseId);
+  const mods=S.modules.forCourse(c.id);
+  return `<a class="btn btn-sm btn-ghost mb" href="#/kursus-saya">← Kursus Saya</a>
+  <div class="grid" style="grid-template-columns:280px 1fr;gap:18px">
+    <div class="glass card"><div class="h3 mb">${esc(c.tajuk)}</div>
+      ${mods.map(m=>{const ls=S.modules.lessons(m);return `<div class="mb"><div class="sm pri" style="font-weight:700">${esc(m.tajuk)}</div>${ls.map(l=>{const pr=DB.progress.find(x=>x.enrollmentId===eid&&x.lessonId===l.id);return `<div class="between" style="padding:6px 0"><div class="sm">${pr&&pr.selesai?'✅':'⬜'} ${esc(l.tajuk)}</div><button class="btn btn-sm btn-ghost" onclick="Pages.playLesson('${eid}','${l.id}','${l.jenisKandungan}','${esc(l.tajuk)}','${l.url}')">Buka</button></div>`;}).join('')}</div>`;}).join('')}
+      <div class="hr"></div>
+      <button class="btn btn-pri" style="width:100%" onclick="R.go('kuiz/${c.id}/${eid}')">📝 Ambil Kuiz</button>
+    </div>
+    <div class="glass-strong card" style="min-height:400px" id="player"><div class="empty">Pilih pelajaran untuk mula.</div></div>
+  </div>`;
+};
+Pages.playLesson=(eid,lid,kind,title,url)=>{
+  const pr=S.progress.toggle(eid,lid);
+  if(kind==='kuiz'){const c=S.enrollments.get(eid);R.go('kuiz/'+c.courseId+'/'+eid);return;}
+  $('#player').innerHTML=`<div class="h2 mb">${esc(title)}</div>
+    ${kind==='video'?`<div class="glass card" style="aspect-ratio:16/9;display:grid;place-items:center;background:rgba(0,0,0,.4)"><div class="center"><div style="font-size:50px">▶️</div><div class="muted">Pemain video (kandungan demo)</div><div class="xs mut">${esc(url)}</div></div></div>`:kind==='pdf'?`<div class="glass card" style="min-height:300px;display:grid;place-items:center"><div class="center"><div style="font-size:50px">📄</div><div class="muted">Dokumen PDF (demo)</div></div></div>`:`<div class="glass card"><p class="muted">Kandungan teks untuk ${esc(title)}.</p></div>`}
+    <div class="row mt"><button class="btn ${pr.selesai?'btn-pri':'btn-ghost'}" onclick="Pages.playLesson('${eid}','${lid}','${kind}','${esc(title)}','${url}')">${pr.selesai?'✅ Selesai':'Tanda Selesai'}</button></div>`;
+};
+Pages['kuiz']=(p)=>{
+  const cid=p[1],eid=p[2];const q=S.quizzes.forCourse(cid)[0];if(!q)return '<div class="empty">Kuiz tidak tersedia.</div>';
+  const e=S.enrollments.get(eid);
+  const u=Auth.user;
+  const attempts=S.quizzes.attemptsFor(u.id,q.id);
+  window.QUIZ_ANS={};
+  App.after=()=>{};
+  return `<a class="btn btn-sm btn-ghost mb" href="javascript:history.back()">← Kembali</a>
+  <div class="glass-strong card"><div class="section-title"><div class="bar"></div><div class="h3">${esc(q.nama)}</div></div>
+    <div class="sm mut mb">Ambang lulus: ${q.skorLulus}% · Percubaan sebelum ini: ${attempts.length}</div>
+    ${q.soalan.map((s,i)=>`<div class="glass card mb"><div class="sm" style="font-weight:700">${i+1}. ${esc(s.soalan)}</div><div class="col mt8">${s.pilihan.map((opt,j)=>`<label class="checkrow" style="margin:0;cursor:pointer"><input type="radio" name="q_${s.id}" value="${j}" onchange="window.QUIZ_ANS['${s.id}']=${j}"><span class="sm">${esc(opt)}</span></label>`).join('')}</div></div>`).join('')}
+    <button class="btn btn-pri" onclick="Pages.submitQuiz('${cid}','${eid}','${q.id}')">Hantar Jawapan</button>
+  </div>`;
+};
+Pages.submitQuiz=(cid,eid,qid)=>{
+  const q=S.quizzes.get(qid);const e=S.enrollments.get(eid);const u=Auth.user;
+  const ans=window.QUIZ_ANS||{};
+  let score=0;q.soalan.forEach(s=>{if(ans[s.id]===s.jawapanBetul)score++;});
+  const pct=Math.round(score/q.soalan.length*100);
+  S.quizzes.attempt({userId:u.id,quizId:qid,enrollmentId:eid,skor:score,skorPct:pct,lulus:pct>=q.skorLulus,answers:Object.assign({},ans)});
+  S.enrollments.upd(eid,{skorAkhir:pct,lulus:pct>=q.skorLulus});
+  audit('Hantar kuiz','Quiz',qid,'Skor '+pct+'%');
+  modal('Keputusan Kuiz',`<div style="text-align:center"><div style="font-size:48px">${pct>=q.skorLulus?'🏆':'📉'}</div><div class="xl">${pct}%</div><div class="muted">${score}/${q.soalan.length} betul · Ambang lulus ${q.skorLulus}%</div><div class="mt"><span class="badge ${pct>=q.skorLulus?'b-ok':'b-bad'}">${pct>=q.skorLulus?'LULUS':'GAGAL'}</span></div><button class="btn btn-pri mt" onclick="closeModal();R.go('kursus-saya')">Selesai</button></div>`);
+};
+Pages['sijil-saya']=()=>{
+  const u=Auth.user;const certs=S.certificates.forUser(u.id);
+  return `<div class="glass card"><div class="section-title"><div class="bar"></div><div class="h3">Sijil Saya (${certs.length})</div></div>
+    ${certs.length?`<div class="grid g2">${certs.map(cer=>{const e=S.enrollments.get(cer.enrollmentId);const s=S.sessions.get(e.sessionId);const c=S.courses.get(e.courseId);return `<div class="glass card"><div class="between mb"><div><div style="font-weight:700">${esc(c.tajuk)}</div><div class="xs mut">${fmtDate(cer.tarikhKeluar)} · ${esc(cer.noSijil)}</div></div><span class="badge ${cer.status==='AKTIF'?'b-ok':'b-bad'}">${cer.status}</span></div>
+      <button class="btn btn-sm btn-pri" onclick="CertUtil.download('${cer.id}')">⬇ Muat Turun e-Sijil</button>
+      <button class="btn btn-sm btn-ghost mt8" onclick="CertUtil.preview('${cer.id}')">👁 Pratonton</button></div>`;}).join('')}</div>`:emptyState('Belum ada sijil. Lengkapkan borang maklum balas selepas program.','🏆')}</div>`;
+};
+CertUtil.preview=(id)=>{const cer=DB.certificates.get(id);if(!cer)return;modal('Pratonton e-Sijil',CertUtil.viewHTML(cer),{w:820});};
+Pages['invois-saya']=()=>{
+  const u=Auth.user;
+  const invs=u.peranan==='MAJIKAN'?S.invoices.forEmployer(u.employerId||''):[...new Set(S.enrollments.forUser(u.id).map(e=>{const i=DB.invoices.find(inv=>inv.enrollmentIds&&inv.enrollmentIds.includes(e.id));return i&&i.id;}))].map(id=>S.invoices.get(id)).filter(Boolean);
+  return `<div class="glass card"><div class="section-title"><div class="bar"></div><div class="h3">Invois & Bukti Bayaran</div></div>
+    ${invs&&invs.length?`<table><thead><tr><th>No. Invois</th><th>Jumlah</th><th>Status Bayaran</th><th>Bukti</th><th>Tindakan</th></tr></thead><tbody>
+    ${invs.map(inv=>{const pp=DB.paymentProofs.find(p=>p.invoiceId===inv.id);return `<tr><td>${esc(inv.noInvois)}</td><td>${fmtMYR(inv.jumlah)}</td><td><span class="badge ${inv.status==='Dibayar'?'b-ok':inv.status==='Menunggu Bukti'?'b-warn':'b-info'}">${inv.status}</span></td><td>${pp?esc(pp.namaFail):'—'}</td><td><button class="btn btn-sm btn-ghost" onclick="Pages.viewInvoice('${inv.id}')">Lihat Invois</button>${!pp&&inv.status==='Menunggu Bukti'?`<button class="btn btn-sm btn-pri" onclick="Pages.uploadProof('${inv.id}')">Muat Naik Bukti</button>`:''}</td></tr>`;}).join('')}
+    </tbody></table>`:emptyState('Tiada invois.','🧾')}
+  </div>`;
+};
+Pages.viewInvoice=(invId)=>{
+  const inv=S.invoices.get(invId);const e=DB.enrollments.find(en=>inv.enrollmentIds&&inv.enrollmentIds.includes(en.id));const s=e?S.sessions.get(e.sessionId):null;const c=e?S.courses.get(e.courseId):null;const bank=DB.settings.bankEdu;
+  modal('Invois '+inv.noInvois,`<div class="glass card"><div class="between"><div><div class="xl">EDU OASIS</div><div class="xs mut">Edu Oasis Training Sdn Bhd · Lot 12, Cyberjaya, Selangor</div></div><div style="text-align:right"><div class="h2">INVOIS</div><div class="xs mut">${esc(inv.noInvois)}</div></div></div>
+  <div class="hr"></div>
+  <div class="grid g2"><div><div class="xs mut">Dibil kepada</div><div style="font-weight:700">${esc(Auth.user.nama)}</div></div><div><div class="xs mut">Program</div><div>${esc(c?c.tajuk:'—')}</div><div class="xs mut mt8">Sesi</div><div>${esc(s?s.kluster:'—')}</div></div></div>
+  <table class="mt"><thead><tr><th>Penerangan</th><th>Jumlah</th></tr></thead><tbody><tr><td>Yuran Latihan — ${esc(c?c.tajuk:'')}</td><td>${fmtMYR(inv.jumlah)}</td></tr><tr><td>SST (0%)</td><td>${fmtMYR(0)}</td></tr><tr><th>Jumlah Bayaran</th><th>${fmtMYR(inv.jumlah)}</th></tr></tbody></table>
+  <div class="glass card mt"><div class="h3 mb">Arahan Pembayaran</div><div class="sm">Sila bayar ke: <b>${esc(bank.bank)}</b> · ${esc(bank.namaPemegang)} · Akaun: <b>${esc(bank.noAkaun)}</b></div><div class="xs mut mt8">Selepas bayar, muat naik bukti pembayaran (PDF/JPG/PNG, maks 5MB, sehingga 3 fail) dalam sistem.</div></div></div>`,{w:620});
+};
+Pages.uploadProof=(invId)=>{
+  const inv=S.invoices.get(invId);
+  modal('Muat Naik Bukti Bayaran',`<div class="field"><label>Nama Fail Bukti (simulasi)</label><input id="up_nama" value="bukti_${esc(inv.noInvois)}.pdf"></div>
+  <div class="grid g2"><div class="field"><label>Tarikh Bayar</label><input type="date" id="up_tkh" value="${todayISO()}"></div>
+  <div class="field"><label>Jumlah (RM)</label><input type="number" id="up_amt" value="${inv.jumlah}"></div></div>
+  <div class="grid g2"><div class="field"><label>Kaedah</label><select id="up_method"><option>Pindahan Bank / IBG</option><option>FPX</option><option>Cek</option><option>Lain-lain</option></select></div>
+  <div class="field"><label>No. Rujukan Transaksi</label><input id="up_ref" value="${genRef('TXN')}"></div></div>
+  <div class="badge b-info">Fail: PDF/JPG/PNG · maks 5MB · sehingga 3 fail (simulasi).</div>
+  <div class="row" style="justify-content:flex-end;margin-top:14px"><button class="btn btn-ghost" onclick="closeModal()">Batal</button><button class="btn btn-pri" onclick="Pages.submitProof('${inv.id}')">Hantar Bukti</button></div>`,{w:560});
+};
+Pages.submitProof=(invId)=>{
+  const inv=S.invoices.get(invId);
+  const pp=S.paymentProofs.add({invoiceId:invId,enrollmentIds:inv.enrollmentIds.slice(),namaFail:$('#up_nama').value,tarikhBayar:$('#up_tkh').value,jumlah:parseFloat($('#up_amt').value),kaedah:$('#up_method').value,rujukanTransaksi:$('#up_ref').value,status:'DITERIMA',disemakOleh:'',sebabTolak:''});
+  inv.status='Bukti Diterima';S.invoices.upd(invId,{status:'Bukti Diterima'});
+  inv.enrollmentIds.forEach(eid=>S.enrollments.upd(eid,{statusBayaran:'BUKTI_DITERIMA',statusPendaftaran:'BUKTI_DITERIMA'}));
+  audit('Muat naik bukti bayaran','PaymentProof',pp.id);
+  closeModal();toast('Bukti bayaran dihantar untuk semakan.','ok');R.go('invois-saya');
+};
+Pages['borang-kehadiran']=(p)=>{
+  // Public-ish: reachable via token; participant confirms attendance
+  const token=p[1];const s=DB.sessions.find(x=>x.borangKehadiranToken===token)||S.sessions.get(token);
+  if(!s){return `<div class="glass card"><div class="empty">Pautan borang kehadiran tidak sah.</div><a class="btn btn-ghost" href="#/dashboard">Papan Pemuka</a></div>`;}
+  const c=S.courses.get(s.courseId);
+  const u=Auth.user;
+  return `<div class="glass-strong card" style="max-width:620px;margin:0 auto"><div class="center"><div style="font-size:40px">📋</div><div class="h2">Borang Pendaftaran Kehadiran</div></div>
+    <div class="sm mut" style="text-align:center;margin-bottom:14px">${esc(c.tajuk)} · ${esc(s.kluster)} · ${fmtDate(s.tarikhMula)}</div>
+    <div class="field"><label>Nama Penuh (seperti pada e-sijil)</label><input id="at_nama" value="${esc(u?u.nama:'')}"></div>
+    <div class="grid g2"><div class="field"><label>No. KP / Pasport</label><input id="at_kp" value="${esc(u?u.noKP||'':'')}"></div><div class="field"><label>Emel</label><input id="at_emel" value="${esc(u?u.emel||'':'')}"></div></div>
+    <div class="grid g2"><div class="field"><label>Telefon</label><input id="at_tel" value="${esc(u?u.telefon||'':'')}"></div><div class="field"><label>Syarikat/Jawatan</label><input id="at_jaw" value="${esc(u?u.jawatan||'':'')}"></div></div>
+    <div class="badge b-warn mb">⚠ Sila semak ejaan nama — ia akan dicetak pada e-sijil.</div>
+    <div class="checkrow"><input type="checkbox" class="checkbox" id="at_akuan"><label for="at_akuan" style="margin:0">Saya akui hadir pada program ini hari ini.</label></div>
+    <button class="btn btn-pri" style="width:100%" onclick="Pages.submitAttendance('${s.id}')">Sahkan Kehadiran</button>
+  </div>`;
+};
+Pages.submitAttendance=(sid)=>{
+  if(!$('#at_akuan').checked){toast('Sila akui kehadiran','warn');return;}
+  const s=S.sessions.get(sid);const u=Auth.user;
+  const en=u?DB.enrollments.find(e=>e.userId===u.id&&e.sessionId===sid):null;
+  const late=new Date().getHours()>10;
+  const a=S.attendance.add({enrollmentId:en?en.id:'',sessionId:sid,sessionDate:s.tarikhMula,status:'HADIR',namaDiSijil:$('#at_nama').value,noKP:$('#at_kp').value,emel:$('#at_emel').value,telefon:$('#at_tel').value,syarikat:$('#at_jaw').value,jawatan:$('#at_jaw').value,sumber:en?'BORANG':'WALK_IN',dilarasOleh:''});
+  if(en){en.kehadiranPeratus=100;S.enrollments.upd(en.id,{kehadiranPeratus:100});}
+  audit('Sahkan kehadiran','Attendance',a.id);
+  toast('Kehadiran direkodkan. '+ (en?'':'Anda walk-in — admin akan semak.'),'ok');
+  if(en){R.go('borang-maklum-balas/'+en.id);}else{R.go('dashboard');}
+};
+Pages['borang-maklum-balas']=(p)=>{
+  const eid=p[1];const e=S.enrollments.get(eid);if(!e)return '<div class="empty">Pendaftaran tidak dijumpai.</div>';
+  const s=S.sessions.get(e.sessionId);const c=S.courses.get(e.courseId);
+  if(s.status!=='tamat'){return `<div class="glass card"><div class="badge b-warn mb">Borang maklum balas tersedia selepas program tamat.</div></div>`;}
+  if(DB.feedbackResponses.find(f=>f.enrollmentId===eid)){return `<div class="glass card"><div class="badge b-ok mb">Anda telah mengisi borang maklum balas.</div><a class="btn btn-ghost" href="#/sijil-saya">Lihat Sijil Saya →</a></div>`;}
+  const tpl=S.feedbackTemplate.get();
+  App.after=()=>{};
+  return `<div class="glass-strong card"><div class="center"><div style="font-size:34px">📝</div><div class="h2">Borang Maklum Balas</div></div>
+    <div class="sm mut" style="text-align:center;margin:8px 0 14px">${esc(c.tajuk)} · ${esc(s.kluster)}</div>
+    <div class="h3 mb">Penilaian Aspek (skala 1–5)</div>
+    <table><thead><tr><th>Aspek</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th></tr></thead><tbody>
+    ${tpl.aspek.map(a=>`<tr><td>${esc(a.l)}</td>${[1,2,3,4,5].map(n=>`<td style="text-align:center"><input type="radio" name="fb_${a.k}" value="${n}" style="width:auto" required></td>`).join('')}</tr>`).join('')}
+    </tbody></table>
+    <div class="field mt"><label>Skor Kesediaan Mengesyorkan (0–10)</label><input type="range" id="fb_rec" min="0" max="10" value="8" oninput="$('#fb_rec_v').textContent=this.value"><div class="sm">Skor: <b id="fb_rec_v">8</b>/10</div></div>
+    ${tpl.soalanTerbuka.map(q=>`<div class="field"><label>${esc(q.l)}</label><textarea id="fb_${q.k}" rows="2"></textarea></div>`).join('')}
+    <div class="badge b-info mb">Sebaik borang dihantar, e-sijil anda akan dijana secara automatik (jika kelayakan dipenuhi).</div>
+    <button class="btn btn-pri" style="width:100%" onclick="Pages.submitFeedback('${eid}')">Hantar & Jana E-Sijil</button>
+  </div>`;
+};
+Pages.submitFeedback=(eid)=>{
+  const e=S.enrollments.get(eid);const tpl=S.feedbackTemplate.get();
+  const skorAspek={};tpl.aspek.forEach(a=>{const r=document.querySelector(`input[name="fb_${a.k}"]:checked`);if(!r){toast('Sila jawab semua aspek','warn');return;}skorAspek[a.k]=parseInt(r.value);});
+  if(Object.keys(skorAspek).length<tpl.aspek.length){return;}
+  const komenTerbuka={};tpl.soalanTerbuka.forEach(q=>komenTerbuka[q.k]=$('#fb_'+q.k).value);
+  const r=S.feedbackResponses.add({enrollmentId:eid,sessionId:e.sessionId,skorAspek,komenTerbuka,skorRekomen:parseInt($('#fb_rec').value)});
+  // refresh report
+  const fr=S.feedbackReports.ensure(e.sessionId,null);
+  const all=DB.feedbackResponses.filter(f=>f.sessionId===e.sessionId);
+  fr.statistik={bilanganRespons:all.length};
+  S.feedbackReports.upd(fr.id,{statistik:fr.statistik});
+  audit('Hantar maklum balas','FeedbackResponse',r.id);
+  // auto-issue certificate
+  const cer=issueCertificateIfEligible(eid);
+  if(cer){
+    audit('Jana e-sijil automatik','Certificate',cer.id);
+    modal('🎉 E-Sijil Dijana!',`<div style="text-align:center"><div style="font-size:50px">🏆</div><div class="h2">Tahniah!</div><p class="muted">Borang maklum balas anda telah dihantar dan e-sijil dijana secara automatik.</p>${CertUtil.viewHTML(cer)}<div class="row" style="justify-content:center;margin-top:14px"><button class="btn btn-pri" onclick="CertUtil.download('${cer.id}')">⬇ Muat Turun e-Sijil</button><button class="btn btn-ghost" onclick="closeModal();R.go('sijil-saya')">Lihat di Sijil Saya</button></div></div>`,{w:820});
+  }else{
+    toast('Maklum balas dihantar. E-sijil tertangguh (kehadiran < ambang).','warn');
+    R.go('kursus-saya');
+  }
+};
+Pages['profil']=()=>{
+  const u=Auth.user;const full=S.users.get(u.id);
+  return `<div class="glass card"><div class="section-title"><div class="bar"></div><div class="h3">Profil Pengguna</div></div>
+    <div class="grid g2">
+      <div class="field"><label>Nama</label><input id="p_nama" value="${esc(full.nama)}"></div>
+      <div class="field"><label>Emel</label><input value="${esc(full.emel)}" disabled></div>
+      <div class="field"><label>No. KP / Pasport</label><input value="${esc(maskKP(full.noKP))}" disabled></div>
+      <div class="field"><label>Telefon</label><input id="p_tel" value="${esc(full.telefon||'')}"></div>
+      <div class="field"><label>Jawatan</label><input id="p_jaw" value="${esc(full.jawatan||'')}"></div>
+      <div class="field"><label>Peranan</label><input value="${full.peranan}" disabled></div>
+    </div>
+    <button class="btn btn-pri" onclick="Pages.saveProfile('${full.id}')">Simpan</button>
+    <div class="hr mt"></div>
+    <div class="h3 mb">Keselamatan & Privasi</div>
+    <div class="sm muted">• Persetujuan PDPA direkodkan. No. KP dimasking dalam paparan umum.<br>• Pada produksi: pengesahan dua faktor (2FA) untuk Admin & Kewangan, hashing kata laluan Argon2/bcrypt.</div>
+  </div>`;
+};
+Pages.saveProfile=(id)=>{S.users.upd(id,{nama:$('#p_nama').value,telefon:$('#p_tel').value,jawatan:$('#p_jaw').value});const s=Auth.user;s.nama=$('#p_nama').value;Auth.user=s;toast('Profil disimpan','ok');};
+
+/* ===== MAJIKAN pages ===== */
+Pages['daftar-kumpulan']=()=>{
+  const u=Auth.user;const emp=u.employerId?S.employers.get(u.employerId):null;
+  App.after=()=>{Pages.refreshGroupSessions();};
+  return `<div class="glass-strong card"><div class="section-title"><div class="bar"></div><div class="h2">Daftar Kumpulan Pekerja</div></div>
+    <div class="sm muted mb">Pilih kursus & sesi, pilih jalur yuran (NON-HRD / HRD Claimable), kemudian tambah peserta secara manual atau muat naik CSV.</div>
+    <div class="grid g2">
+      <div class="field"><label>Kursus</label><select id="g_crs" onchange="Pages.refreshGroupSessions()">${DB.courses.filter(c=>c.statusPublish).map(c=>`<option value="${c.id}">${esc(c.tajuk)}</option>`).join('')}</select></div>
+      <div class="field"><label>Sesi / Kohort</label><select id="g_ses"></select></div>
+    </div>
+    <div id="g_track"></div>
+    <div class="hr"></div>
+    <div class="h3 mb">Senarai Peserta</div>
+    <div class="row mb"><input id="g_csv" type="file" accept=".csv" onchange="Pages.parseCSV(this)"><button class="btn btn-sm btn-ghost" onclick="Pages.addManualRow()">➕ Tambah Manual</button></div>
+    <table id="g_tbl"><thead><tr><th>Nama</th><th>No. KP</th><th>Emel</th><th>Jawatan</th><th></th></tr></thead><tbody id="g_body"><tr><td colspan="5" class="muted" style="text-align:center">Tambah peserta atau muat naik CSV.</td></tr></tbody></table>
+    <div class="row" style="justify-content:flex-end;margin-top:14px"><button class="btn btn-pri" onclick="Pages.submitGroup('${emp?emp.id:''}')">Hantar Pendaftaran</button></div>
+    <div class="xs mut mt">Format CSV: <span class="kbd">nama,noKP,emel,jawatan</span> (header pertama baris). Bil. peserta boleh sehingga kuota sesi.</div>
+  </div>`;
+};
+Pages.refreshGroupSessions=()=>{
+  const cid=$('#g_crs').value;const c=S.courses.get(cid);
+  const u=Auth.user;const emp=u.employerId?S.employers.get(u.employerId):null;
+  const ss=S.sessions.forCourse(cid).filter(s=>s.status!=='tamat'&&S.enrollments.forSession(s.id).length<s.kuota);
+  $('#g_ses').innerHTML=ss.length?ss.map(s=>`<option value="${s.id}">${esc(s.kluster)} — ${fmtDate(s.tarikhMula)} (${s.kuota-S.enrollments.forSession(s.id).length} tempat)</option>`).join(''):'<option>Tiada sesi</option>';
+  const nonActive=c.jalurNonHRDAktif,hrdActive=c.layakTuntutanETRiS&&c.jalurHRDAktif;
+  $('#g_track').innerHTML=`<div class="grid g2 mt"><div class="field"><label>Jalur Yuran</label><select id="g_jalur">${nonActive?'<option value="NON_HRD">NON-HRD ('+fmtMYR(c.yuranNonHRD)+' setiap peserta)</option>':''}${hrdActive?'<option value="HRD">HRD Claimable ('+fmtMYR(c.yuranHRD)+' setiap peserta)</option>':''}</select></div>
+  <div class="field"><label>Maklumat Majikan</label><div class="sm muted">${emp?esc(emp.namaSyarikat)+' · '+esc(emp.noSSM):'(akan diisi)'} · HRD: ${emp?esc(emp.idMajikanHRDCorp||'—'):'—'}</div></div></div>`;
+};
+Pages.parseCSV=(input)=>{
+  const f=input.files[0];if(!f)return;const r=new FileReader();
+  r.onload=()=>{const lines=r.result.split(/\r?\n/).filter(l=>l.trim());const body=$('#g_body');body.innerHTML='';
+  let start=0;if(lines[0]&&/nama/i.test(lines[0])&&/noKP/i.test(lines[0]))start=1;
+  for(let i=start;i<lines.length;i++){const c=lines[i].split(',').map(x=>x.trim());Pages.addRow(c[0]||'',c[1]||'',c[2]||'',c[3]||'');}
+  toast(lines.length-start+' peserta diimport','ok');};
+  r.readAsText(f);
+};
+Pages.addManualRow=()=>Pages.addRow('','','','');
+Pages.addRow=(n,k,e,j)=>{
+  const rid=uid('r');
+  $('#g_body').insertAdjacentHTML('beforeend',`<tr id="${rid}"><td><input value="${esc(n)}"></td><td><input value="${esc(k)}"></td><td><input value="${esc(e)}"></td><td><input value="${esc(j)}"></td><td><button class="btn btn-sm btn-bad" onclick="document.getElementById('${rid}').remove()">✕</button></td></tr>`);
+};
+Pages.submitGroup=(empId)=>{
+  const cid=$('#g_crs').value,sid=$('#g_ses').value,jalur=$('#g_jalur').value;
+  if(!sid){toast('Pilih sesi','warn');return;}
+  const c=S.courses.get(cid);const s=S.sessions.get(sid);
+  const rows=$$('#g_body tr');const pax=[];
+  rows.forEach(r=>{const inp=r.querySelectorAll('input');if(inp.length>=4&&inp[0].value.trim())pax.push({nama:inp[0].value.trim(),noKP:inp[1].value.trim(),emel:inp[2].value.trim(),jawatan:inp[3].value.trim()});});
+  if(!pax.length){toast('Tambah sekurang-kurangnya satu peserta','warn');return;}
+  const taken=S.enrollments.forSession(sid).length;
+  if(taken+pax.length>s.kuota){toast('Kuota tidak mencukupi ('+(s.kuota-taken)+' tempat tinggal)','warn');return;}
+  if(jalur==='HRD'){
+    const curEmp=Auth.user.employerId?S.employers.get(Auth.user.employerId):null;
+    const eid=empId||(curEmp?curEmp.id:S.employers.add({namaSyarikat:curEmp?curEmp.namaSyarikat:'Majikan',noSSM:curEmp?curEmp.noSSM:'DUMMY (simulasi)',idMajikanHRDCorp:'HRD-DUMMY',picNama:Auth.user.nama,picEmel:Auth.user.emel,bakiLevi:0}).id);
+    const hr=S.hrdRequests.add({noRujukan:genRef('HRD'),employerId:eid,courseId:cid,sessionId:sid,bilPeserta:pax.length,status:'Permintaan Baharu',adminDitugasan:'',tempatDipegangHingga:daysFrom(now(),7),hasilSemakanLevi:'',catatanLevi:'',tarikhHantarHRD:null,rujukanHRDCorp:'',keputusan:''});
+    pax.forEach(px=>S.enrollments.add({userId:Auth.user.id,sessionId:sid,courseId:cid,employerId:eid,jalurYuran:'HRD',yuranDikenakan:c.yuranHRD,statusBayaran:'DISAHKAN',statusPendaftaran:'HRD_PROSES',hrdRequestId:hr.id,kehadiranPeratus:0,namaPesertaCsv:px.nama,noKPCsv:px.noKP,emelCsv:px.emel,jawatanCsv:px.jawatan}));
+    S.hrdMessages.add({requestId:hr.id,pengirim:'majikan',mesej:'Pendaftaran kumpulan '+pax.length+' peserta. Sila hubungi admin.',ts:now()});
+    audit('Daftar kumpulan HRD','HRDRequest',hr.id);
+    toast('Permohonan HRD dicipta untuk '+pax.length+' peserta. Hubungi admin.','ok');R.go('permohonan-hrd');
+  }else{
+    const total=pax.length*c.yuranNonHRD;
+    const enIds=[];const eid=empId||null;
+    pax.forEach(px=>{const en=S.enrollments.add({userId:Auth.user.id,sessionId:sid,courseId:cid,employerId:eid,jalurYuran:'NON_HRD',yuranDikenakan:c.yuranNonHRD,statusBayaran:'MENUNGGU_BUKTI',statusPendaftaran:'MENUNGGU_BUKTI',kehadiranPeratus:0,namaPesertaCsv:px.nama,noKPCsv:px.noKP,emelCsv:px.emel,jawatanCsv:px.jawatan});enIds.push(en.id);});
+    const inv=S.invoices.add({noInvois:genRef('INV'),employerId:eid,userId:Auth.user.id,sessionId:sid,jumlah:total,cukai:0,status:'Menunggu Bukti',enrollmentIds:enIds});
+    audit('Daftar kumpulan NON-HRD','Invoice',inv.id);
+    toast('Pendaftaran '+pax.length+' peserta. Invois dijana.','ok');R.go('invois-saya');
+  }
+};
+Pages['permohonan-hrd']=()=>{
+  const u=Auth.user;const emp=u.employerId?S.employers.get(u.employerId):null;
+  const list=emp?DB.hrdRequests.filter(h=>h.employerId===emp.id):[];
+  return `<div class="glass card"><div class="section-title"><div class="bar"></div><div class="h3">Permohonan HRD (${list.length})</div></div>
+    ${list.length?`<table><thead><tr><th>No. Rujukan</th><th>Kursus</th><th>Bil. Peserta</th><th>Status</th><th>Tindakan</th></tr></thead><tbody>
+    ${list.map(h=>`<tr><td>${esc(h.noRujukan)}</td><td>${esc(S.courses.get(h.courseId).tajuk)}</td><td>${h.bilPeserta}</td><td>${bh(h.status)}</td><td><button class="btn btn-sm btn-ghost" onclick="Pages.viewHRD('${h.id}')">Buka</button></td></tr>`).join('')}
+    </tbody></table>`:emptyState('Tiada permohonan HRD. Mulakan dari daftar kumpulan (jalur HRD).','📨')}</div>`;
+};
+Pages.viewHRD=(hid)=>{
+  const h=S.hrdRequests.get(hid);const emp=S.employers.get(h.employerId);const c=S.courses.get(h.courseId);const ac=DB.settings.adminContact;
+  const msgs=S.hrdRequests.messages(hid);const docs=S.hrdRequests.docs(hid);
+  modal('Permohonan HRD '+h.noRujukan,`<div class="between mb"><div><div class="h3">${esc(c.tajuk)}</div><div class="xs mut">${esc(emp.namaSyarikat)} · HRD: ${esc(emp.idMajikanHRDCorp)}</div></div>${bh(h.status)}</div>
+    <div class="glass card mb"><div class="h3 mb">Panel Hubungi Admin</div>
+      <div class="row mb"><a class="btn btn-sm btn-pri" href="https://wa.me/${ac.wa.replace(/[^0-9]/g,'')}" target="_blank">💬 WhatsApp</a><a class="btn btn-sm" href="mailto:${ac.emel}">✉ Emel</a><a class="btn btn-sm btn-ghost" href="tel:${ac.tel}">📞 ${esc(ac.tel)}</a></div>
+      <div class="badge b-warn mb">Pendaftaran belum disahkan. Tiada pembayaran perlu dibuat sehingga kelulusan HRD Corp.</div>
+      <div class="xs mut">Tempat dipegang sementara sehingga ${fmtDate(h.tempatDipegangHingga)}.</div>
+    </div>
+    <div class="grid g2 mb">
+      <div class="glass card"><div class="h3 mb">Semakan Geran Levi</div><div class="sm muted">${esc(h.hasilSemakanLevi||'Belum disemak oleh admin')}</div>${h.catatanLevi?`<div class="xs mut mt8">${esc(h.catatanLevi)}</div>`:''}</div>
+      <div class="glass card"><div class="h3 mb">Kelulusan HRD Corp</div><div class="sm muted">Tarikh hantar: ${fmtDate(h.tarikhHantarHRD)||'—'}</div><div class="sm muted">Rujukan HRD Corp: ${esc(h.rujukanHRDCorp||'—')}</div><div class="sm mt8">Keputusan: <b>${esc(h.keputusan||'—')}</b></div></div>
+    </div>
+    <div class="glass card mb"><div class="h3 mb">Dokumen Sokongan</div>${docs.length?`<table><thead><tr><th>Dokumen</th><th>Tarikh</th></tr></thead><tbody>${docs.map(d=>`<tr><td>${esc(d.jenisDokumen)} — ${esc(d.namaFail)}</td><td>${fmtDate(d.ts)}</td></tr>`).join('')}</tbody></table>`:'<div class="muted sm">Tiada dokumen lagi.</div>'}
+      <button class="btn btn-sm mt8" onclick="Pages.uploadHRDDoc('${h.id}')">Muat Naik Dokumen Diminta</button></div>
+    <div class="glass card"><div class="h3 mb">Mesej dalam Sistem</div>
+      <div style="max-height:160px;overflow:auto;margin-bottom:10px">${msgs.map(m=>`<div class="sm ${m.pengirim==='admin'?'pri':'accent'}" style="margin:6px 0"><b>${m.pengirim}:</b> ${esc(m.mesej)} <span class="xs mut">· ${fmtDateTime(m.ts)}</span></div>`).join('')||'<div class="muted sm">Tiada mesej.</div>'}</div>
+      <div class="row"><input id="hm_msg" placeholder="Taip mesej…"><button class="btn btn-sm btn-pri" onclick="Pages.sendHRDMsg('${h.id}')">Hantar</button></div>
+    </div>
+    <button class="btn btn-ghost" onclick="closeModal()">Tutup</button>`,{w:780});
+};
+Pages.uploadHRDDoc=(hid)=>{modal('Muat Naik Dokumen',`<div class="field"><label>Jenis Dokumen</label><select id="hd_jenis"><option>Invois Proforma</option><option>Senarai Peserta</option><option>Atur Cara Kursus</option><option>Profil Jurulatih</option><option>Lain-lain</option></select></div><div class="field"><label>Nama Fail (simulasi)</label><input id="hd_nama" value="dokumen_${genRef('D')}.pdf"></div><button class="btn btn-pri" onclick="Pages.submitHRDDoc('${hid}')">Muat Naik</button><button class="btn btn-ghost" onclick="closeModal()">Batal</button>`,{w:480});};
+Pages.submitHRDDoc=(hid)=>{const j=$('#hd_jenis').value,n=$('#hd_nama').value;S.hrdRequests.addDoc({requestId:hid,jenisDokumen:j,namaFail:n});audit('Muat naik dokumen HRD','HRDDocument',hid);closeModal();toast('Dokumen dimuat naik','ok');Pages.viewHRD(hid);};
+Pages.sendHRDMsg=(hid)=>{const m=$('#hm_msg').value.trim();if(!m)return;S.hrdRequests.addMsg({requestId:hid,pengirim:'majikan',mesej:m});closeModal();Pages.viewHRD(hid);};
+Pages['pekerja']=()=>{
+  const u=Auth.user;const emp=u.employerId?S.employers.get(u.employerId):null;
+  if(!emp)return '<div class="empty">Akaun tidak dipautkan.</div>';
+  const ens=S.enrollments.forEmployer(emp.id);
+  const paxMap={};ens.forEach(e=>{const key=e.namaPesertaCsv||e.emelCsv||e.userId;paxMap[key]=(paxMap[key]||[]);paxMap[key].push(e);});
+  return `<div class="glass card"><div class="section-title"><div class="bar"></div><div class="h3">Pekerja & Kemajuan Latihan</div></div>
+    <table><thead><tr><th>Nama</th><th>No. KP</th><th>Kursus</th><th>Kemajuan</th><th>Kehadiran</th><th>Status</th></tr></thead><tbody>
+    ${ens.map(e=>{const c=S.courses.get(e.courseId);const prog=S.progress.forEnrollment(e.id);const tot=S.modules.allLessons(c.id).length;const done=prog.filter(p=>p.selesai).length;const pct=tot?Math.round(done/tot*100):0;return `<tr><td>${esc(e.namaPesertaCsv||S.users.get(e.userId).nama)}</td><td>${esc(maskKP(e.noKPCsv||S.users.get(e.userId).noKP))}</td><td>${esc(c.tajuk)}</td><td><div class="progress" style="width:80px"><span style="width:${pct}%"></span></div> ${pct}%</td><td>${e.kehadiranPeratus||0}%</td><td>${be(e.statusPendaftaran)}</td></tr>`;}).join('')}
+    </tbody></table>
+  </div>`;
+};
+Pages['tuntutan']=()=>{
+  const u=Auth.user;const emp=u.employerId?S.employers.get(u.employerId):null;
+  if(!emp)return '<div class="empty">Akaun tidak dipautkan.</div>';
+  const claims=DB.claimCases.filter(c=>c.employerId===emp.id);
+  return `<div class="glass card"><div class="section-title"><div class="bar"></div><div class="h3">Status Tuntutan e-TRiS (${claims.length})</div></div>
+    ${claims.length?`<table><thead><tr><th>No. Rujukan</th><th>Sesi</th><th>Tarikh Akhir</th><th>Status</th><th>Dokumen</th></tr></thead><tbody>
+    ${claims.map(c=>{const s=S.sessions.get(c.sessionId);const crs=S.courses.get(s.courseId);const docs=S.claimCases.documents(c.id);const done=docs.filter(d=>d.status==='Lengkap').length;return `<tr><td>${esc(c.rujukanETRiS)}</td><td>${esc(crs.tajuk)}<div class="xs mut">${esc(s.kluster)}</div></td><td>${fmtDate(c.tarikhAkhir)}</td><td>${bc(c.status)}</td><td>${done}/${docs.length} lengkap</td></tr>`;}).join('')}
+    </tbody></table>`:emptyState('Tiada kes tuntutan. Dicipta automatik selepas permohonan HRD diluluskan.','💼')}
+  </div>`;
+};
+
+/* ===== JURULATIH pages ===== */
+Pages['sesi-saya']=()=>{
+  const u=Auth.user;const tp=S.trainers.forUser(u.id);if(!tp)return '<div class="empty">Profil jurulatih tidak dijumpai.</div>';
+  const ss=DB.sessions.filter(s=>s.jurulatihId===tp.id);
+  return `<div class="glass card"><div class="section-title"><div class="bar"></div><div class="h3">Sesi Saya (${ss.length})</div></div>
+    <table><thead><tr><th>Kursus</th><th>Kluster</th><th>Tarikh</th><th>Status</th><th>Tindakan</th></tr></thead><tbody>
+    ${ss.map(s=>{const c=S.courses.get(s.courseId);return `<tr><td>${esc(c.tajuk)}</td><td>${esc(s.kluster)}</td><td>${fmtDate(s.tarikhMula)}</td><td>${bs(s.status)}</td><td><button class="btn btn-sm btn-ghost" onclick="R.go('kehadiran')">Kehadiran</button>${s.status==='tamat'?'<button class="btn btn-sm btn-ghost" onclick="R.go(\'laporan-maklum-balas\')">Laporan</button>':''}</td></tr>`;}).join('')}
+    </tbody></table></div>`;
+};
+Pages['kehadiran']=()=>{
+  const u=Auth.user;const tp=S.trainers.forUser(u.id);
+  const ss=DB.sessions.filter(s=>s.jurulatihId===tp.id);
+  const sel=$('#k_sel')?$('#k_sel').value:(ss[0]?ss[0].id:'');
+  const s=S.sessions.get(sel);
+  const att=s?S.attendance.forSession(s.id):[];
+  App.after=()=>{const el=$('#k_sel');if(el)el.onchange=()=>App.render();};
+  return `<div class="glass card"><div class="section-title"><div class="bar"></div><div class="h3">Senarai Kehadiran</div></div>
+    <div class="field"><label>Sesi</label><select id="k_sel">${ss.map(x=>`<option value="${x.id}" ${x.id===sel?'selected':''}>${esc(S.courses.get(x.courseId).tajuk)} — ${esc(x.kluster)}</option>`).join('')}</select></div>
+    ${s?`<div class="row mb"><div class="badge b-info">Pautan Borang Kehadiran: <span class="kbd">#/borang-kehadiran/${esc(s.borangKehadiranToken)}</span></div><button class="btn btn-sm" onclick="Pages.showQR('${s.id}')">Tunjuk QR</button></div>
+      <table><thead><tr><th>Nama</th><th>No. KP</th><th>Jawatan</th><th>Status</th><th>Sumber</th></tr></thead><tbody>
+      ${att.length?att.map(a=>`<tr><td>${esc(a.namaDiSijil)}</td><td>${esc(maskKP(a.noKP))}</td><td>${esc(a.jawatan)}</td><td><span class="badge ${a.status==='HADIR'?'b-ok':a.status==='LEWAT'?'b-warn':'b-bad'}">${a.status}</span></td><td>${a.sumber}</td></tr>`).join(''):emptyState('Belum ada rekod kehadiran.','📋')}
+      </tbody></table>`:''}
+  </div>`;
+};
+Pages.showQR=(sid)=>{const s=S.sessions.get(sid);const url=location.origin+location.pathname+'#/borang-kehadiran/'+s.borangKehadiranToken;
+  // simple deterministic QR-like grid
+  let g='';const seed=s.borangKehadiranToken;for(let i=0;i<25;i++){let row='';for(let j=0;j<25;j++){const v=(seed.charCodeAt((i*25+j)%seed.length)+i*j)%3;row+=v<2?'<td style="background:#04141d"></td>':'<td></td>';}g+='<tr>'+row+'</tr>';}
+  modal('QR Borang Kehadiran',`<div style="text-align:center"><table style="margin:0 auto;border-collapse:collapse;border:8px solid #fff;background:#fff">${g}</table><div class="xs mut mt8">Pautan: <span class="kbd">${esc(url)}</span></div><button class="btn btn-sm btn-ghost mt8" onclick="navigator.clipboard&&navigator.clipboard.writeText('${url.replace(/'/g,"\\'")}');toast('Disalin','ok')">Salin Pautan</button></div>`,{w:420});};
+Pages['laporan-maklum-balas']=()=>{
+  const u=Auth.user;const tp=S.trainers.forUser(u.id);
+  const reports=DB.feedbackReports.filter(f=>f.trainerId===tp.id);
+  return `<div class="glass card"><div class="section-title"><div class="bar"></div><div class="h3">Laporan Maklum Balas</div></div>
+    <div class="sm muted mb">Laporan hanya dipaparkan selepas admin semak dan lepaskan. Komen ditunjukkan tanpa nama peserta.</div>
+    ${reports.length?reports.map(f=>{const s=S.sessions.get(f.sessionId);const c=S.courses.get(s.courseId);const released=f.status==='Dilepaskan kepada Jurulatih';return `<div class="glass card mb"><div class="between"><div><div style="font-weight:700">${esc(c.tajuk)}</div><div class="xs mut">${esc(s.kluster)} · ${fmtDate(s.tarikhTamat)}</div></div><span class="badge ${released?'b-ok':'b-warn'}">${f.status}</span></div>
+      ${released?`<div class="hr"></div><div class="sm"><b>Respons:</b> ${f.statistik.bilanganRespons||0} peserta</div>
+        <div class="sm mt8"><b>Sentimen:</b> 👍 ${f.sentimen.positif} positif · 😐 ${f.sentimen.neutral} neutral · 👎 ${f.sentimen.negatif} negatif</div>
+        <div class="sm mt8"><b>Ringkasan Eksekutif:</b> ${esc(f.ringkasan||'—')}</div>
+        ${f.tema.length?`<div class="sm mt8"><b>Tema:</b> ${f.tema.map(t=>`<span class="tag">${esc(t.t)} (${t.s})</span>`).join(' ')}</div>`:''}
+        <div class="row mt"><button class="btn btn-sm btn-pri" onclick="Pages.ackReport('${f.id}')">${f.diakuiOleh?'✓ Diakui':'Akui Laporan'}</button></div>`:'<div class="muted sm mt8">Menunggu pelepasan admin.</div>'}
+    </div>`;}).join(''):emptyState('Tiada laporan lagi.','📊')}</div>`;
+};
+Pages.ackReport=(fid)=>{S.feedbackReports.upd(fid,{diakuiOleh:Auth.user.emel});toast('Laporan diakui','ok');R.go('laporan-maklum-balas');};
+Pages['portal-jurulatih']=()=>{
+  const u=Auth.user;const tp=S.trainers.forUser(u.id);if(!tp)return '<div class="empty">Profil jurulatih tidak dijumpai.</div>';
+  const docs=S.trainers.docs(tp.id);const bank=S.trainers.bank(tp.id);
+  const sessions=DB.sessions.filter(s=>s.jurulatihId===tp.id);
+  const readiness=[
+    ['Profil',tp.statusProfil==='Diluluskan'],
+    ['Gambar Profil',tp.statusGambar==='Diluluskan'],
+    ['Course Plan',docs.some(d=>d.jenis==='COURSE_PLAN'&&d.status==='Diluluskan')],
+    ['Session Plan',docs.some(d=>d.jenis==='SESSION_PLAN'&&d.status==='Diluluskan')],
+    ['Akaun Bank',!!bank],
+  ];
+  return `<div class="glass card mb"><div class="section-title"><div class="bar"></div><div class="h3">Senarai Semak Kesediaan</div></div>
+    <div class="grid auto">${readiness.map(r=>`<div class="glass card"><div class="between"><div class="sm">${r[0]}</div><span class="badge ${r[1]?'b-ok':'b-warn'}">${r[1]?'Lengkap':'Belum'}</span></div></div>`).join('')}</div></div>
+  <div class="grid g2">
+    <div class="glass card"><div class="section-title"><div class="bar"></div><div class="h3">Profil & Gambar</div></div>
+      <div class="field"><label>Bio</label><textarea id="t_bio" rows="3">${esc(tp.bio)}</textarea></div>
+      <div class="grid g2"><div class="field"><label>Kepakaran</label><input id="t_kep" value="${esc(tp.kepakaran.join(', '))}"></div><div class="field"><label>Pengalaman (tahun)</label><input id="t_exp" type="number" value="${tp.pengalaman}"></div></div>
+      <div class="field"><label>Gambar Profil (URL/nama fail simulasi)</label><input id="t_img" value="${esc(tp.gambarUrl)}" placeholder="gambar_profil.jpg"></div>
+      <div class="sm">Status gambar: <span class="badge ${tp.statusGambar==='Diluluskan'?'b-ok':'b-warn'}">${tp.statusGambar}</span></div>
+      <button class="btn btn-pri mt8" onclick="Pages.saveTrainerProfile('${tp.id}')">Simpan Profil</button>
+    </div>
+    <div class="glass card"><div class="section-title"><div class="bar"></div><div class="h3">Butiran Akaun Bank Honorarium</div></div>
+      <div class="field"><label>Nama Bank</label><select id="b_bank">${SeedData.banks.map(b=>`<option ${bank&&bank.namaBank===b?'selected':''}>${b}</option>`).join('')}</select></div>
+      <div class="field"><label>Nama Pemegang Akaun</label><input id="b_nama" value="${esc(bank?bank.namaPemegang:tp.nama)}"></div>
+      <div class="field"><label>No. Akaun</label><input id="b_no" value="${esc(bank?bank.noAkaun:'')}" placeholder="************1234 (ditapis bertopeng)"></div>
+      <div class="xs mut mb">⚠ No. akaun disulitkan & dipaparkan bertopeng (cth. •••••• 1234). Setiap akses dicatat dalam log audit.</div>
+      <button class="btn btn-pri" onclick="Pages.saveBank('${tp.id}')">Simpan Akaun Bank</button>
+    </div>
+  </div>
+  <div class="glass card mt"><div class="section-title"><div class="bar"></div><div class="h3">Dokumen Kursus (Course Plan / Session Plan)</div></div>
+    <table><thead><tr><th>Jenis</th><th>Sesi/Kursus</th><th>Versi</th><th>Status</th><th>Komen Admin</th><th>Tindakan</th></tr></thead><tbody>
+    ${docs.length?docs.map(d=>`<tr><td>${d.jenis}</td><td>${esc(d.sessionId?S.sessions.get(d.sessionId).kluster:S.courses.get(d.courseId).kod)}</td><td>${d.versi}</td><td><span class="badge ${d.status==='Diluluskan'?'b-ok':d.status==='Perlu Pembetulan'?'b-bad':'b-warn'}">${d.status}</span></td><td>${esc(d.komenAdmin||'—')}</td><td><button class="btn btn-sm btn-pri" onclick="Pages.uploadTrainerDoc('${tp.id}','${d.jenis}','${d.id}')">Hantar Semula</button></td></tr>`).join(''):emptyState('Tiada dokumen. Hantar course plan & session plan.','🗂️')}
+    </tbody></table>
+    <div class="row mt">${sessions.slice(0,1).map(s=>`<button class="btn" onclick="Pages.uploadTrainerDoc('${tp.id}','COURSE_PLAN','')">➕ Hantar Course Plan</button><button class="btn" onclick="Pages.uploadTrainerDoc('${tp.id}','SESSION_PLAN','')">➕ Hantar Session Plan</button>`).join('')}</div>
+  </div>`;
+};
+Pages.saveTrainerProfile=(tid)=>{const tp=S.trainers.get(tid);S.trainers.upd(tid,{bio:$('#t_bio').value,kepakaran:$('#t_kep').value.split(',').map(s=>s.trim()),pengalaman:parseInt($('#t_exp').value),gambarUrl:$('#t_img').value,statusGambar:tp.statusGambar==='Diluluskan'?'Dalam Semakan':'Dihantar'});toast('Profil disimpan','ok');};
+Pages.saveBank=(tid)=>{S.trainers.setBank({trainerId:tid,namaBank:$('#b_bank').value,namaPemegang:$('#b_nama').value,noAkaun:$('#b_no').value,disahkanOleh:'pending'});audit('Kemaskini akaun bank jurulatih','TrainerBankAccount',tid);toast('Akaun bank disimpan. Perlu pengesahan semula.','ok');};
+Pages.uploadTrainerDoc=(tid,kind,docId)=>{const tp=S.trainers.get(tid);const sess=DB.sessions.filter(s=>s.jurulatihId===tid)[0];
+  modal('Hantar '+kind,`<div class="field"><label>Sesi</label><select id="td_ses">${DB.sessions.filter(s=>s.jurulatihId===tid).map(s=>`<option value="${s.id}">${esc(s.kluster)}</option>`).join('')}</select></div>
+  <div class="field"><label>Nama Fail (simulasi PDF/DOCX maks 10MB)</label><input id="td_nama" value="${kind.toLowerCase()}_${uid('f')}.pdf"></div>
+  <div class="field"><label>Objektif / Topik (untuk session plan berstruktur)</label><textarea id="td_obj" rows="3" placeholder="Objektif, topik, aktiviti, masa, kaedah penyampaian"></textarea></div>
+  <button class="btn btn-pri" onclick="Pages.submitTrainerDoc('${tid}','${kind}')">Hantar untuk Semakan</button><button class="btn btn-ghost" onclick="closeModal()">Batal</button>`,{w:520});};
+Pages.submitTrainerDoc=(tid,kind)=>{const sid=$('#td_ses').value;const c=S.sessions.get(sid).courseId;S.trainers.addDoc({trainerId:tid,jenis:kind,courseId:kind==='COURSE_PLAN'?c:null,sessionId:kind==='SESSION_PLAN'?sid:null,namaFail:$('#td_nama').value,versi:'1.'+Math.floor(Math.random()*9),status:'Dihantar',komenAdmin:'',tarikhAkhir:daysFrom(S.sessions.get(sid).tarikhMula,-7),objektif:$('#td_obj').value});audit('Hantar dokumen jurulatih','TrainerDocument',tid);closeModal();toast('Dokumen dihantar untuk semakan admin','ok');R.go('portal-jurulatih');};
+Pages['pustaka-bahan']=()=>{
+  const u=Auth.user;const tp=S.trainers.forUser(u.id);
+  const mats=DB.programMaterials.filter(m=>m.aktif);
+  return `<div class="glass card"><div class="section-title"><div class="bar"></div><div class="h3">Pustaka Bahan Program</div></div>
+    <div class="grid auto">${mats.map(m=>`<div class="glass card"><div class="between"><div><div style="font-weight:700">${esc(m.nama)}</div><div class="xs mut">${m.jenis} · v${m.versi} · ${esc(m.fail)}</div></div><span class="badge ${m.jenis==='TEMPLAT_SLAID'?'b-pri':'b-info'}">${m.jenis}</span></div>
+      <button class="btn btn-sm btn-pri mt8" onclick="Pages.dlMaterial('${m.id}','${tp?tp.id:''}')">⬇ Muat Turun</button></div>`).join('')}</div>
+    <div class="xs mut mt">Muat turun direkod; sistem memaklumkan jika versi terbaharu tersedia.</div></div>`;
+};
+Pages.dlMaterial=(mid,tid)=>{S.materials.logDL({materialId:mid,trainerId:tid});toast('Muat turun direkod (simulasi)','ok');};
+
+/* ===== ADMIN pages ===== */
+Pages['urus-kursus']=()=>{
+  App.after=()=>{};
+  return `<div class="glass card mb"><div class="between"><div class="section-title" style="margin:0"><div class="bar"></div><div class="h3">Katalog & Sesi Kursus (${DB.courses.length})</div></div><button class="btn btn-pri btn-sm" onclick="Pages.editCourse('')">➕ Kursus Baharu</button></div>
+    <table><thead><tr><th>Kod</th><th>Tajuk</th><th>Kategori</th><th>Mod</th><th>NON-HRD</th><th>HRD</th><th>Layak e-TRiS</th><th>Tindakan</th></tr></thead><tbody>
+    ${DB.courses.map(c=>`<tr><td>${esc(c.kod)}</td><td><a href="#/kursus/${c.id}">${esc(c.tajuk)}</a></td><td>${esc(c.kategori)}</td><td>${esc(c.mod)}</td><td>${fmtMYR(c.yuranNonHRD)}</td><td>${c.layakTuntutanETRiS?fmtMYR(c.yuranHRD):'—'}</td><td>${c.layakTuntutanETRiS?'<span class="badge b-hrd">Ya</span>':'<span class="badge b-muted">Tidak</span>'}</td><td><button class="btn btn-sm btn-ghost" onclick="Pages.editCourse('${c.id}')">Sunting</button></td></tr>`).join('')}
+    </tbody></table></div>
+  <div class="glass card"><div class="section-title"><div class="bar"></div><div class="h3">Sesi / Kohort (${DB.sessions.length})</div></div>
+    <table><thead><tr><th>Kluster</th><th>Kursus</th><th>Tarikh</th><th>Kuota</th><th>Jurulatih</th><th>Status</th><th>Tindakan</th></tr></thead><tbody>
+    ${DB.sessions.map(s=>{const c=S.courses.get(s.courseId);const t=S.trainers.get(s.jurulatihId);return `<tr><td>${esc(s.kluster)}</td><td>${esc(c.tajuk)}</td><td>${fmtDate(s.tarikhMula)}</td><td>${S.enrollments.forSession(s.id).length}/${s.kuota}</td><td>${t?esc(t.nama):'—'}</td><td>${bs(s.status)}</td><td><button class="btn btn-sm btn-ghost" onclick="Pages.editSession('${s.id}')">Sunting</button></td></tr>`;}).join('')}
+    </tbody></table>
+    <button class="btn btn-sm btn-pri mt8" onclick="Pages.editSession('')">➕ Sesi Baharu</button></div>`;
+};
+Pages.editCourse=(id)=>{
+  const c=id?S.courses.get(id):{kod:'EO-'+(1001+DB.courses.length),tajuk:'',penerangan:'',kategori:CATEGORIES[0],kategoriKursus:'STANDARD',mod:'Bersemuka',tempohJam:8,yuranNonHRD:0,yuranHRD:0,jalurNonHRDAktif:true,jalurHRDAktif:false,kuotaDefault:20,ambangKehadiran:80,skorLulus:70,layakTuntutanETRiS:false,rujukanHRDCorp:'',statusPublish:true};
+  modal('Kursus: '+(id?'Sunting':'Baharu'),`<div class="grid g2">
+    <div class="field"><label>Kod</label><input id="c_kod" value="${esc(c.kod)}"></div>
+    <div class="field"><label>Tajuk</label><input id="c_tajuk" value="${esc(c.tajuk)}"></div>
+    <div class="field"><label>Kategori</label><select id="c_cat">${CATEGORIES.map(x=>`<option ${x===c.kategori?'selected':''}>${x}</option>`).join('')}</select></div>
+    <div class="field"><label>Kategori Kursus</label><select id="c_typ"><option value="STANDARD" ${c.kategoriKursus==='STANDARD'?'selected':''}>Standard</option><option value="MICRO_SESSION" ${c.kategoriKursus==='MICRO_SESSION'?'selected':''}>Micro-Session</option></select></div>
+    <div class="field"><label>Mod</label><select id="c_mod">${['Bersemuka','Dalam Talian Langsung','Kendiri','Hibrid'].map(m=>`<option ${m===c.mod?'selected':''}>${m}</option>`).join('')}</select></div>
+    <div class="field"><label>Tempoh (jam)</label><input id="c_jam" type="number" value="${c.tempohJam}"></div>
+    <div class="field"><label>Yuran NON-HRD (RM)</label><input id="c_non" type="number" value="${c.yuranNonHRD}"></div>
+    <div class="field"><label>Yuran HRD (RM)</label><input id="c_hrd" type="number" value="${c.yuranHRD}"></div>
+    <div class="field"><label>Kuota Default</label><input id="c_kuota" type="number" value="${c.kuotaDefault}"></div>
+    <div class="field"><label>Ambang Kehadiran (%)</label><input id="c_amb" type="number" value="${c.ambangKehadiran}"></div>
+  </div>
+  <div class="field"><label>Penerangan</label><textarea id="c_desc" rows="3">${esc(c.penerangan)}</textarea></div>
+  <div class="checkrow"><input type="checkbox" class="checkbox" id="c_hrdA" ${c.layakTuntutanETRiS?'checked':''}><label for="c_hrdA" style="margin:0">Layak Tuntutan e-TRiS (HRD Claimable)</label></div>
+  <div class="field"><label>Rujukan HRD Corp</label><input id="c_ref" value="${esc(c.rujukanHRDCorp)}" placeholder="HRDC-PROG-XXXX (DUMMY)"></div>
+  <button class="btn btn-pri" onclick="Pages.saveCourse('${id||''}')">Simpan</button> <button class="btn btn-ghost" onclick="closeModal()">Batal</button>`,{w:760});
+};
+Pages.saveCourse=(id)=>{
+  const data={kod:$('#c_kod').value,tajuk:$('#c_tajuk').value,kategori:$('#c_cat').value,kategoriKursus:$('#c_typ').value,mod:$('#c_mod').value,tempohJam:parseInt($('#c_jam').value),yuranNonHRD:parseFloat($('#c_non').value),yuranHRD:parseFloat($('#c_hrd').value),kuotaDefault:parseInt($('#c_kuota').value),ambangKehadiran:parseInt($('#c_amb').value),penerangan:$('#c_desc').value,layakTuntutanETRiS:$('#c_hrdA').checked,rujukanHRDCorp:$('#c_ref').value,jalurNonHRDAktif:true,jalurHRDAktif:$('#c_hrdA').checked,statusPublish:true};
+  if(id){S.courses.upd(id,data);audit('Sunting kursus','Course',id);}else{S.courses.add(data);}
+  closeModal();toast('Kursus disimpan','ok');R.go('urus-kursus');
+};
+Pages.editSession=(id)=>{
+  const s=id?S.sessions.get(id):{courseId:DB.courses[0].id,tarikhMula:todayISO(),tarikhTamat:todayISO(),lokasi:SeedData.venues[0],kuota:20,status:'akan datang',jurulatihId:DB.trainerProfiles[0].id,kluster:'KOHORT-NEW'};
+  modal('Sesi: '+(id?'Sunting':'Baharu'),`<div class="grid g2">
+    <div class="field"><label>Kursus</label><select id="s_crs">${DB.courses.map(c=>`<option value="${c.id}" ${c.id===s.courseId?'selected':''}>${esc(c.tajuk)}</option>`).join('')}</select></div>
+    <div class="field"><label>Kluster</label><input id="s_kl" value="${esc(s.kluster)}"></div>
+    <div class="field"><label>Tarikh Mula</label><input type="date" id="s_ms" value="${s.tarikhMula}"></div>
+    <div class="field"><label>Tarikh Tamat</label><input type="date" id="s_mt" value="${s.tarikhTamat}"></div>
+    <div class="field"><label>Jurulatih</label><select id="s_tr">${DB.trainerProfiles.map(t=>`<option value="${t.id}" ${t.id===s.jurulatihId?'selected':''}>${esc(t.nama)}</option>`).join('')}</select></div>
+    <div class="field"><label>Kuota</label><input id="s_kuota" type="number" value="${s.kuota}"></div>
+    <div class="field"><label>Status</label><select id="s_stat">${['akan datang','sedang berlangsung','tamat','penuh'].map(x=>`<option ${x===s.status?'selected':''}>${x}</option>`).join('')}</select></div>
+    <div class="field"><label>Lokasi</label><input id="s_lok" value="${esc(s.lokasi)}"></div>
+  </div>
+  <button class="btn btn-pri" onclick="Pages.saveSession('${id||''}')">Simpan</button> <button class="btn btn-ghost" onclick="closeModal()">Batal</button>`,{w:680});
+};
+Pages.saveSession=(id)=>{
+  const data={courseId:$('#s_crs').value,kluster:$('#s_kl').value,tarikhMula:$('#s_ms').value,tarikhTamat:$('#s_mt').value,jurulatihId:$('#s_tr').value,kuota:parseInt($('#s_kuota').value),status:$('#s_stat').value,lokasi:$('#s_lok').value};
+  if(id){S.sessions.upd(id,data);}else{data.borangKehadiranToken=uid('att');S.sessions.add(data);}
+  closeModal();toast('Sesi disimpan','ok');R.go('urus-kursus');
+};
+Pages['pendaftaran']=()=>{
+  const ens=DB.enrollments;
+  return `<div class="glass card"><div class="section-title"><div class="bar"></div><div class="h3">Pendaftaran (${ens.length})</div></div>
+    <table><thead><tr><th>Peserta</th><th>Kursus</th><th>Sesi</th><th>Jalur</th><th>Bayaran</th><th>Pendaftaran</th></tr></thead><tbody>
+    ${ens.map(e=>{const u=DB.users.find(x=>x.id===e.userId);const c=S.courses.get(e.courseId);const s=S.sessions.get(e.sessionId);return `<tr><td>${esc(e.namaPesertaCsv||u.nama)}<div class="xs mut">${esc(maskKP(e.noKPCsv||u.noKP))}</div></td><td>${esc(c.tajuk)}</td><td>${esc(s.kluster)}</td><td>${e.jalurYuran==='HRD'?'<span class="badge b-hrd">HRD</span>':'<span class="badge b-pri">NON-HRD</span>'}</td><td>${be(e.statusBayaran)}</td><td>${be(e.statusPendaftaran)}</td></tr>`;}).join('')}
+    </tbody></table></div>`;
+};
+Pages['sah-bayaran']=()=>{
+  const pps=DB.paymentProofs;
+  return `<div class="glass card"><div class="section-title"><div class="bar"></div><div class="h3">Pengesahan Bukti Bayaran</div></div>
+    <table><thead><tr><th>No. Invois</th><th>Fail</th><th>Jumlah</th><th>Kaedah</th><th>Rujukan</th><th>Status</th><th>Tindakan</th></tr></thead><tbody>
+    ${pps.map(p=>{const inv=DB.invoices.get(p.invoiceId);return `<tr><td>${esc(inv?inv.noInvois:'—')}</td><td>${esc(p.namaFail)}</td><td>${fmtMYR(p.jumlah)}</td><td>${esc(p.kaedah)}</td><td>${esc(p.rujukanTransaksi)}</td><td><span class="badge ${p.status==='DISAHKAN'?'b-ok':p.status==='DITERIMA'?'b-info':p.status==='DITOLAK'?'b-bad':'b-warn'}">${BADGE_PAY[p.status]||p.status}</span></td><td>${p.status==='DITERIMA'?`<button class="btn btn-sm btn-pri" onclick="Pages.verifyProof('${p.id}','DISAHKAN')">Sahkan</button><button class="btn btn-sm btn-bad" onclick="Pages.verifyProof('${p.id}','DITOLAK')">Tolak</button>`:p.status==='MENUNGGU'?'<span class="xs mut">Menunggu bukti</span>':'—'}</td></tr>`;}).join('')}
+    </tbody></table></div>`;
+};
+Pages.verifyProof=(pid,decision)=>{
+  if(decision==='DITOLAK'){modal('Tolak Bukti Bayaran',`<div class="field"><label>Sebab Penolakan</label><textarea id="pp_sebab" rows="3"></textarea></div><button class="btn btn-bad" onclick="Pages.doVerifyProof('${pid}','DITOLAK')">Tolak</button> <button class="btn btn-ghost" onclick="closeModal()">Batal</button>`,{w:480});return;}
+  confirmBox('Sahkan bukti bayaran ini? Akses kelas akan dibuka kepada peserta.',()=>Pages.doVerifyProof(pid,'DISAHKAN'),{yes:'Sahkan'});
+};
+Pages.doVerifyProof=(pid,decision)=>{
+  const p=S.paymentProofs.get(pid);const inv=S.invoices.get(p.invoiceId);
+  const sebab=decision==='DITOLAK'&&$('#pp_sebab')?$('#pp_sebab').value:'';
+  S.paymentProofs.upd(pid,{status:decision,disemakOleh:Auth.user.emel,sebabTolak:sebab});
+  if(decision==='DISAHKAN'){
+    inv.status='Dibayar';S.invoices.upd(inv.id,{status:'Dibayar'});
+    p.enrollmentIds.forEach(eid=>S.enrollments.upd(eid,{statusBayaran:'DISAHKAN',statusPendaftaran:'DISAHKAN'}));
+    audit('Sahkan bayaran','PaymentProof',pid);
+    toast('Bayaran disahkan. Akses kelas dibuka.','ok');
+  }else{
+    inv.status='Ditolak';S.invoices.upd(inv.id,{status:'Ditolak'});
+    p.enrollmentIds.forEach(eid=>S.enrollments.upd(eid,{statusBayaran:'DITOLAK',statusPendaftaran:'DITOLAK'}));
+    audit('Tolak bayaran','PaymentProof',pid);
+    toast('Bayaran ditolak.','warn');
+  }
+  closeModal();R.go('sah-bayaran');
+};
+Pages['peti-hrd']=()=>{
+  const hrds=DB.hrdRequests;
+  const f=$('#h_f')?$('#h_f').value:'';
+  const list=f?hrds.filter(h=>h.status===f):hrds;
+  App.after=()=>{};
+  return `<div class="glass card"><div class="section-title"><div class="bar"></div><div class="h3">Peti Masuk Permohonan HRD (${list.length})</div></div>
+    <div class="field"><label>Tapis Status</label><select id="h_f" onchange="App.render()"><option value="">Semua</option>${STATUS_HRD.map(s=>`<option value="${s}" ${f===s?'selected':''}>${s}</option>`).join('')}</select></div>
+    <table><thead><tr><th>No. Rujukan</th><th>Majikan</th><th>Kursus</th><th>Bil</th><th>Admin</th><th>Status</th><th>SLA</th><th>Tindakan</th></tr></thead><tbody>
+    ${list.map(h=>{const emp=S.employers.get(h.employerId);const c=S.courses.get(h.courseId);const sla=h.status==='Diluluskan'||h.status==='Ditolak'?'—':`sehingga ${fmtDate(h.tempatDipegangHingga)}`;return `<tr><td>${esc(h.noRujukan)}</td><td>${esc(emp?emp.namaSyarikat:'—')}</td><td>${esc(c.tajuk)}</td><td>${h.bilPeserta}</td><td>${esc(h.adminDitugasan||'—')}</td><td>${bh(h.status)}</td><td class="xs mut">${sla}</td><td><button class="btn btn-sm btn-pri" onclick="Pages.processHRD('${h.id}')">Proses</button></td></tr>`;}).join('')}
+    </tbody></table></div>`;
+};
+Pages.processHRD=(hid)=>{
+  const h=S.hrdRequests.get(hid);const emp=S.employers.get(h.employerId);const c=S.courses.get(h.courseId);
+  const msgs=S.hrdRequests.messages(hid);const docs=S.hrdRequests.docs(hid);
+  modal('Proses Permohonan HRD '+h.noRujukan,`<div class="between mb"><div><div class="h3">${esc(c.tajuk)}</div><div class="xs mut">${esc(emp.namaSyarikat)} · ${esc(emp.idMajikanHRDCorp)}</div><div class="xs mut">Bil. peserta: ${h.bilPeserta}</div></div>${bh(h.status)}</div>
+    <div class="grid g2 mb">
+      <div class="glass card"><div class="h3 mb">1. Semakan Geran Levi</div>
+        <div class="field"><label>Baki Levi (DUMMY)</label><input id="h_levi" value="${emp.bakiLevi||0}" type="number"></div>
+        <div class="field"><label>Catatan</label><textarea id="h_cat" rows="2">${esc(h.catatanLevi||'')}</textarea></div>
+        <button class="btn btn-sm btn-pri" onclick="Pages.saveLevi('${h.id}','${emp.id}')">Simakan & Rekod</button>
+      </div>
+      <div class="glass card"><div class="h3 mb">2. Penyediaan Dokumen</div>
+        <div class="xs mut">Sediakan/muat naik dokumen sokongan & kongsi dengan majikan.</div>
+        <button class="btn btn-sm mt8" onclick="Pages.uploadHRDDoc('${h.id}')">Muat Naik Dokumen</button>
+        <div class="mt8">${docs.map(d=>`<div class="sm">📎 ${esc(d.jenisDokumen)} — ${esc(d.namaFail)}</div>`).join('')||'<div class="xs mut">Tiada dokumen.</div>'}</div>
+      </div>
+    </div>
+    <div class="glass card mb"><div class="h3 mb">3. Penghantaran & Kelulusan HRD Corp</div>
+      <div class="grid g2"><div class="field"><label>Tarikh Hantar ke HRD Corp</label><input type="date" id="h_tkh" value="${h.tarikhHantarHRD||todayISO()}"></div><div class="field"><label>No. Rujukan HRD Corp</label><input id="h_ref" value="${esc(h.rujukanHRDCorp||'')}"></div></div>
+      <div class="row"><button class="btn btn-sm btn-info" onclick="Pages.setHRDStatus('${h.id}','Dihantar ke HRD Corp')">Hantar ke HRD Corp</button>
+      <button class="btn btn-sm btn-warn" onclick="Pages.setHRDStatus('${h.id}','Menunggu Kelulusan HRD Corp')">Menunggu Kelulusan</button>
+      <button class="btn btn-sm btn-ok" onclick="Pages.approveHRD('${h.id}')">Diluluskan</button>
+      <button class="btn btn-sm btn-bad" onclick="Pages.setHRDStatus('${h.id}','Ditolak')">Ditolak</button></div>
+    </div>
+    <div class="glass card"><div class="h3 mb">Mesej</div><div style="max-height:140px;overflow:auto;margin-bottom:10px">${msgs.map(m=>`<div class="sm ${m.pengirim==='admin'?'pri':'accent'}" style="margin:6px 0"><b>${m.pengirim}:</b> ${esc(m.mesej)}</div>`).join('')||'<div class="xs mut">Tiada mesej.</div>'}</div>
+      <div class="row"><input id="ph_msg" placeholder="Mesej kepada majikan…"><button class="btn btn-sm btn-pri" onclick="Pages.adminMsg('${h.id}')">Hantar</button></div>
+    </div>
+    <button class="btn btn-ghost mt8" onclick="closeModal()">Tutup</button>`,{w:820});
+};
+Pages.saveLevi=(hid,eid)=>{const h=S.hrdRequests.get(hid);const lev=parseInt($('#h_levi').value);S.employers.get(eid).bakiLevi=lev;S.hrdRequests.upd(hid,{hasilSemakanLevi:'Baki levi: '+fmtMYR(lev)+' (DUMMY)',catatanLevi:$('#h_cat').value,status:h.status==='Permintaan Baharu'?'Dalam Semakan Geran Levi':h.status,adminDitugasan:Auth.user.emel});audit('Semakan levi','HRDRequest',hid);closeModal();toast('Semakan levi direkod','ok');Pages.processHRD(hid);};
+Pages.setHRDStatus=(hid,st)=>{const h=S.hrdRequests.get(hid);const upd={status:st,adminDitugasan:Auth.user.emel};if(st==='Dihantar ke HRD Corp'){upd.tarikhHantarHRD=$('#h_tkh')?$('#h_tkh').value:todayISO();upd.rujukanHRDCorp=$('#h_ref')?$('#h_ref').value:h.rujukanHRDCorp;}if(st==='Ditolak')upd.keputusan='DITOLAK';S.hrdRequests.upd(hid,upd);audit('Status HRD: '+st,'HRDRequest',hid);closeModal();toast('Status: '+st,'ok');R.go('peti-hrd');};
+Pages.approveHRD=(hid)=>{confirmBox('Luluskan permohonan HRD? Pendaftaran peserta akan disahkan & Kes Tuntutan dicipta.',()=>{const h=S.hrdRequests.get(hid);S.hrdRequests.upd(hid,{status:'Diluluskan',keputusan:'LULUS',tarikhHantarHRD:$('#h_tkh')?$('#h_tkh').value:h.tarikhHantarHRD,rujukanHRDCorp:$('#h_ref')?$('#h_ref').value:h.rujukanHRDCorp,adminDitugasan:Auth.user.emel});S.enrollments.forSession(h.sessionId).forEach(e=>{if(e.hrdRequestId===hid)S.enrollments.upd(e.id,{statusPendaftaran:'DISAHKAN',statusBayaran:'DISAHKAN'});});const emp=S.employers.get(h.employerId);const s=S.sessions.get(h.sessionId);const cc=S.claimCases.add({sessionId:h.sessionId,employerId:h.employerId,hrdRequestId:hid,rujukanETRiS:genRef('ETRIS'),status:'Dalam Proses',tarikhAkhir:daysFrom(s.tarikhTamat,90),tarikhHantar:null,catatan:'Dicipta automatik dari Permohonan HRD diluluskan.'});const cdDefs=[['SENARAI_PESERTA','Lengkap',true],['LEMBARAN_KEHADIRAN','Lengkap',true],['SERTIFIKAT','Lengkap',true],['INVOIS_RESIT','Lengkap',true],['COURSE_PLAN','Belum Disediakan',false],['SESSION_PLAN','Belum Disediakan',false],['PENGESAHAN_KEHADIRAN','Belum Disediakan',false],['T3','Belum Disediakan',false],['JD14','Belum Disediakan',false]];cdDefs.forEach(d=>S.claimCases.addDoc({claimCaseId:cc.id,jenisDokumen:d[0],status:d[1],sumber:d[2]?'Sistem (auto)':'Muat naik',wajib:true,versi:'1.0',disediakanOleh:Auth.user.emel}));audit('Lulus HRD + cipta Kes Tuntutan','ClaimCase',cc.id);closeModal();toast('HRD diluluskan. Kes Tuntutan dicipta.','ok');R.go('pusat-tuntutan');},{yes:'Luluskan'});};
+Pages.adminMsg=(hid)=>{const m=$('#ph_msg').value.trim();if(!m)return;S.hrdRequests.addMsg({requestId:hid,pengirim:'admin',mesej:m});closeModal();Pages.processHRD(hid);};
+Pages['pusat-tuntutan']=()=>{
+  const cases=DB.claimCases;
+  return `<div class="glass card"><div class="section-title"><div class="bar"></div><div class="h3">Pusat Tuntutan e-TRiS (${cases.length})</div></div>
+    <div class="sm muted mb">Modul pembeza: penjejakan, semakan & penyusunan dokumen tuntutan. Penghantaran ke e-TRiS dilakukan manual pada MVP.</div>
+    <table><thead><tr><th>No. Rujukan</th><th>Majikan</th><th>Sesi</th><th>Tarikh Akhir</th><th>Status</th><th>Dokumen</th><th>Tindakan</th></tr></thead><tbody>
+    ${cases.map(cc=>{const emp=S.employers.get(cc.employerId);const s=S.sessions.get(cc.sessionId);const c=S.courses.get(s.courseId);const docs=S.claimCases.documents(cc.id);const done=docs.filter(d=>d.status==='Lengkap').length;return `<tr><td>${esc(cc.rujukanETRiS)}</td><td>${esc(emp?emp.namaSyarikat:'—')}</td><td>${esc(c.tajuk)}<div class="xs mut">${esc(s.kluster)}</div></td><td>${fmtDate(cc.tarikhAkhir)}</td><td>${bc(cc.status)}</td><td>${done}/${docs.length}</td><td><button class="btn btn-sm btn-pri" onclick="Pages.viewClaim('${cc.id}')">Buka Kes</button></td></tr>`;}).join('')}
+    </tbody></table></div>`;
+};
+Pages.viewClaim=(ccid)=>{
+  const cc=S.claimCases.get(ccid);const emp=S.employers.get(cc.employerId);const s=S.sessions.get(cc.sessionId);const c=S.courses.get(s.courseId);
+  const docs=S.claimCases.documents(ccid);const tplByType={PENGESAHAN_KEHADIRAN:S.claimTemplates.list().find(t=>t.jenis==='PENGESAHAN_KEHADIRAN'),T3:S.claimTemplates.list().find(t=>t.jenis==='T3'),JD14:S.claimTemplates.list().find(t=>t.jenis==='JD14')};
+  const valid=docs.filter(d=>d.wajib&&d.status!=='Lengkap').length===0;
+  modal('Kes Tuntutan '+cc.rujukanETRiS,`<div class="between mb"><div><div class="h3">${esc(c.tajuk)}</div><div class="xs mut">${esc(emp.namaSyarikat)} · ${esc(s.kluster)}</div></div>${bc(cc.status)}</div>
+    <div class="glass card mb"><div class="h3 mb">Senarai Semak Dokumen (CLM-02)</div>
+      <table><thead><tr><th>Dokumen</th><th>Sumber</th><th>Wajib</th><th>Status</th><th>Tindakan</th></tr></thead><tbody>
+      ${docs.map(d=>`<tr><td>${esc(d.jenisDokumen)}</td><td>${esc(d.sumber)}</td><td>${d.wajib?'Ya':'Tidak'}</td><td><span class="badge ${d.status==='Lengkap'?'b-ok':d.status==='Belum Disediakan'?'b-muted':'b-warn'}">${d.status}</span></td><td>${tplByType[d.jenisDokumen]?`<button class="btn btn-sm" onclick="Pages.genClaimDoc('${ccid}','${d.id}','${d.jenisDokumen}')">Jana Draf</button>`:''}<button class="btn btn-sm btn-ghost" onclick="Pages.upClaimDoc('${d.id}')">Naik Fail Bertanda Tangan</button></td></tr>`).join('')}
+      </tbody></table>
+      <div class="row mt"><button class="btn btn-sm ${valid?'btn-pri':'btn-ghost'}" ${valid?'':'disabled'} onclick="Pages.validateClaim('${ccid}')">✓ Jalankan Pengesahan (CLM-08)</button><button class="btn btn-sm btn-info" onclick="Pages.exportClaim('${ccid}')">📦 Eksport Pakej Tuntutan (ZIP)</button></div>
+      ${valid?'<div class="badge b-ok mt8">Pengesahan lulus — semua dokumen wajib lengkap.</div>':'<div class="badge b-warn mt8">Pengesahan tertangguh — lengkapkan dokumen wajib.</div>'}
+    </div>
+    <div class="grid g2">
+      <div class="glass card"><div class="h3 mb">Kemas Kini Status</div>
+        <div class="field"><label>Status</label><select id="cl_st">${STATUS_CLAIM.map(x=>`<option ${x===cc.status?'selected':''}>${x}</option>`).join('')}</select></div>
+        <div class="field"><label>Tarikh Hantar e-TRiS</label><input type="date" id="cl_tkh" value="${cc.tarikhHantar||todayISO()}"></div>
+        <button class="btn btn-pri" onclick="Pages.saveClaim('${ccid}')">Simpan</button>
+      </div>
+      <div class="glass card"><div class="h3 mb">Maklumat</div>
+        <div class="sm muted">Tarikh akhir pengemukaan: ${fmtDate(cc.tarikhAkhir)}</div>
+        <div class="sm muted">Rujukan HRD: ${esc(S.hrdRequests.get(cc.hrdRequestId).rujukanHRDCorp||'—')}</div>
+        <div class="sm muted">Kos latihan pelmet: ${fmtMYR(c.kosLatihanPelmet||c.yuranHRD)}</div>
+      </div>
+    </div>
+    <button class="btn btn-ghost mt8" onclick="closeModal()">Tutup</button>`,{w:880});
+};
+Pages.genClaimDoc=(ccid,did,jenis)=>{const tpl=S.claimTemplates.list().find(t=>t.jenis===jenis);const cc=S.claimCases.get(ccid);const s=S.sessions.get(cc.sessionId);const emp=S.employers.get(cc.employerId);const peserta=S.enrollments.forSession(s.id).map(e=>e.namaPesertaCsv||S.users.get(e.userId).nama);const fields=jenis==='PENGESAHAN_KEHADIRAN'?`Senarai peserta: ${peserta.join('; ')}`:jenis==='T3'?`Jurulatih: ${esc(S.trainers.get(s.jurulatihId).nama)}`:`Majikan: ${esc(emp.namaSyarikat)} · No. SSM: ${esc(emp.noSSM)}`;S.claimCases.updDoc(did,{status:'Draf',sumber:'Templat + data sistem'});audit('Jana draf '+jenis,'ClaimDocument',did);toast('Draf '+jenis+' dijana dari templat ('+esc(tpl?tpl.fail:'')+'). Lengkapkan & muat naik versi bertandatangan.','ok');Pages.viewClaim(ccid);};
+Pages.upClaimDoc=(did)=>{const d=DB.claimDocuments.find(x=>x.id===did);const j=d.jenisDokumen;modal('Naik Fail Bertandatangan',`<div class="field"><label>Nama Fail Bertandatangan (simulasi PDF)</label><input id="cd_nama" value="${j}_signed.pdf"></div><button class="btn btn-pri" onclick="Pages.doUpClaim('${did}')">Lengkap</button><button class="btn btn-ghost" onclick="closeModal()">Batal</button>`,{w:460});};
+Pages.doUpClaim=(did)=>{S.claimCases.updDoc(did,{status:'Lengkap',sumber:'Muat naik bertandatangan'});closeModal();toast('Dokumen ditandatangani & dimuat naik','ok');};
+Pages.validateClaim=(ccid)=>{const docs=S.claimCases.documents(ccid).filter(d=>d.wajib);const all=docs.every(d=>d.status==='Lengkap');if(all){S.claimCases.upd(ccid,{status:'Dokumen Lengkap'});toast('Pengesahan lulus. Semua dokumen wajib lengkap.','ok');}else{toast('Pengesahan gagal — lengkapkan dokumen.','warn');}closeModal();Pages.viewClaim(ccid);};
+Pages.exportClaim=(ccid)=>{const cc=S.claimCases.get(ccid);const docs=S.claimCases.documents(ccid);const s=S.sessions.get(cc.sessionId);const c=S.courses.get(s.courseId);const emp=S.employers.get(cc.employerId);const peserta=S.enrollments.forSession(s.id).map(e=>({nama:e.namaPesertaCsv||S.users.get(e.userId).nama,noKP:maskKP(e.noKPCsv||S.users.get(e.userId).noKP)}));const csv='JenisDokumen,Status,Wajib\n'+docs.map(d=>`${d.jenisDokumen},${d.status},${d.wajib?'Ya':'Tidak'}`).join('\n');const txt=`PAKEJ TUNTUTAN e-TRiS\nNo. Rujukan: ${cc.rujukanETRiS}\nKursus: ${c.tajuk}\nMajikan: ${emp.namaSyarikat} (${emp.noSSM})\nSesi: ${s.kluster} (${fmtDate(s.tarikhMula)} - ${fmtDate(s.tarikhTamat)})\nKos Latihan: ${fmtMYR(c.kosLatihanPelmet||c.yuranHRD)}\n\n--- Senarai Peserta ---\n${peserta.map(p=>p.nama+' | '+p.noKP).join('\n')}\n\n--- Senarai Semak ---\n${csv}`;const blob=new Blob([txt],{type:'text/plain'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='Pakej_Tuntutan_'+cc.rujukanETRiS+'.zip';a.click();audit('Eksport pakej tuntutan','ClaimCase',ccid);toast('Pakej tuntutan dieksport (ZIP simulasi)','ok');};
+Pages.saveClaim=(ccid)=>{S.claimCases.upd(ccid,{status:$('#cl_st').value,tarikhHantar:$('#cl_tkh').value});audit('Kemaskini kes tuntutan','ClaimCase',ccid);closeModal();toast('Kes tuntutan dikemaskini','ok');R.go('pusat-tuntutan');};
+Pages['urus-kehadiran']=()=>{
+  const ss=DB.sessions;
+  const sel=$('#a_sel')?$('#a_sel').value:(ss[0]?ss[0].id:'');
+  const s=S.sessions.get(sel);
+  App.after=()=>{const el=$('#a_sel');if(el)el.onchange=()=>App.render();};
+  return `<div class="glass card"><div class="section-title"><div class="bar"></div><div class="h3">Pengurusan Kehadiran</div></div>
+    <div class="field"><label>Sesi</label><select id="a_sel">${ss.map(x=>`<option value="${x.id}" ${x.id===sel?'selected':''}>${esc(S.courses.get(x.courseId).tajuk)} — ${esc(x.kluster)}</option>`).join('')}</select></div>
+    ${s?`<div class="row mb"><div class="badge b-info">Pautan: <span class="kbd">#/borang-kehadiran/${esc(s.borangKehadiranToken)}</span></div><button class="btn btn-sm" onclick="Pages.showQR('${s.id}')">Tunjuk QR</button><button class="btn btn-sm btn-ghost" onclick="Pages.exportAttendance('${s.id}')">Eksport Lembaran (CSV)</button></div>
+      <table><thead><tr><th>Nama</th><th>No. KP</th><th>Status</th><th>Sumber</th><th>Cap Masa</th><th>Laras Manual</th></tr></thead><tbody>
+      ${S.attendance.forSession(s.id).map(a=>`<tr><td>${esc(a.namaDiSijil)}</td><td>${esc(maskKP(a.noKP))}</td><td><span class="badge ${a.status==='HADIR'?'b-ok':a.status==='LEWAT'?'b-warn':'b-bad'}">${a.status}</span></td><td>${a.sumber}</td><td>${fmtDateTime(a.capMasaBorang)}</td><td><button class="btn btn-sm btn-ghost" onclick="Pages.adjustAtt('${a.id}')">Laras</button></td></tr>`).join('')||emptyState('Belum ada rekod kehadiran.','📋')}
+      </tbody></table>
+      <div class="sm mt">Kadar kehadiran purata sesi: ${(()=>{const att=S.attendance.forSession(s.id);if(!att.length)return 0;return Math.round(att.filter(a=>a.status!=='TIADA').length/att.length*100);})()}%</div>`:''}
+  </div>`;
+};
+Pages.adjustAtt=(aid)=>{const a=DB.attendance.find(x=>x.id===aid);modal('Laras Kehadiran',`<div class="field"><label>Status</label><select id="a_st">${['HADIR','LEWAT','TIADA'].map(s=>`<option ${a.status===s?'selected':''}>${s}</option>`).join('')}</select></div><div class="field"><label>Sebab</label><textarea id="a_sb" rows="2"></textarea></div><button class="btn btn-pri" onclick="Pages.saveAtt('${aid}')">Simpan</button><button class="btn btn-ghost" onclick="closeModal()">Batal</button>`,{w:460});};
+Pages.saveAtt=(aid)=>{const a=DB.attendance.find(x=>x.id===aid);a.status=$('#a_st').value;a.dilarasOleh=Auth.user.emel;a.sumber='MANUAL';audit('Laras kehadiran','Attendance',aid);closeModal();toast('Kehadiran dilaras & dicatat dalam log audit','ok');R.go('urus-kehadiran');};
+Pages.exportAttendance=(sid)=>{const s=S.sessions.get(sid);const c=S.courses.get(s.courseId);const att=S.attendance.forSession(sid);const csv='Nama,NoKP,Jawatan,Status,Sumber,CapMasa\n'+att.map(a=>`"${a.namaDiSijil}","${a.noKP}","${a.jawatan}","${a.status}","${a.sumber}","${fmtDateTime(a.capMasaBorang)}"`).join('\n');const blob=new Blob([csv],{type:'text/csv'});const url=URL.createObjectURL(blob);const el=document.createElement('a');el.href=url;el.download='Kehadiran_'+s.kluster+'.csv';el.click();toast('Lembaran kehadiran dieksport','ok');};
+Pages['analisis-maklum-balas']=()=>{
+  const reports=DB.feedbackReports;
+  return `<div class="glass card"><div class="section-title"><div class="bar"></div><div class="h3">Analisis & Semakan Maklum Balas (${reports.length})</div></div>
+    <div class="sm muted mb">Analisis dijana automatik → disemak admin → dilepaskan kepada jurulatih. Komen tanpa nama peserta.</div>
+    <table><thead><tr><th>Sesi</th><th>Respons</th><th>Sentimen</th><th>Penanda Isu</th><th>Status</th><th>Tindakan</th></tr></thead><tbody>
+    ${reports.map(f=>{const s=S.sessions.get(f.sessionId);const c=S.courses.get(s.courseId);return `<tr><td>${esc(c.tajuk)}<div class="xs mut">${esc(s.kluster)}</div></td><td>${f.statistik.bilanganRespons||0}</td><td>👍${f.sentimen.positif} 😐${f.sentimen.neutral} 👎${f.sentimen.negatif}</td><td>${f.penandaIsu.length?'<span class="badge b-warn">'+f.penandaIsu.length+' isu</span>':'<span class="badge b-ok">Tiada</span>'}</td><td><span class="badge ${f.status==='Dilepaskan kepada Jurulatih'?'b-ok':'b-warn'}">${f.status}</span></td><td><button class="btn btn-sm btn-pri" onclick="Pages.reviewReport('${f.id}')">Semak</button></td></tr>`;}).join('')}
+    </tbody></table></div>`;
+};
+Pages.reviewReport=(fid)=>{
+  const f=S.feedbackReports.get(fid);const s=S.sessions.get(f.sessionId);const c=S.courses.get(s.courseId);const resp=DB.feedbackResponses.filter(r=>r.sessionId===f.sessionId);
+  const avg=a=>{const xs=resp.map(r=>r.skorAspek[a]||0).filter(x=>x>0);return xs.length?(xs.reduce((x,y)=>x+y,0)/xs.length).toFixed(2):'—';};
+  modal('Semakan Laporan Maklum Balas',`<div class="between mb"><div class="h3">${esc(c.tajuk)}</div><span class="badge ${f.status==='Dilepaskan kepada Jurulatih'?'b-ok':'b-warn'}">${f.status}</span></div>
+    <div class="grid g3 mb">${kpiCard('Respons',f.statistik.bilanganRespons||0,'📝')}${kpiCard('Skor Kesediaan',(resp.length?(resp.reduce((s,r)=>s+(r.skorRekomen||0),0)/resp.length).toFixed(1):'—')+'/10','⭐')}${kpiCard('Sentimen Positif',resp.length?Math.round(f.sentimen.positif/resp.length*100)+'%':'—','👍')}</div>
+    <div class="glass card mb"><div class="h3 mb">Statistik Aspek (purata 1–5)</div>
+      <table><thead><tr><th>Aspek</th><th>Skor</th></tr></thead><tbody>${S.feedbackTemplate.get().aspek.map(a=>`<tr><td>${esc(a.l)}</td><td><div class="progress" style="width:120px;display:inline-block;margin-right:8px"><span style="width:${(avg(a.k)/5*100)||0}%"></span></div>${avg(a.k)}</td></tr>`).join('')}</tbody></table>
+      ${f.penandaIsu.length?`<div class="badge b-warn mt8">Penanda isu: ${f.penandaIsu.join(', ')}</div>`:''}
+    </div>
+    <div class="glass card mb"><div class="h3 mb">Ringkasan Eksekutif (draf — boleh disunting)</div><textarea id="r_sum" rows="4">${esc(f.ringkasan||'')}</textarea>
+      <div class="xs mut mt8">Sembunyikan komen yang tidak sesuai sebelum dilepaskan.</div>
+    </div>
+    <div class="glass card mb"><div class="h3 mb">Komen Peserta (tanpa nama)</div>
+      ${resp.map(r=>`<div class="sm" style="margin:6px 0"><span class="badge ${r.skorRekomen>=8?'b-ok':r.skorRekomen>=5?'b-warn':'b-bad'}">${r.skorRekomen}/10</span> <b>Terbaik:</b> ${esc(r.komenTerbuka.terbaik)} <b>Penambahbaikan:</b> ${esc(r.komenTerbuka.penambahbaikan)}</div>`).join('')||'<div class="xs mut">Tiada komen.</div>'}
+    </div>
+    <div class="row"><button class="btn btn-ghost" onclick="closeModal()">Tutup</button><button class="btn btn-pri" onclick="Pages.releaseReport('${fid}')">📝 Simpan & Lepaskan kepada Jurulatih</button></div>`,{w:820});
+};
+Pages.releaseReport=(fid)=>{S.feedbackReports.upd(fid,{ringkasan:$('#r_sum').value,status:'Dilepaskan kepada Jurulatih',disemakOleh:Auth.user.emel,tarikhDilepaskan:now()});audit('Lepaskan laporan maklum balas','FeedbackReport',fid);closeModal();toast('Laporan dilepaskan kepada jurulatih','ok');R.go('analisis-maklum-balas');};
+Pages['semakan-jurulatih']=()=>{
+  const docs=DB.trainerDocuments.filter(d=>d.status==='Dihantar'||d.status==='Dalam Semakan');
+  return `<div class="glass card mb"><div class="section-title"><div class="bar"></div><div class="h3">Semakan Dokumen Jurulatih</div></div>
+    ${docs.length?`<table><thead><tr><th>Jurulatih</th><th>Jenis</th><th>Fail</th><th>Versi</th><th>Status</th><th>Tindakan</th></tr></thead><tbody>
+    ${docs.map(d=>{const t=S.trainers.get(d.trainerId);return `<tr><td>${esc(t.nama)}</td><td>${d.jenis}</td><td>${esc(d.namaFail)}</td><td>${d.versi}</td><td><span class="badge b-warn">${d.status}</span></td><td><button class="btn btn-sm btn-ok" onclick="Pages.decideTrainerDoc('${d.id}','Diluluskan')">Lulus</button><button class="btn btn-sm btn-bad" onclick="Pages.decideTrainerDoc('${d.id}','Perlu Pembetulan')">Pulangkan</button></td></tr>`;}).join('')}
+    </tbody></table>`:emptyState('Tiada dokumen menunggu semakan.','✓')}
+  </div>
+  <div class="glass card"><div class="section-title"><div class="bar"></div><div class="h3">Akaun Bank Honorarium (semakan)</div></div>
+    <table><thead><tr><th>Jurulatih</th><th>Bank</th><th>No. Akaun (bertopeng)</th><th>Status</th></tr></thead><tbody>
+    ${DB.trainerBankAccounts.map(b=>{const t=S.trainers.get(b.trainerId);return `<tr><td>${esc(t.nama)}</td><td>${esc(b.namaBank)}</td><td>${esc(maskAcct(b.noAkaun))}</td><td><span class="badge ${b.disahkanOleh==='pending'?'b-warn':'b-ok'}">${b.disahkanOleh==='pending'?'Perlu Sah':'Disahkan'}</span></td></tr>`;}).join('')}
+    </tbody></table></div>`;
+};
+Pages.decideTrainerDoc=(did,st)=>{const d=DB.trainerDocuments.find(x=>x.id===did);if(st==='Perlu Pembetulan'){modal('Pulangkan Dokumen',`<div class="field"><label>Komen untuk Jurulatih</label><textarea id="td_komen" rows="3"></textarea></div><button class="btn btn-bad" onclick="Pages.doDecideTrainer('${did}','Perlu Pembetulan')">Pulangkan</button><button class="btn btn-ghost" onclick="closeModal()">Batal</button>`,{w:460});return;}confirmBox('Luluskan dokumen ini?',()=>Pages.doDecideTrainer(did,'Diluluskan'),{yes:'Luluskan'});};
+Pages.doDecideTrainer=(did,st)=>{const d=DB.trainerDocuments.find(x=>x.id===did);d.status=st;d.komenAdmin=$('#td_komen')?$('#td_komen').value:(st==='Diluluskan'?'Diluluskan.':'');if(st==='Diluluskan')d.status='Diluluskan';Store.save(DB);audit('Semakan dokumen jurulatih: '+st,'TrainerDocument',did);closeModal();toast('Dokumen: '+st,'ok');R.go('semakan-jurulatih');};
+Pages['pustaka-bahan-admin']=()=>{
+  return `<div class="glass card"><div class="section-title"><div class="bar"></div><div class="h3">Pustaka Bahan Program</div></div>
+    <table><thead><tr><th>Jenis</th><th>Nama</th><th>Versi</th><th>Kategori</th><th>Muat Turun</th><th>Aktif</th><th>Tindakan</th></tr></thead><tbody>
+    ${DB.programMaterials.map(m=>`<tr><td><span class="badge ${m.jenis==='TEMPLAT_SLAID'?'b-pri':'b-info'}">${m.jenis}</span></td><td>${esc(m.nama)}</td><td>${m.versi}</td><td>${esc(m.kategori)}</td><td>${S.materials.downloads(m.id).length}</td><td>${m.aktif?'<span class="badge b-ok">Aktif</span>':'<span class="badge b-muted">Tidak</span>'}</td><td><button class="btn btn-sm btn-ghost" onclick="Pages.toggleMat('${m.id}')">Togol</button></td></tr>`).join('')}
+    </tbody></table>
+    <button class="btn btn-sm btn-pri mt8" onclick="Pages.addMaterial()">➕ Tambah Bahan</button></div>`;
+};
+Pages.addMaterial=()=>{modal('Tambah Bahan',`<div class="field"><label>Jenis</label><select id="m_jenis"><option>TEMPLAT_SLAID</option><option>LATAR_ZOOM</option></select></div><div class="field"><label>Nama</label><input id="m_nama"></div><div class="field"><label>Nama Fail</label><input id="m_fail" value="fail_v1.pptx"></div><div class="field"><label>Versi</label><input id="m_ver" value="1.0"></div><button class="btn btn-pri" onclick="Pages.saveMaterial()">Tambah</button><button class="btn btn-ghost" onclick="closeModal()">Batal</button>`,{w:480});};
+Pages.saveMaterial=()=>{S.materials.add({jenis:$('#m_jenis').value,nama:$('#m_nama').value,fail:$('#m_fail').value,versi:$('#m_ver').value,kategori:'SEMUA',aktif:true});closeModal();toast('Bahan ditambah','ok');R.go('pustaka-bahan-admin');};
+Pages.toggleMat=(mid)=>{const m=DB.programMaterials.find(x=>x.id===mid);m.aktif=!m.aktif;Store.save(DB);R.go('pustaka-bahan-admin');};
+Pages['templat']=()=>{
+  const ct=DB.certTemplate;const ft=S.feedbackTemplate.get();
+  return `<div class="grid g2">
+    <div class="glass card"><div class="section-title"><div class="bar"></div><div class="h3">Templat e-Sijil Umum (v${ct.versi})</div></div>
+      <div class="field"><label>Teks Umum Pengiktirafan</label><textarea id="t_text" rows="3">${esc(ct.teksUmum)}</textarea></div>
+      <div class="grid g2"><div class="field"><label>Nama Penandatangan</label><input id="t_name" value="${esc(ct.namaPenandatangan)}"></div><div class="field"><label>Jawatan</label><input id="t_jaw" value="${esc(ct.jawatanPenandatangan)}"></div></div>
+      <button class="btn btn-pri" onclick="Pages.saveCertTpl()">Simpan Templat</button>
+      <div class="xs mut mt8">Satu templat untuk semua program. Versi direkod; e-sijil lama kekal versi asal.</div>
+    </div>
+    <div class="glass card"><div class="section-title"><div class="bar"></div><div class="h3">Templat Borang Maklum Balas (v${ft.versi})</div></div>
+      <div class="sm muted mb">Aspek: ${ft.aspek.map(a=>a.l).join('; ')}</div>
+      <div class="sm muted mb">Soalan terbuka: ${ft.soalanTerbuka.map(q=>q.l).join('; ')}</div>
+      <div class="xs mut">Boleh disunting admin tanpa perubahan kod.</div>
+    </div>
+  </div>
+  <div class="glass card mt"><div class="section-title"><div class="bar"></div><div class="h3">Templat Dokumen e-TRiS (Pengesahan Kehadiran, T3, JD14)</div></div>
+    <table><thead><tr><th>Jenis</th><th>Nama Templat</th><th>Versi</th><th>Fail</th><th>Pemetaan Medan</th><th>Aktif</th></tr></thead><tbody>
+    ${DB.claimTemplates.map(t=>`<tr><td><span class="badge b-hrd">${t.jenis}</span></td><td>${esc(t.nama)}</td><td>${t.versi}</td><td>${esc(t.fail)}</td><td class="xs mut">${esc(t.pemetaanMedan.join(', '))}</td><td>${t.aktif?'<span class="badge b-ok">Aktif</span>':'<span class="badge b-muted">Tidak</span>'}</td></tr>`).join('')}
+    </tbody></table></div>`;
+};
+Pages.saveCertTpl=()=>{S.certTemplate.upd({teksUmum:$('#t_text').value,namaPenandatangan:$('#t_name').value,jawatanPenandatangan:$('#t_jaw').value});audit('Kemaskini templat e-sijil','CertificateTemplate','1');toast('Templat e-sijil disimpan','ok');};
+Pages['laporan']=()=>{
+  const ens=DB.enrollments;const inv=DB.invoices.filter(i=>i.status==='Dibayar');
+  const col=inv.reduce((s,i)=>s+i.jumlah,0);
+  const byCat={};DB.courses.forEach(c=>{byCat[c.kategori]=(byCat[c.kategori]||0)+S.enrollments.forCourse(c.id).length;});
+  const att=DB.attendance;const present=att.filter(a=>a.status!=='TIADA').length;
+  return `<div class="grid g4 mb">${kpiCard('Pendaftaran',ens.length,'📝')}${kpiCard('Kutipan (Dibayar)',fmtMYR(col).replace('RM ',''),'💰')}${kpiCard('Kehadiran (rekod)',att.length,'📋','Hadir '+present+' / Tiada '+(att.length-present))}${kpiCard('Sijil Dijana',DB.certificates.length,'🏆')}</div>
+  <div class="glass card"><div class="section-title"><div class="bar"></div><div class="h3">Pendaftaran mengikut Kategori</div></div>
+    <table><thead><tr><th>Kategori</th><th>Bil. Pendaftaran</th><th>Bar</th></tr></thead><tbody>${Object.entries(byCat).map(([k,v])=>`<tr><td>${esc(k)}</td><td>${v}</td><td><div class="progress" style="width:200px"><span style="width:${Math.min(100,v*5)}%"></span></div></td></tr>`).join('')}</tbody></table></div>
+  <div class="glass card mt"><div class="section-title"><div class="bar"></div><div class="h3">Kesediaan Tuntutan</div></div>
+    <table><thead><tr><th>Sesi HRD</th><th>Majikan</th><th>Dokumen Lengkap</th><th>Status</th></tr></thead><tbody>
+    ${DB.claimCases.map(cc=>{const docs=S.claimCases.documents(cc.id);const done=docs.filter(d=>d.status==='Lengkap').length;const s=S.sessions.get(cc.sessionId);const c=S.courses.get(s.courseId);const emp=S.employers.get(cc.employerId);return `<tr><td>${esc(c.tajuk)}</td><td>${esc(emp?emp.namaSyarikat:'—')}</td><td><div class="progress" style="width:140px"><span style="width:${Math.round(done/docs.length*100)}%"></span></div> ${done}/${docs.length}</td><td>${bc(cc.status)}</td></tr>`;}).join('')}
+    </tbody></table>
+    <button class="btn btn-sm btn-ghost mt8" onclick="Pages.exportReport()">⬇ Eksport Laporan (CSV)</button></div>`;
+};
+Pages.exportReport=()=>{const csv='Laporan Ringkas\n\nMetrik,Nilai\nPendaftaran,'+DB.enrollments.length+'\nKutipan,'+DB.invoices.filter(i=>i.status==='Dibayar').reduce((s,i)=>s+i.jumlah,0)+'\nSijil,'+DB.certificates.length+'\nKes Tuntutan,'+DB.claimCases.length+'\n';const blob=new Blob([csv],{type:'text/csv'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='Laporan_EduOasis.csv';a.click();toast('Laporan dieksport','ok');};
+
+/* ===== KEWANGAN + SUPER ADMIN ===== */
+Pages['invois']=()=>{return `<div class="glass card"><div class="section-title"><div class="bar"></div><div class="h3">Invois (${DB.invoices.length})</div></div>
+  <table><thead><tr><th>No.</th><th>Jumlah</th><th>Status</th><th>Diterbit</th><th>Tindakan</th></tr></thead><tbody>
+  ${DB.invoices.map(i=>`<tr><td>${esc(i.noInvois)}</td><td>${fmtMYR(i.jumlah)}</td><td><span class="badge ${i.status==='Dibayar'?'b-ok':i.status==='Menunggu Bukti'?'b-warn':'b-info'}">${i.status}</span></td><td>${fmtDate(i.tarikhTerbit)}</td><td><button class="btn btn-sm btn-ghost" onclick="Pages.viewInvoice('${i.id}')">Lihat</button></td></tr>`).join('')}
+  </tbody></table></div>`;};
+Pages['pengguna']=()=>{
+  return `<div class="glass card"><div class="between"><div class="section-title" style="margin:0"><div class="bar"></div><div class="h3">Pengguna & Peranan (${DB.users.length})</div></div><button class="btn btn-sm btn-pri" onclick="Pages.addUser()">➕ Pengguna Baharu</button></div>
+    <table><thead><tr><th>Nama</th><th>Emel</th><th>Peranan</th><th>Jawatan</th><th>No. KP</th><th>Tindakan</th></tr></thead><tbody>
+    ${DB.users.map(u=>`<tr><td>${esc(u.nama)}</td><td>${esc(u.emel)}</td><td><span class="badge b-info">${u.peranan}</span></td><td>${esc(u.jawatan||'—')}</td><td>${esc(maskKP(u.noKP))}</td><td><button class="btn btn-sm btn-ghost" onclick="Pages.editUser('${u.id}')">Sunting</button></td></tr>`).join('')}
+    </tbody></table></div>`;
+};
+Pages.addUser=()=>Pages.editUser('');
+Pages.editUser=(id)=>{const u=id?S.users.get(id):{nama:'',emel:'',kataLaluan:'password',peranan:'PESERTA',noKP:'',telefon:'',jawatan:'',employerId:null};const roles=['PESERTA','MAJIKAN','JURULATIH','ADMIN','KEWANGAN','SUPER_ADMIN'];modal('Pengguna: '+(id?'Sunting':'Baharu'),`<div class="grid g2"><div class="field"><label>Nama</label><input id="u_nama" value="${esc(u.nama)}"></div><div class="field"><label>Emel</label><input id="u_emel" value="${esc(u.emel)}"></div><div class="field"><label>Peranan</label><select id="u_role">${roles.map(r=>`<option ${r===u.peranan?'selected':''}>${r}</option>`).join('')}</select></div><div class="field"><label>No. KP</label><input id="u_kp" value="${esc(u.noKP)}"></div></div><button class="btn btn-pri" onclick="Pages.saveUser('${id||''}')">Simpan</button><button class="btn btn-ghost" onclick="closeModal()">Batal</button>`,{w:560});};
+Pages.saveUser=(id)=>{const data={nama:$('#u_nama').value,emel:$('#u_emel').value,peranan:$('#u_role').value,noKP:$('#u_kp').value};if(id)S.users.upd(id,data);else S.users.add(Object.assign({kataLaluan:'password',telefon:'',jawatan:'',employerId:null,fotoUrl:null},data));closeModal();toast('Pengguna disimpan','ok');R.go('pengguna');};
+Pages['tetapan']=()=>{
+  const s=DB.settings;
+  return `<div class="glass card"><div class="section-title"><div class="bar"></div><div class="h3">Tetapan Sistem</div></div>
+    <div class="grid g2">
+      <div class="field"><label>Yuran Micro-Session (RM)</label><input id="s_micro" type="number" value="${s.microFee}"></div>
+      <div class="field"><label>Ambang Kehadiran (%)</label><input id="s_amb" type="number" value="${s.ambangKehadiran}"></div>
+      <div class="field"><label>Tempoh Tempat Dipegang HRD (hari)</label><input id="s_hold" type="number" value="${s.tempatDipegangHari}"></div>
+      <div class="field"><label>Tempoh Respons Bayaran (hari)</label><input id="s_resp" type="number" value="${s.tempohResponsBayaran}"></div>
+    </div>
+    <div class="field"><label>Akaun Bank Edu Oasis</label><input id="s_bank" value="${esc(s.bankEdu.bank+' | '+s.bankEdu.namaPemegang+' | '+s.bankEdu.noAkaun)}"></div>
+    <div class="field"><label>Dasar Pembatalan</label><textarea id="s_cancel" rows="2">${esc(s.dasarPembatalan)}</textarea></div>
+    <button class="btn btn-pri" onclick="Pages.saveSettings()">Simpan Tetapan</button>
+  </div>`;
+};
+Pages.saveSettings=()=>{S.settings.upd({microFee:parseFloat($('#s_micro').value),ambangKehadiran:parseInt($('#s_amb').value),tempatDipegangHari:parseInt($('#s_hold').value),tempohResponsBayaran:parseInt($('#s_resp').value),dasarPembatalan:$('#s_cancel').value});toast('Tetapan disimpan','ok');};
+Pages['audit']=()=>{return `<div class="glass card"><div class="section-title"><div class="bar"></div><div class="h3">Log Audit (${DB.auditLogs.length})</div></div>
+  <table><thead><tr><th>Tarikh/Masa</th><th>Pengguna</th><th>Tindakan</th><th>Entiti</th><th>ID</th></tr></thead><tbody>
+  ${DB.auditLogs.slice(0,100).map(a=>`<tr><td>${fmtDateTime(a.ts)}</td><td>${esc(a.userName)}</td><td>${esc(a.action)}</td><td>${esc(a.entity)}</td><td class="xs mut">${esc(a.entityId)}</td></tr>`).join('')}
+  </tbody></table></div>`;};
+Pages['reset']=()=>{return `<div class="glass-strong card"><div class="section-title"><div class="bar"></div><div class="h3">Reset Data Dummy</div></div>
+  <div class="badge b-warn mb">⚠ Tindakan ini akan memadam semua data demo dan menjana semula data contoh (DUMMY).</div>
+  <div class="row"><button class="btn btn-bad" onclick="Pages.doReset()">Reset & Jana Semula Data</button><button class="btn" onclick="Pages.doLogout()">Log Keluar</button></div>
+  <div class="hr"></div>
+  <div class="h3 mb">Akaun Demo</div>
+  <table><thead><tr><th>Peranan</th><th>Emel</th><th>Kata Laluan</th></tr></thead><tbody>
+    ${[['Super Admin','superadmin@eduoasis.my','super123'],['Pentadbir Kursus','admin@eduoasis.my','admin123'],['Pegawai Kewangan','finance@eduoasis.my','finance123'],['Majikan/HR','hr1@techsolutions.com.my','hr123'],['Jurulatih','aimanfauzi@eduoasis.my','trainer123'],['Peserta','ahmad1@example.com','peserta123']].map(r=>`<tr><td>${r[0]}</td><td>${r[1]}</td><td><span class="kbd">${r[2]}</span></td></tr>`).join('')}
+  </tbody></table></div>`;};
+Pages.doReset=()=>{confirmBox('Reset semua data dummy? Tindakan ini tidak boleh diundur.',()=>{Store.clear();DB=seed();Store.save(DB);Auth.logout();toast('Data dummy dijana semula','ok');R.go('login');},{bad:true,yes:'Reset Sekarang'});};
+Pages.doLogout=()=>{Auth.logout();R.go('login');};
+
+
+/* ---------------- Init ---------------- */
+function boot(){
+  DB=Store.load();
+  if(!DB){DB=seed();Store.save(DB);}
+  R.init();
+  App.render();
+}
+boot();
+</script>
+</body>
+</html>
