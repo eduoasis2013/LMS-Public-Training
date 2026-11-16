@@ -124,6 +124,8 @@ details>summary{cursor:pointer;padding:8px 0;font-weight:600}
 .tab{padding:8px 14px;border-radius:10px;cursor:pointer;font-size:13px;font-weight:600;color:var(--txt-dim)}
 .tab.active{background:var(--glass2);color:var(--txt)}
 .empty{padding:40px;text-align:center;color:var(--txt-mut)}
+.home-tile{display:block;text-decoration:none;color:inherit;cursor:pointer;transition:.15s}
+.home-tile:hover{transform:translateY(-2px);border-color:var(--primary);box-shadow:0 12px 30px -10px rgba(16,185,129,.5)}
 .pill-price{font-weight:800;font-size:15px}
 .qty{display:inline-flex;align-items:center;gap:6px;background:rgba(0,0,0,.25);border:1px solid var(--glass-brd);border-radius:8px;padding:3px}
 .qty button{background:none;border:none;color:var(--txt);cursor:pointer;padding:4px 8px;font-size:14px}
@@ -528,11 +530,11 @@ const Layout={
   navByRole(){
     const r=Auth.user.peranan;
     const items={
-      PESERTA:[['dashboard','📅 Papan Pemuka'],['kursus-saya','🎓 Kursus Saya'],['sijil-saya','🏆 Sijil Saya'],['invois-saya','🧾 Invois & Bayaran'],['profil','👤 Profil']],
-      MAJIKAN:[['dashboard','📅 Papan Pemuka'],['daftar-kumpulan','➕ Daftar Kumpulan'],['permohonan-hrd','📨 Permohonan HRD'],['pekerja','👥 Pekerja & Kemajuan'],['tuntutan','💼 Status Tuntutan'],['invois-saya','🧾 Invois']],
+      PESERTA:[['dashboard','📅 Papan Pemuka'],['kursus-saya','🎓 Kursus Saya'],['sijil-saya','🏆 Sijil Saya'],['invois-saya','🧾 Bayaran & Bukti'],['profil','👤 Profil']],
+      MAJIKAN:[['dashboard','📅 Papan Pemuka'],['daftar-kumpulan','➕ Daftar Kumpulan'],['permohonan-hrd','📨 Permohonan HRD'],['pekerja','👥 Pekerja & Kemajuan'],['tuntutan','💼 Status Tuntutan'],['invois-saya','🧾 Bayaran & Bukti']],
       JURULATIH:[['dashboard','📅 Papan Pemuka'],['sesi-saya','🎤 Sesi Saya'],['kehadiran','📋 Kehadiran'],['laporan-maklum-balas','📊 Laporan Maklum Balas'],['portal-jurulatih','🗂️ Portal Dokumen Jurulatih'],['pustaka-bahan','🎨 Pustaka Bahan'],['profil','👤 Profil']],
       ADMIN:[['dashboard','📅 Papan Pemuka'],['urus-kursus','📚 Urus Kursus & Sesi'],['pendaftaran','📝 Pendaftaran'],['sah-bayaran','💰 Pengesahan Bayaran'],['peti-hrd','📥 Peti Masuk HRD'],['pusat-tuntutan','💼 Pusat Tuntutan e-TRiS'],['urus-kehadiran','📋 Pengurusan Kehadiran'],['analisis-maklum-balas','📈 Analisis Maklum Balas'],['semakan-jurulatih','✅ Semakan Dokumen Jurulatih'],['pustaka-bahan-admin','🎨 Pustaka Bahan'],['templat','📐 Templat e-Sijil & Borang'],['laporan','📊 Laporan']],
-      KEWANGAN:[['dashboard','📅 Papan Pemuka'],['sah-bayaran','💰 Pengesahan Bayaran'],['invois','🧾 Invois'],['laporan','📊 Laporan Kutipan']],
+      KEWANGAN:[['dashboard','📅 Papan Pemuka'],['sah-bayaran','💰 Pengesahan Bayaran'],['laporan','📊 Laporan Kutipan']],
       SUPER_ADMIN:[['dashboard','📅 Papan Pemuka'],['pengguna','👥 Pengguna & Peranan'],['tetapan','⚙️ Tetapan Sistem'],['audit','📜 Log Audit'],['reset','♻️ Reset Data Dummy']]
     };
     return items[r]||[];
@@ -585,7 +587,7 @@ const Layout={
     </div>`;
   }
 };
-function pageTitle(path){const m={'dashboard':'Papan Pemuka','kursus-saya':'Kursus Saya','sijil-saya':'Sijil Saya','invois-saya':'Invois & Bayaran','profil':'Profil Saya','daftar-kumpulan':'Daftar Kumpulan','permohonan-hrd':'Permohonan HRD','pekerja':'Pekerja & Kemajuan','tuntutan':'Status Tuntutan','sesi-saya':'Sesi Saya','kehadiran':'Kehadiran','laporan-maklum-balas':'Laporan Maklum Balas','portal-jurulatih':'Portal Dokumen Jurulatih','pustaka-bahan':'Pustaka Bahan','urus-kursus':'Urus Kursus & Sesi','pendaftaran':'Pendaftaran','sah-bayaran':'Pengesahan Bayaran','pusat-tuntutan':'Pusat Tuntutan e-TRiS','urus-kehadiran':'Pengurusan Kehadiran','analisis-maklum-balas':'Analisis & Semakan Maklum Balas','semakan-jurulatih':'Semakan Dokumen Jurulatih','pustaka-bahan-admin':'Pustaka Bahan','templat':'Templat e-Sijil & Borang','laporan':'Laporan','invois':'Invois','pengguna':'Pengguna & Peranan','tetapan':'Tetapan Sistem','audit':'Log Audit','reset':'Reset Data Dummy'};return m[path]||'Edu Oasis';}
+function pageTitle(path){const m={'dashboard':'Papan Pemuka','kursus-saya':'Kursus Saya','sijil-saya':'Sijil Saya','invois-saya':'Bayaran & Bukti','profil':'Profil Saya','daftar-kumpulan':'Daftar Kumpulan','permohonan-hrd':'Permohonan HRD','pekerja':'Pekerja & Kemajuan','tuntutan':'Status Tuntutan','sesi-saya':'Sesi Saya','kehadiran':'Kehadiran','laporan-maklum-balas':'Laporan Maklum Balas','portal-jurulatih':'Portal Dokumen Jurulatih','pustaka-bahan':'Pustaka Bahan','urus-kursus':'Urus Kursus & Sesi','pendaftaran':'Pendaftaran','sah-bayaran':'Pengesahan Bayaran','pusat-tuntutan':'Pusat Tuntutan e-TRiS','urus-kehadiran':'Pengurusan Kehadiran','analisis-maklum-balas':'Analisis & Semakan Maklum Balas','semakan-jurulatih':'Semakan Dokumen Jurulatih','pustaka-bahan-admin':'Pustaka Bahan','templat':'Templat e-Sijil & Borang','laporan':'Laporan','invois':'Invois (e-Boss)','pengguna':'Pengguna & Peranan','tetapan':'Tetapan Sistem','audit':'Log Audit','reset':'Reset Data Dummy'};return m[path]||'Edu Oasis';}
 
 /* PAGE REGISTRY — filled in next block */
 const Pages={};
@@ -718,9 +720,9 @@ PagesPublic.home=()=>`<div class="glass-strong card" style="text-align:center;pa
     <a class="btn" href="#/sah-sijil">Pengesahan Sijil Awam</a>
   </div>
   <div class="grid g3 mt-lg">
-    <div class="glass card"><div class="h3 pri">🎓 Latihan Awam Standard</div><p class="sm muted">Yuran dipisahkan jelas: kadar NON-HRD & kadar HRD Claimable. Mod bersemuka, dalam talian langsung, kendiri atau hibrid.</p></div>
-    <div class="glass card"><div class="h3 pri">⚡ Micro-Session Dalam Talian</div><p class="sm muted">Sesi pantas 2–4 jam pada kadar tetap <b>RM50</b>. Pendaftaran pantas dan pengesahan bayaran.</p></div>
-    <div class="glass card"><div class="h3 accent">💼 e-TRiS / HRD Corp</div><p class="sm muted">Aliran khas jalur HRD: hubungi admin, semakan geran levi, dokumen sokongan, kelulusan HRD Corp & penjejakan tuntutan.</p></div>
+    <a class="glass card home-tile" href="#/katalog?std=1"><div class="h3 pri">🎓 Latihan Awam Standard</div><p class="sm muted">Yuran dipisahkan jelas: kadar NON-HRD & kadar HRD Claimable. Mod bersemuka, dalam talian langsung, kendiri atau hibrid.</p><div class="xs pri mt8" style="font-weight:600">Lihat kursus standard →</div></a>
+    <a class="glass card home-tile" href="#/katalog?typ=MICRO"><div class="h3 pri">⚡ Micro-Session Dalam Talian</div><p class="sm muted">Sesi pantas 2–4 jam pada kadar tetap <b>RM50</b>. Pendaftaran pantas dan pengesahan bayaran.</p><div class="xs pri mt8" style="font-weight:600">Lihat Micro-Session →</div></a>
+    <a class="glass card home-tile" href="#/katalog?typ=HRD"><div class="h3 accent">💼 e-TRiS / HRD Corp</div><p class="sm muted">Aliran khas jalur HRD: hubungi admin, semakan geran levi, dokumen sokongan, kelulusan HRD Corp & penjejakan tuntutan.</p><div class="xs accent mt8" style="font-weight:600">Lihat kursus layak tuntutan →</div></a>
   </div></div>
   <div class="grid g3 mt-lg">
     <div class="glass card"><div class="kpi">12</div><div class="xs mut">Kursus contoh (8 Standard + 4 Micro-Session)</div></div>
@@ -741,12 +743,17 @@ PagesPublic.catalog=(p)=>{
       if(cat.length&&!cat.includes(c.kategori))return false;
       if(mod.length&&!mod.includes(c.mod))return false;
       if(typ.length){if(typ.includes('MICRO')&&c.kategoriKursus!=='MICRO_SESSION')return false;if(typ.includes('HRD')&&!c.layakTuntutanETRiS)return false;}
+      if(params.get('std')==='1'&&c.kategoriKursus!=='STANDARD')return false;
       if(q2){const s=(c.tajuk+' '+c.penerangan+' '+c.kategori).toLowerCase();if(!s.includes(q2.toLowerCase()))return false;}
       return true;
     });
     $('#cat_results').innerHTML=list.length?`<div class="grid auto">${list.map(courseCard).join('')}</div>`:emptyState('Tiada kursus sepadan dengan penapis.','🔍');
   }
-  App.after=()=>{refilter();$('#f_q')&&($('#f_q').oninput=refilter);[...$$('input[type=checkbox]')].forEach(c=>c.onchange=refilter);};
+  App.after=()=>{
+    const typ=params.get('typ');
+    if(typ){[...$$('#f_typ input')].forEach(cb=>{if(cb.value===typ)cb.checked=true;});}
+    refilter();$('#f_q')&&($('#f_q').oninput=refilter);[...$$('input[type=checkbox]')].forEach(c=>c.onchange=refilter);
+  };
   return `<div class="glass-strong card mb">
     <div class="between"><div class="h2">Katalog Kursus Awam</div><input id="f_q" placeholder="🔍 Cari kursus…" style="max-width:280px"></div>
     <div class="grid" style="grid-template-columns:220px 1fr;gap:18px;margin-top:14px">
@@ -837,7 +844,7 @@ PagesPublic.register=()=>{
     <div class="field"><label>No. KP / Pasport</label><input id="r_kp" placeholder=" format sahaja (DUMMY)"></div>
     <div class="field"><label>Telefon</label><input id="r_tel" placeholder="01XXXXXXXX"></div>
     <div class="field"><label>Kata Laluan</label><input id="r_pw" type="password"></div>
-    <div class="checkrow"><input type="checkbox" class="checkbox" id="r_pdpa"><label for="r_pdpa" style="margin:0">Saya bersetuju dengan <b>Akta Perlindungan Data Peribadi 2010 (PDPA)</b>. Data ini adalah demo (DUMMY).</label></div>
+    <div class="checkrow"><input type="checkbox" class="checkbox" id="r_pdpa"><label for="r_pdpa" style="margin:0">Saya bersetuju dengan <b>Akta Perlindungan Data Peribadi 2010 (PDPA)</b>. <a href="${esc(DB.settings.pdpaFail||'PDPA_Notis_Edu_Oasis.pdf')}" target="_blank" rel="noopener" style="font-weight:600">Lihat notis PDPA (PDF) ↗</a>. Data ini adalah demo (DUMMY).</label></div>
     <button class="btn btn-pri" style="width:100%" onclick="PagesPublic.doRegister()">Daftar</button>
     <div class="xs mut mt" style="text-align:center">Sudah ada akaun? <a href="#/login">Log masuk</a></div>
   </div>`;
@@ -872,6 +879,7 @@ Pages.login=()=>{
       <div class="h2 mb" style="text-align:center">Log Masuk</div>
       <div class="field"><label>Emel</label><input id="l_emel" value="ahmad1@example.com" type="email"></div>
       <div class="field"><label>Kata Laluan</label><input id="l_pw" value="peserta123" type="password"></div>
+      <div class="xs mut" style="text-align:right;margin:-4px 0 10px"><a href="javascript:void(0)" onclick="Pages.forgotPassword()" style="font-weight:600">Lupa kata laluan? ↗</a></div>
       <button class="btn btn-pri" style="width:100%" onclick="Pages.doLogin()">Log Masuk</button>
       <div class="xs mut mt" style="text-align:center"><a href="#/daftar">Daftar akaun baharu (peserta)</a> · <a href="#/">Laman awam</a></div>
       <div class="hr mt"></div>
@@ -886,6 +894,26 @@ Pages.doLogin=()=>{
   const u=Auth.login(e,p);
   if(!u){toast('Emel atau kata laluan salah','bad');return;}
   toast('Selamat datang, '+u.nama,'ok');R.go('dashboard');
+};
+Pages.forgotPassword=()=>{
+  modal('Lupa Kata Laluan',`<p class="sm muted mb">Masukkan emel berdaftar anda. Sistem akan menjana kata laluan baharu dan (pada produksi) menghantarnya ke emel anda.</p>
+    <div class="field"><label>Emel</label><input id="fp_emel" type="email" placeholder="anda@contoh.com"></div>
+    <button class="btn btn-pri" style="width:100%" onclick="Pages.doForgot()">Hantar Pautan / Kata Laluan Baharu</button>
+    <div class="xs mut mt" style="text-align:center">⚠ DEMO: kata laluan baharu akan dipaparkan di sini (tiada emel sebenar dihantar).</div>`,{w:460});
+};
+Pages.doForgot=()=>{
+  const emel=$('#fp_emel').value.trim();
+  if(!emel){toast('Sila masukkan emel','warn');return;}
+  const u=S.users.byEmail(emel);
+  if(!u){toast('Emel tidak dijumpai dalam akaun DEMO','bad');return;}
+  const baru='eo-'+Math.random().toString(36).slice(2,8);
+  S.users.upd(u.id,{kataLaluan:baru});
+  audit('Reset kata laluan (lupa kata laluan)','User',u.id);
+  closeModal();
+  modal('Kata Laluan Baharu Dijana',`<div class="badge b-ok mb">✅ Kata laluan baharu berjaya dijana untuk <b>${esc(u.nama)}</b>.</div>
+    <div class="glass card" style="text-align:center"><div class="xs mut">Kata laluan sementara (DEMO)</div><div class="kpi" style="font-size:22px;color:var(--primary2)">${esc(baru)}</div></div>
+    <p class="sm muted mt">Pada produksi, pautan set semula kata laluan akan dihantar ke <b>${esc(emel)}</b> dan pengguna menetapkan kata laluan sendiri. Sila log masuk dan tukar kata laluan ini selepas ini.</p>
+    <button class="btn btn-pri" style="width:100%" onclick="closeModal();R.go('login')">Log Masuk Sekarang</button>`,{w:460});
 };
 
 /* ===== Enrollment Flow (fee track selection → payment proof / HRD request) ===== */
@@ -936,16 +964,15 @@ const EnrollFlow={
     <div class="field"><label>Nama Penuh (seperti pada sijil)</label><input id="en_nama" value="${esc(u.nama)}"></div>
     <div class="grid g2"><div class="field"><label>No. KP / Pasport</label><input id="en_kp" value="${esc(u.noKP||'')}"></div><div class="field"><label>Telefon</label><input id="en_tel" value="${esc(u.telefon||'')}"></div></div>
     <div class="field"><label>Jawatan</label><input id="en_jaw" value="${esc(u.jawatan||'')}"></div>
-    <div class="glass card"><div class="between"><div><div class="xs mut">Yuran NON-HRD</div><div class="pill-price pri">${fmtMYR(c.yuranNonHRD)}</div></div><div class="badge b-info">Invois akan dijana selepas pendaftaran</div></div></div>
+    <div class="glass card"><div class="between"><div><div class="xs mut">Yuran NON-HRD</div><div class="pill-price pri">${fmtMYR(c.yuranNonHRD)}</div></div><div class="badge b-info">Invois rasmi dijana oleh e-boss</div></div></div>
     <div class="row" style="justify-content:space-between;margin-top:14px"><button class="btn btn-ghost" onclick="EnrollFlow.state.jalur=null;EnrollFlow.render()">← Jalur</button>
-    <button class="btn btn-pri" onclick="EnrollFlow.submitNonHRD()">Daftar & Jana Invois</button></div>`;
+    <button class="btn btn-pri" onclick="EnrollFlow.submitNonHRD()">Daftar & Bayar</button></div>`;
   },
   submitNonHRD(){
     const st=EnrollFlow.state;const c=S.courses.get(st.courseId);const s=S.sessions.get(st.sessionId);const u=Auth.user;
     const en=S.enrollments.add({userId:u.id,sessionId:st.sessionId,courseId:c.id,employerId:u.employerId||null,jalurYuran:'NON_HRD',yuranDikenakan:c.yuranNonHRD,statusBayaran:'MENUNGGU_BUKTI',statusPendaftaran:'MENUNGGU_BUKTI',hrdRequestId:null,kehadiranPeratus:0,skorAkhir:null,lulus:null});
-    const inv=S.invoices.add({noInvois:genRef('INV'),employerId:u.employerId||null,userId:u.id,sessionId:st.sessionId,jumlah:c.yuranNonHRD,cukai:0,status:'Menunggu Bukti',enrollmentIds:[en.id]});
     audit('Pendaftaran NON-HRD','Enrollment',en.id);
-    closeModal();toast('Pendaftaran berjaya! Invois dijana.','ok');
+    closeModal();toast('Pendaftaran berjaya! Sila muat naik bukti bayaran (invois dari e-boss).','ok');
     R.go('invois-saya');
   },
   stepHRDForm(c){
@@ -1059,13 +1086,13 @@ Pages._dashAdmin=(r)=>{
   return `<div class="grid g4 mb">${kpiCard('Pendaftaran',ens.length,'📝')}${kpiCard('Pengesahan Bayaran Tertunggak',pendPay.length,'💰')}${kpiCard('Permohonan HRD Aktif',pendHRD.length,'📨')}${kpiCard('Kes Tuntutan',claims.length,'💼')}</div>
   <div class="grid" style="grid-template-columns:1fr 1fr 1fr;gap:18px">
     <div class="glass card"><div class="section-title"><div class="bar"></div><div class="h3">Pengesahan Bayaran</div></div>
-      ${pendPay.slice(0,4).map(p=>{const inv=DB.invoices.get(p.invoiceId);return `<div class="between mb"><div class="sm">${esc(inv?inv.noInvois:p.invoiceId)}</div><button class="btn btn-sm btn-pri" onclick="R.go('sah-bayaran')">Semak</button></div>`;}).join('')||emptyState('Tiada','✓')}
+      ${pendPay.slice(0,4).map(p=>{const en=p.enrollmentIds&&p.enrollmentIds[0]?DB.enrollments.find(e=>e.id===p.enrollmentIds[0]):null;const c=en&&S.courses.get(en.courseId);return `<div class="between mb"><div class="sm">${esc(c?c.tajuk.slice(0,28):p.id)}</div><button class="btn btn-sm btn-pri" onclick="R.go('sah-bayaran')">Semak</button></div>`;}).join('')||emptyState('Tiada','✓')}
     </div>
     <div class="glass card"><div class="section-title"><div class="bar"></div><div class="h3">Peti Masuk HRD</div></div>
       ${pendHRD.slice(0,4).map(h=>`<div class="between mb"><div class="sm">${esc(h.noRujukan)}</div>${bh(h.status)}<button class="btn btn-sm btn-ghost" onclick="R.go('peti-hrd')">Buka</button></div>`).join('')||emptyState('Tiada','📨')}
     </div>
     <div class="glass card"><div class="section-title"><div class="bar"></div><div class="h3">Analisis Maklum Balas</div></div>
-      ${reports.slice(0,4).map(f=>{const s=DB.sessions.get(f.sessionId);const c=S.courses.get(s.courseId);return `<div class="between mb"><div class="sm">${esc(c.tajuk.slice(0,25))}</div><span class="badge b-warn">${f.status}</span></div>`;}).join('')||emptyState('Tiada','📊')}
+      ${reports.slice(0,4).map(f=>{const s=S.sessions.get(f.sessionId);const c=s&&S.courses.get(s.courseId);return `<div class="between mb"><div class="sm">${esc(c?c.tajuk.slice(0,25):'(sesi dihapus)')}</div><span class="badge b-warn">${f.status}</span></div>`;}).join('')||emptyState('Tiada','📊')}
     </div>
   </div>
   ${r==='SUPER_ADMIN'?`<div class="glass card mt"><div class="h3 mb">Tindakan Pantas</div><div class="row"><a class="btn" href="#/pengguna">Pengguna & Peranan</a><a class="btn" href="#/tetapan">Tetapan Sistem</a><a class="btn btn-bad" href="#/reset">Reset Data Dummy</a></div></div>`:''}`;
@@ -1133,39 +1160,40 @@ Pages['sijil-saya']=()=>{
       <button class="btn btn-sm btn-pri" onclick="CertUtil.download('${cer.id}')">⬇ Muat Turun e-Sijil</button>
       <button class="btn btn-sm btn-ghost mt8" onclick="CertUtil.preview('${cer.id}')">👁 Pratonton</button></div>`;}).join('')}</div>`:emptyState('Belum ada sijil. Lengkapkan borang maklum balas selepas program.','🏆')}</div>`;
 };
-CertUtil.preview=(id)=>{const cer=DB.certificates.get(id);if(!cer)return;modal('Pratonton e-Sijil',CertUtil.viewHTML(cer),{w:820});};
+CertUtil.preview=(id)=>{const cer=S.certificates.get(id);if(!cer)return;modal('Pratonton e-Sijil',CertUtil.viewHTML(cer),{w:820});};
 Pages['invois-saya']=()=>{
   const u=Auth.user;
-  const invs=u.peranan==='MAJIKAN'?S.invoices.forEmployer(u.employerId||''):[...new Set(S.enrollments.forUser(u.id).map(e=>{const i=DB.invoices.find(inv=>inv.enrollmentIds&&inv.enrollmentIds.includes(e.id));return i&&i.id;}))].map(id=>S.invoices.get(id)).filter(Boolean);
-  return `<div class="glass card"><div class="section-title"><div class="bar"></div><div class="h3">Invois & Bukti Bayaran</div></div>
-    ${invs&&invs.length?`<table><thead><tr><th>No. Invois</th><th>Jumlah</th><th>Status Bayaran</th><th>Bukti</th><th>Tindakan</th></tr></thead><tbody>
-    ${invs.map(inv=>{const pp=DB.paymentProofs.find(p=>p.invoiceId===inv.id);return `<tr><td>${esc(inv.noInvois)}</td><td>${fmtMYR(inv.jumlah)}</td><td><span class="badge ${inv.status==='Dibayar'?'b-ok':inv.status==='Menunggu Bukti'?'b-warn':'b-info'}">${inv.status}</span></td><td>${pp?esc(pp.namaFail):'—'}</td><td><button class="btn btn-sm btn-ghost" onclick="Pages.viewInvoice('${inv.id}')">Lihat Invois</button>${!pp&&inv.status==='Menunggu Bukti'?`<button class="btn btn-sm btn-pri" onclick="Pages.uploadProof('${inv.id}')">Muat Naik Bukti</button>`:''}</td></tr>`;}).join('')}
-    </tbody></table>`:emptyState('Tiada invois.','🧾')}
+  const ens=u.peranan==='MAJIKAN'?S.enrollments.forEmployer(u.employerId||''):S.enrollments.forUser(u.id);
+  const non=ens.filter(e=>e.jalurYuran==='NON_HRD');
+  return `<div class="glass card"><div class="section-title"><div class="bar"></div><div class="h3">Bayaran & Bukti Bayaran</div></div>
+    <div class="badge b-info mb">ℹ Invois rasmi dijana oleh platform <b>e-boss</b>. Di sini anda hanya muat naik <b>bukti bayaran</b> untuk pengesahan kemas kelas.</div>
+    ${non.length?`<table><thead><tr><th>Kursus</th><th>Jumlah</th><th>Status Bayaran</th><th>Bukti</th><th>Tindakan</th></tr></thead><tbody>
+    ${non.map(e=>{const c=S.courses.get(e.courseId);const pp=DB.paymentProofs.find(p=>p.enrollmentIds&&p.enrollmentIds.includes(e.id));return `<tr><td>${esc(c?c.tajuk:'—')}</td><td>${fmtMYR(e.yuranDikenakan)}</td><td>${bp(e.statusBayaran)}</td><td>${pp?esc(pp.namaFail):'—'}</td><td><button class="btn btn-sm btn-ghost" onclick="Pages.viewInvoice('${e.id}')">Arahan Bayaran</button>${!pp&&e.statusBayaran==='MENUNGGU_BUKTI'?`<button class="btn btn-sm btn-pri" onclick="Pages.uploadProof('${e.id}')">Muat Naik Bukti</button>`:''}</td></tr>`;}).join('')}
+    </tbody></table>`:emptyState('Tiada pendaftaran NON-HRD menunggu bayaran.','🧾')}
   </div>`;
 };
-Pages.viewInvoice=(invId)=>{
-  const inv=S.invoices.get(invId);const e=DB.enrollments.find(en=>inv.enrollmentIds&&inv.enrollmentIds.includes(en.id));const s=e?S.sessions.get(e.sessionId):null;const c=e?S.courses.get(e.courseId):null;const bank=DB.settings.bankEdu;
-  modal('Invois '+inv.noInvois,`<div class="glass card"><div class="between"><div><div class="xl">EDU OASIS</div><div class="xs mut">Edu Oasis Training Sdn Bhd · Lot 12, Cyberjaya, Selangor</div></div><div style="text-align:right"><div class="h2">INVOIS</div><div class="xs mut">${esc(inv.noInvois)}</div></div></div>
+Pages.viewInvoice=(enId)=>{
+  const e=S.enrollments.get(enId);const c=S.courses.get(e.courseId);const s=S.sessions.get(e.sessionId);const bank=DB.settings.bankEdu;
+  modal('Arahan Pembayaran — '+esc(c?c.tajuk:'Kursus'),`<div class="glass card"><div class="between"><div><div class="xl">EDU OASIS</div><div class="xs mut">Edu Oasis Training Sdn Bhd · Lot 12, Cyberjaya, Selangor</div></div><div style="text-align:right"><div class="h2">ARAHAN BAYARAN</div><div class="xs mut">Rujukan: ${esc(e.id)}</div></div></div>
   <div class="hr"></div>
   <div class="grid g2"><div><div class="xs mut">Dibil kepada</div><div style="font-weight:700">${esc(Auth.user.nama)}</div></div><div><div class="xs mut">Program</div><div>${esc(c?c.tajuk:'—')}</div><div class="xs mut mt8">Sesi</div><div>${esc(s?s.kluster:'—')}</div></div></div>
-  <table class="mt"><thead><tr><th>Penerangan</th><th>Jumlah</th></tr></thead><tbody><tr><td>Yuran Latihan — ${esc(c?c.tajuk:'')}</td><td>${fmtMYR(inv.jumlah)}</td></tr><tr><td>SST (0%)</td><td>${fmtMYR(0)}</td></tr><tr><th>Jumlah Bayaran</th><th>${fmtMYR(inv.jumlah)}</th></tr></tbody></table>
-  <div class="glass card mt"><div class="h3 mb">Arahan Pembayaran</div><div class="sm">Sila bayar ke: <b>${esc(bank.bank)}</b> · ${esc(bank.namaPemegang)} · Akaun: <b>${esc(bank.noAkaun)}</b></div><div class="xs mut mt8">Selepas bayar, muat naik bukti pembayaran (PDF/JPG/PNG, maks 5MB, sehingga 3 fail) dalam sistem.</div></div></div>`,{w:620});
+  <table class="mt"><thead><tr><th>Penerangan</th><th>Jumlah</th></tr></thead><tbody><tr><td>Yuran Latihan — ${esc(c?c.tajuk:'')}</td><td>${fmtMYR(e.yuranDikenakan)}</td></tr><tr><td>SST (0%)</td><td>${fmtMYR(0)}</td></tr><tr><th>Jumlah Bayaran</th><th>${fmtMYR(e.yuranDikenakan)}</th></tr></tbody></table>
+  <div class="glass card mt"><div class="h3 mb">Arahan Pembayaran</div><div class="sm">Sila bayar ke: <b>${esc(bank.bank)}</b> · ${esc(bank.namaPemegang)} · Akaun: <b>${esc(bank.noAkaun)}</b></div><div class="xs mut mt8">Invois rasmi akan dijana oleh <b>e-boss</b>. Selepas bayar, muat naik bukti pembayaran (PDF/JPG/PNG, maks 5MB, sehingga 3 fail) di sini untuk pengesahan kemas kelas.</div></div></div>`,{w:620});
 };
-Pages.uploadProof=(invId)=>{
-  const inv=S.invoices.get(invId);
-  modal('Muat Naik Bukti Bayaran',`<div class="field"><label>Nama Fail Bukti (simulasi)</label><input id="up_nama" value="bukti_${esc(inv.noInvois)}.pdf"></div>
+Pages.uploadProof=(enId)=>{
+  const e=S.enrollments.get(enId);const c=S.courses.get(e.courseId);
+  modal('Muat Naik Bukti Bayaran',`<div class="field"><label>Nama Fail Bukti (simulasi)</label><input id="up_nama" value="bukti_${esc(c?c.kod:e.id)}.pdf"></div>
   <div class="grid g2"><div class="field"><label>Tarikh Bayar</label><input type="date" id="up_tkh" value="${todayISO()}"></div>
-  <div class="field"><label>Jumlah (RM)</label><input type="number" id="up_amt" value="${inv.jumlah}"></div></div>
+  <div class="field"><label>Jumlah (RM)</label><input type="number" id="up_amt" value="${e.yuranDikenakan}"></div></div>
   <div class="grid g2"><div class="field"><label>Kaedah</label><select id="up_method"><option>Pindahan Bank / IBG</option><option>FPX</option><option>Cek</option><option>Lain-lain</option></select></div>
   <div class="field"><label>No. Rujukan Transaksi</label><input id="up_ref" value="${genRef('TXN')}"></div></div>
   <div class="badge b-info">Fail: PDF/JPG/PNG · maks 5MB · sehingga 3 fail (simulasi).</div>
-  <div class="row" style="justify-content:flex-end;margin-top:14px"><button class="btn btn-ghost" onclick="closeModal()">Batal</button><button class="btn btn-pri" onclick="Pages.submitProof('${inv.id}')">Hantar Bukti</button></div>`,{w:560});
+  <div class="row" style="justify-content:flex-end;margin-top:14px"><button class="btn btn-ghost" onclick="closeModal()">Batal</button><button class="btn btn-pri" onclick="Pages.submitProof('${e.id}')">Hantar Bukti</button></div>`,{w:560});
 };
-Pages.submitProof=(invId)=>{
-  const inv=S.invoices.get(invId);
-  const pp=S.paymentProofs.add({invoiceId:invId,enrollmentIds:inv.enrollmentIds.slice(),namaFail:$('#up_nama').value,tarikhBayar:$('#up_tkh').value,jumlah:parseFloat($('#up_amt').value),kaedah:$('#up_method').value,rujukanTransaksi:$('#up_ref').value,status:'DITERIMA',disemakOleh:'',sebabTolak:''});
-  inv.status='Bukti Diterima';S.invoices.upd(invId,{status:'Bukti Diterima'});
-  inv.enrollmentIds.forEach(eid=>S.enrollments.upd(eid,{statusBayaran:'BUKTI_DITERIMA',statusPendaftaran:'BUKTI_DITERIMA'}));
+Pages.submitProof=(enId)=>{
+  const e=S.enrollments.get(enId);
+  const pp=S.paymentProofs.add({invoiceId:null,enrollmentIds:[enId],userId:e.userId,employerId:e.employerId||null,namaFail:$('#up_nama').value,tarikhBayar:$('#up_tkh').value,jumlah:parseFloat($('#up_amt').value),kaedah:$('#up_method').value,rujukanTransaksi:$('#up_ref').value,status:'DITERIMA',disemakOleh:'',sebabTolak:''});
+  S.enrollments.upd(enId,{statusBayaran:'BUKTI_DITERIMA',statusPendaftaran:'BUKTI_DITERIMA'});
   audit('Muat naik bukti bayaran','PaymentProof',pp.id);
   closeModal();toast('Bukti bayaran dihantar untuk semakan.','ok');R.go('invois-saya');
 };
@@ -1539,8 +1567,9 @@ Pages['pendaftaran']=()=>{
 Pages['sah-bayaran']=()=>{
   const pps=DB.paymentProofs;
   return `<div class="glass card"><div class="section-title"><div class="bar"></div><div class="h3">Pengesahan Bukti Bayaran</div></div>
-    <table><thead><tr><th>No. Invois</th><th>Fail</th><th>Jumlah</th><th>Kaedah</th><th>Rujukan</th><th>Status</th><th>Tindakan</th></tr></thead><tbody>
-    ${pps.map(p=>{const inv=DB.invoices.get(p.invoiceId);return `<tr><td>${esc(inv?inv.noInvois:'—')}</td><td>${esc(p.namaFail)}</td><td>${fmtMYR(p.jumlah)}</td><td>${esc(p.kaedah)}</td><td>${esc(p.rujukanTransaksi)}</td><td><span class="badge ${p.status==='DISAHKAN'?'b-ok':p.status==='DITERIMA'?'b-info':p.status==='DITOLAK'?'b-bad':'b-warn'}">${BADGE_PAY[p.status]||p.status}</span></td><td>${p.status==='DITERIMA'?`<button class="btn btn-sm btn-pri" onclick="Pages.verifyProof('${p.id}','DISAHKAN')">Sahkan</button><button class="btn btn-sm btn-bad" onclick="Pages.verifyProof('${p.id}','DITOLAK')">Tolak</button>`:p.status==='MENUNGGU'?'<span class="xs mut">Menunggu bukti</span>':'—'}</td></tr>`;}).join('')}
+    <div class="badge b-info mb">ℹ Invois rasmi dijana oleh <b>e-boss</b>. Tugas di sini: sahkan <b>bukti bayaran</b> yang dimuat naik peserta untuk membuka akses kelas.</div>
+    <table><thead><tr><th>Kursus / Peserta</th><th>Fail</th><th>Jumlah</th><th>Kaedah</th><th>Rujukan</th><th>Status</th><th>Tindakan</th></tr></thead><tbody>
+    ${pps.map(p=>{const en=p.enrollmentIds&&p.enrollmentIds[0]?DB.enrollments.find(e=>e.id===p.enrollmentIds[0]):null;const c=en&&S.courses.get(en.courseId);const usr=en&&S.users.get(en.userId);return `<tr><td>${esc(c?c.tajuk:'—')}<div class="xs mut">${esc(usr?usr.nama:'—')}</div></td><td>${esc(p.namaFail)}</td><td>${fmtMYR(p.jumlah)}</td><td>${esc(p.kaedah)}</td><td>${esc(p.rujukanTransaksi)}</td><td><span class="badge ${p.status==='DISAHKAN'?'b-ok':p.status==='DITERIMA'?'b-info':p.status==='DITOLAK'?'b-bad':'b-warn'}">${BADGE_PAY[p.status]||p.status}</span></td><td>${p.status==='DITERIMA'?`<button class="btn btn-sm btn-pri" onclick="Pages.verifyProof('${p.id}','DISAHKAN')">Sahkan</button><button class="btn btn-sm btn-bad" onclick="Pages.verifyProof('${p.id}','DITOLAK')">Tolak</button>`:p.status==='MENUNGGU'?'<span class="xs mut">Menunggu bukti</span>':'—'}</td></tr>`;}).join('')}
     </tbody></table></div>`;
 };
 Pages.verifyProof=(pid,decision)=>{
@@ -1548,16 +1577,14 @@ Pages.verifyProof=(pid,decision)=>{
   confirmBox('Sahkan bukti bayaran ini? Akses kelas akan dibuka kepada peserta.',()=>Pages.doVerifyProof(pid,'DISAHKAN'),{yes:'Sahkan'});
 };
 Pages.doVerifyProof=(pid,decision)=>{
-  const p=S.paymentProofs.get(pid);const inv=S.invoices.get(p.invoiceId);
+  const p=S.paymentProofs.get(pid);
   const sebab=decision==='DITOLAK'&&$('#pp_sebab')?$('#pp_sebab').value:'';
   S.paymentProofs.upd(pid,{status:decision,disemakOleh:Auth.user.emel,sebabTolak:sebab});
   if(decision==='DISAHKAN'){
-    inv.status='Dibayar';S.invoices.upd(inv.id,{status:'Dibayar'});
     p.enrollmentIds.forEach(eid=>S.enrollments.upd(eid,{statusBayaran:'DISAHKAN',statusPendaftaran:'DISAHKAN'}));
     audit('Sahkan bayaran','PaymentProof',pid);
     toast('Bayaran disahkan. Akses kelas dibuka.','ok');
   }else{
-    inv.status='Ditolak';S.invoices.upd(inv.id,{status:'Ditolak'});
     p.enrollmentIds.forEach(eid=>S.enrollments.upd(eid,{statusBayaran:'DITOLAK',statusPendaftaran:'DITOLAK'}));
     audit('Tolak bayaran','PaymentProof',pid);
     toast('Bayaran ditolak.','warn');
@@ -1752,15 +1779,33 @@ Pages['laporan']=()=>{
 Pages.exportReport=()=>{const csv='Laporan Ringkas\n\nMetrik,Nilai\nPendaftaran,'+DB.enrollments.length+'\nKutipan,'+DB.invoices.filter(i=>i.status==='Dibayar').reduce((s,i)=>s+i.jumlah,0)+'\nSijil,'+DB.certificates.length+'\nKes Tuntutan,'+DB.claimCases.length+'\n';const blob=new Blob([csv],{type:'text/csv'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='Laporan_EduOasis.csv';a.click();toast('Laporan dieksport','ok');};
 
 /* ===== KEWANGAN + SUPER ADMIN ===== */
-Pages['invois']=()=>{return `<div class="glass card"><div class="section-title"><div class="bar"></div><div class="h3">Invois (${DB.invoices.length})</div></div>
-  <table><thead><tr><th>No.</th><th>Jumlah</th><th>Status</th><th>Diterbit</th><th>Tindakan</th></tr></thead><tbody>
-  ${DB.invoices.map(i=>`<tr><td>${esc(i.noInvois)}</td><td>${fmtMYR(i.jumlah)}</td><td><span class="badge ${i.status==='Dibayar'?'b-ok':i.status==='Menunggu Bukti'?'b-warn':'b-info'}">${i.status}</span></td><td>${fmtDate(i.tarikhTerbit)}</td><td><button class="btn btn-sm btn-ghost" onclick="Pages.viewInvoice('${i.id}')">Lihat</button></td></tr>`).join('')}
-  </tbody></table></div>`;};
+Pages['invois']=()=>{return `<div class="glass card"><div class="section-title"><div class="bar"></div><div class="h3">Invois — Platform e-Boss</div></div>
+  <div class="badge b-info mb">ℹ Penjanaan invois rasmi dikendali oleh platform <b>e-boss</b> luaran.</div>
+  <p class="muted mb">Pengurusan invois (penjanaan, nombor, resit rasmi, cukai SST) tidak dilakukan dalam LMS Edu Oasis. Ini diasingkan ke <b>e-boss</b> supaya LMS memberi tumpuan kepada: katalog program, data jurulatih, pengurusan pengguna/peranan, dan pendaftaran peserta.</p>
+  <p class="muted mb">Tugas kewangan dalam LMS terhad kepada <b>pengesahan bukti bayaran</b> yang dimuat naik peserta selepas bayar mengikut invois dari e-boss. Sila gunakan menu <a href="#/sah-bayaran" class="pri" style="font-weight:600">💰 Pengesahan Bayaran</a>.</p>
+  <div class="xs mut">Untuk akses e-boss, hubungi pentadbir sistem kewangan.</div>
+</div>`;};
 Pages['pengguna']=()=>{
+  const roles=['','PESERTA','MAJIKAN','JURULATIH','ADMIN','KEWANGAN','SUPER_ADMIN'];
+  App.after=()=>{Pages.renderUsers();const q=$('#u_q'),rf=$('#u_role_filter');if(q)q.oninput=Pages.renderUsers;if(rf)rf.onchange=Pages.renderUsers;};
   return `<div class="glass card"><div class="between"><div class="section-title" style="margin:0"><div class="bar"></div><div class="h3">Pengguna & Peranan (${DB.users.length})</div></div><button class="btn btn-sm btn-pri" onclick="Pages.addUser()">➕ Pengguna Baharu</button></div>
-    <table><thead><tr><th>Nama</th><th>Emel</th><th>Peranan</th><th>Jawatan</th><th>No. KP</th><th>Tindakan</th></tr></thead><tbody>
-    ${DB.users.map(u=>`<tr><td>${esc(u.nama)}</td><td>${esc(u.emel)}</td><td><span class="badge b-info">${u.peranan}</span></td><td>${esc(u.jawatan||'—')}</td><td>${esc(maskKP(u.noKP))}</td><td><button class="btn btn-sm btn-ghost" onclick="Pages.editUser('${u.id}')">Sunting</button></td></tr>`).join('')}
-    </tbody></table></div>`;
+    <div class="row mb" style="align-items:flex-end">
+      <div class="field" style="flex:1;min-width:220px;margin:0"><label>Cari pengguna (nama / emel / jawatan)</label><input id="u_q" placeholder="🔍 cth. JURULATIH, Ahmad, admin@…"></div>
+      <div class="field" style="min-width:200px;margin:0"><label>Tapis Peranan</label><select id="u_role_filter"><option value="">Semua peranan</option>${roles.slice(1).map(r=>`<option value="${r}">${r}</option>`).join('')}</select></div>
+      <button class="btn btn-ghost btn-sm" onclick="$('#u_q').value='';$('#u_role_filter').value='';Pages.renderUsers()">Reset</button>
+    </div>
+    <table><thead><tr><th>Nama</th><th>Emel</th><th>Peranan</th><th>Jawatan</th><th>No. KP</th><th>Tindakan</th></tr></thead><tbody id="u_tbody"></tbody></table></div>`;
+};
+Pages.renderUsers=()=>{
+  const q=(($('#u_q')&&$('#u_q').value)||'').trim().toLowerCase();
+  const rf=($('#u_role_filter')&&$('#u_role_filter').value)||'';
+  let list=DB.users.filter(u=>{
+    if(rf&&u.peranan!==rf)return false;
+    if(q){const s=(u.nama+' '+u.emel+' '+(u.jawatan||'')+' '+u.peranan+' '+(u.noKP||'')).toLowerCase();if(!s.includes(q))return false;}
+    return true;
+  });
+  const tb=$('#u_tbody');if(!tb)return;
+  tb.innerHTML=list.length?list.map(u=>`<tr><td>${esc(u.nama)}</td><td>${esc(u.emel)}</td><td><span class="badge b-info">${u.peranan}</span></td><td>${esc(u.jawatan||'—')}</td><td>${esc(maskKP(u.noKP))}</td><td><button class="btn btn-sm btn-ghost" onclick="Pages.editUser('${u.id}')">Sunting</button></td></tr>`).join(''):`<tr><td colspan="6"><div class="empty" style="padding:24px">Tiada pengguna sepadan dengan carian.</div></td></tr>`;
 };
 Pages.addUser=()=>Pages.editUser('');
 Pages.editUser=(id)=>{const u=id?S.users.get(id):{nama:'',emel:'',kataLaluan:'password',peranan:'PESERTA',noKP:'',telefon:'',jawatan:'',employerId:null};const roles=['PESERTA','MAJIKAN','JURULATIH','ADMIN','KEWANGAN','SUPER_ADMIN'];modal('Pengguna: '+(id?'Sunting':'Baharu'),`<div class="grid g2"><div class="field"><label>Nama</label><input id="u_nama" value="${esc(u.nama)}"></div><div class="field"><label>Emel</label><input id="u_emel" value="${esc(u.emel)}"></div><div class="field"><label>Peranan</label><select id="u_role">${roles.map(r=>`<option ${r===u.peranan?'selected':''}>${r}</option>`).join('')}</select></div><div class="field"><label>No. KP</label><input id="u_kp" value="${esc(u.noKP)}"></div></div><button class="btn btn-pri" onclick="Pages.saveUser('${id||''}')">Simpan</button><button class="btn btn-ghost" onclick="closeModal()">Batal</button>`,{w:560});};
@@ -1777,8 +1822,24 @@ Pages['tetapan']=()=>{
     <div class="field"><label>Akaun Bank Edu Oasis</label><input id="s_bank" value="${esc(s.bankEdu.bank+' | '+s.bankEdu.namaPemegang+' | '+s.bankEdu.noAkaun)}"></div>
     <div class="field"><label>Dasar Pembatalan</label><textarea id="s_cancel" rows="2">${esc(s.dasarPembatalan)}</textarea></div>
     <button class="btn btn-pri" onclick="Pages.saveSettings()">Simpan Tetapan</button>
+  </div>
+  <div class="glass card mt">
+    <div class="section-title"><div class="bar"></div><div class="h3">Notis & Polisi PDPA (Akta 2010)</div></div>
+    <div class="sm muted mb">Ini adalah bahagian untuk mengurus fail Notis Perlindungan Data Peribadi (PDPA) yang dipaparkan pada borang pendaftaran peserta. Naik taraf fail di sini apabila polisi dikemas kini.</div>
+    <div class="grid g2">
+      <div class="field"><label>Fail Notis PDPA Semasa</label><input id="s_pdpa" value="${esc(s.pdpaFail||'PDPA_Notis_Edu_Oasis.pdf')}" readonly></div>
+      <div class="field"><label>Versi / Tarikh Pindaan</label><input id="s_pdpa_v" value="${esc(s.pdpaVersi||'v1.0')+' / '+(s.pdpaTarikh||'16 Nov 2026')}"></div>
+    </div>
+    <div class="field"><label>Muat Naik Fail PDPA Baharu (PDF)</label><input type="file" id="s_pdpa_file" accept="application/pdf,.pdf" onchange="Pages.pickPdpaFile(this)"></div>
+    <div class="row">
+      <a class="btn btn-ghost" href="${esc(s.pdpaFail||'PDPA_Notis_Edu_Oasis.pdf')}" target="_blank" rel="noopener">📄 Pratonton Fail Semasa ↗</a>
+      <button class="btn btn-pri" onclick="Pages.savePdpa()">Simpan Fail PDPA</button>
+    </div>
+    <div class="xs mut mt8">⚠ DEMO: fail disimpan sebagai nama fail dalam data tetapan. Pada produksi, fail PDF dimuat naik ke storan selamat (cth. S3/OSS) dan pautan pendaftaran dikemaskini secara automatik.</div>
   </div>`;
 };
+Pages.pickPdpaFile=(inp)=>{const f=inp.files&&inp.files[0];if(f){$('#s_pdpa').value=f.name;toast('Fail dipilih: '+f.name,'info');}};
+Pages.savePdpa=()=>{const fail=$('#s_pdpa').value.trim()||'PDPA_Notis_Edu_Oasis.pdf';const v=$('#s_pdpa_v').value.trim();S.settings.upd({pdpaFail:fail,pdpaVersi:v});audit('Kemaskini fail PDPA','Settings','pdpa');toast('Fail PDPA dikemaskini','ok');R.go('tetapan');};
 Pages.saveSettings=()=>{S.settings.upd({microFee:parseFloat($('#s_micro').value),ambangKehadiran:parseInt($('#s_amb').value),tempatDipegangHari:parseInt($('#s_hold').value),tempohResponsBayaran:parseInt($('#s_resp').value),dasarPembatalan:$('#s_cancel').value});toast('Tetapan disimpan','ok');};
 Pages['audit']=()=>{return `<div class="glass card"><div class="section-title"><div class="bar"></div><div class="h3">Log Audit (${DB.auditLogs.length})</div></div>
   <table><thead><tr><th>Tarikh/Masa</th><th>Pengguna</th><th>Tindakan</th><th>Entiti</th><th>ID</th></tr></thead><tbody>
